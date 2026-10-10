@@ -113,6 +113,218 @@ namespace InvestorVirtual.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LearningTerms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Category = 1,
+                            Description = "Anything of value that a person or company owns. It can be physical (like cash, land, or machinery) or financial (like stocks and bonds) that can be converted into money or used to generate future earnings (selling with a profit or through dividends).",
+                            TermName = "Asset"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Category = 1,
+                            Description = "Money or debts that a person or company owes to others. Examples include bank loans, unpaid bills, mortgages, or credit card balances.",
+                            TermName = "Liability"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Category = 1,
+                            Description = "The actual net worth of an owner's share in a business or asset. It is calculated simply as what you own (Assets) minus what you owe (Liabilities).",
+                            TermName = "Equity"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Category = 4,
+                            Description = "A quick valuation check that compares a company's stock price to how much profit it actually makes per share. It shows whether a stock is cheap or expensive relative to its real earnings. Example: If a stock trades at $100 and earns $5 per share each year, its P/E ratio is 20 ($100 / $5). This means investors are paying $20 for every $1 of annual profit the company makes",
+                            TermName = "Price-to-Earnings (P/E) Ratio"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Category = 4,
+                            Description = "The total market value of a company. It is calculated by multiplying the price of a single stock share by the total number of shares that exist. It shows how big a company really is (Small-Cap vs. Large-Cap).",
+                            TermName = "Market Capitalization (Market Cap)"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Category = 2,
+                            Description = "A simple score from 0 to 100 that shows if a stock has been bought or sold too quickly. A score above 70 usually means a stock is overbought (overpriced), while below 30 means it is oversold (bargain price).",
+                            TermName = "Relative Strength Index (RSI)"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Category = 2,
+                            Description = "A line on a chart that shows the average closing price of a stock over a specific number of days (like 20, 50, or 200 days). It smoothes out daily price bounces to show the overall trend direction. Investors usually have 20, 50 and 200 day SMAs active at the same time, which they use to analyze market trends.",
+                            TermName = "Simple Moving Average (SMA)"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Category = 2,
+                            Description = "Similar to an SMA, but it gives more weight to the most recent prices. This makes it react faster to fresh news or sudden price changes than a standard moving average.",
+                            TermName = "Exponential Moving Average (EMA)"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Category = 3,
+                            Description = "A visual price chart shape that looks like three peaks (a tall middle \"head\" between two lower \"shoulders\"). It usually signals that an upward price trend is running out of steam and may turn downward.",
+                            TermName = "Head and Shoulders"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Category = 3,
+                            Description = "A chart pattern that looks like the letter \"W\". It happens when a stock price drops to a low point twice, bounces off that level both times, and signals a potential price recovery. It usually bounces back due to funds stepping in to buy on a \"discount\" price after panic sell-offs, because they still have faith in the asset, otherwise they would let it crash through their foundations",
+                            TermName = "Double Bottom"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Category = 1,
+                            Description = "A market period where prices are steadily rising and general investor sentiment is optimistic. It is named after a bull, which attacks by thrusting its horns upward.",
+                            TermName = "Bullish Market (Bull Market)"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Category = 1,
+                            Description = "A market period where stock prices fall significantly (typically 20% or more from recent highs) and market sentiment is pessimistic. It is named after a bear, which attacks by swiping its paws downward.",
+                            TermName = "Bearish Market (Bear Market)"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Category = 4,
+                            Description = "A company's net profit divided by its total number of stock shares. It shows how much profit a company generates for every single share of stock issued. Example: If a company makes $10 million in profit and has 5 million issued shares to investors, its EPS is $2 (10 million / 5 million).",
+                            TermName = "EPS (Earnings Per Share)"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Category = 4,
+                            Description = "A P/E ratio that compares current share price against real, proven earnings over the past 12 months (last 4 quarters). It reflects actual historical performance rather than future promises.",
+                            TermName = "Trailing P/E"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Category = 4,
+                            Description = "A P/E ratio that compares current share price against estimated future earnings projected by financial analysts for the next 12 months. It shows what investors expect the company to earn ahead. This is one of the stones that tips a stock's cost if the company fails to meet these expectations during their quarterly \"Earnings Call\"",
+                            TermName = "Forward P/E"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Category = 1,
+                            Description = "A 12-month accounting period used by companies for financial reporting and tax purposes. It does not always align with the calendar year (Jan 1–Dec 31); for instance, Apple's fiscal year ends in late September.",
+                            TermName = "Fiscal Year"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Category = 1,
+                            Description = "A 3-month chunk of a company's fiscal year (Q1, Q2, Q3, Q4). Public companies publish official financial updates and earnings reports at the end of every fiscal quarter usually called \"Earnings Calls\".",
+                            TermName = "Fiscal Quarter"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Category = 1,
+                            Description = "A cash payout that a profitable company shares directly with its stockholders, usually paid out quarterly. It rewards long-term investors simply for owning shares in the business.",
+                            TermName = "Dividend"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Category = 1,
+                            Description = "A percentage that shows how much a company pays out in dividends each year relative to its current stock price. It measures the cash return you get on your investment, similar to an interest rate at a bank. Example: If a company's stock price is $100 and it pays $4.00 in total dividends per year, its Dividend Yield is 4% ($4 / $100). If the stock price rises to $200 while the dividend stays $4, the yield drops to 2%. If you want to calculate this cash yield yourself you would have to calculate what is x% out of the company's current share price and multiply that by the total amount of shares you own.",
+                            TermName = "Dividend Yield"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Category = 1,
+                            Description = "The cutoff date that determines who gets paid the upcoming dividend. You must buy the stock before this date to receive the dividend. If you buy on or after the ex-dividend date, the dividend payment goes to the previous owner.",
+                            TermName = "Ex-Dividend Date (Ex-Date)"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Category = 1,
+                            Description = "A portion of a single equity share, allowing you to buy stock based on a specific dollar amount rather than the full share price. Depending on the brokerage or trading platform, fractional shares may either pay a proportional dividend (e.g., holding 0.5 shares yields half the dividend payout) or no dividend at all if the platform limits payouts strictly to whole shares.",
+                            TermName = "Fractional Shares"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Category = 1,
+                            Description = "A digital service or app that connects investors to financial exchanges to buy and sell stocks, ETFs, and other assets. Platforms differ in features, such as supporting fractional share execution, commission structures, and specific dividend distribution policies.",
+                            TermName = "Investment Platform (Brokerage)"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Category = 1,
+                            Description = "The total number of shares bought and sold for a specific stock during a set period (usually one trading day). Higher volume means high activity and liquidity, making it easier to enter or exit a position without moving the price drastically.",
+                            TermName = "Trading Volume (Volume)"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Category = 1,
+                            Description = "Trading activity where orders are executed at or above the seller's asking price. High buying volume shows strong market demand and typically pushes the stock price upward.",
+                            TermName = "Buying Volume (Buy-Side Volume)"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Category = 1,
+                            Description = "Trading activity where sellers are eager to exit and fulfill orders at or below the buyer's bidding price. High selling volume indicates panic, profit-taking, or heavy supply, pushing the price downward.",
+                            TermName = "Selling Volume (Sell-Side Volume)"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Category = 1,
+                            Description = "A rapid stock price change (e.g., 10%–20%) occurring on low trading volume, typically caused by sudden news, major geopolitical events, or quarterly earnings calls. When unexpected news drops, institutional algorithms and market makers instantly update their buy/sell quotes to a new level. The price shifts dramatically without needing massive retail trading volume simply because no buyers or sellers are willing to execute orders at the previous price.",
+                            TermName = "Low-Volume Sentiment Shift (Institutional Repricing)"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Category = 3,
+                            Description = "A bullish pattern that occurs when a short-term moving average (like the 50-day SMA, or faster 20-day SMA) crosses above a longer-term moving average (like the 200-day or 50-day SMA). It signals that recent buying momentum is accelerating upward and a sustained bull trend may be starting.",
+                            TermName = "Golden Cross"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Category = 3,
+                            Description = "A bearish pattern that occurs when a short-term moving average (like the 50-day SMA, or faster 20-day SMA) drops below a longer-term moving average (like the 200-day or 50-day SMA). It signals that downward selling pressure is taking over and further price decline may follow.",
+                            TermName = "Death Cross"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Category = 3,
+                            Description = "A slang term for a stock whose price is plummeting rapidly with no signs of stopping. Trying to buy it during the steep drop is called \"catching a falling knife\"—a high-risk attempt to guess the bottom that often leads to quick losses before the price stabilizes.",
+                            TermName = "Falling Knife"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Category = 3,
+                            Description = "A temporary, short-lived price recovery during a severe, long-term downtrend. It gives a false impression that the stock has bottomed out, but the price quickly resumes falling once the brief surge in buying runs out of steam.",
+                            TermName = "Dead Cat Bounce"
+                        });
                 });
 
             modelBuilder.Entity("InvestorVirtual.Data.Models.News", b =>
