@@ -1,10 +1,13 @@
 ﻿namespace InvestorVirtual.Data.Models;
 
+using Microsoft.EntityFrameworkCore;
+
 using System.ComponentModel.DataAnnotations;
 
-using static Common.EntityValidation;
+using static InvestorVirtual.Common.EntityValidation;
 
 // This model represents the news articles that are written for each of the stocks to keep track of what is happening in the stock market
+[Comment("This model represents the news articles that are written for each of the stocks to keep track of what is happening in the stock market")]
 public class News
 {
     [Key]
@@ -12,12 +15,15 @@ public class News
 
     [Required]
     [MaxLength(HeadlineMaxLength)]
+    [Comment("This is the news article's headline")]
     public string Headline { get; set; } = null!; // This is the news article's headline   --will most likely be the only thing visible if I make a list or article catalog that holds all articles, before clicking on it to open said article
 
     [Required]
+    [Comment("This is the main story surrounding the stock")]
     public string Body { get; set; } = null!; // This is the main story surrounding the stock
 
     [Required]
     [MaxLength(SourceMaxLength)]
+    [Comment("This is the source or sources of the article")]
     public string Source { get; set; } = null!; // This is the source or sources of the article
 }

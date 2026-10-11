@@ -3,7 +3,10 @@ namespace InvestorVirtual;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-using Data;
+using InvestorVirtual.Data;
+using InvestorVirtual.Data.Common;
+using InvestorVirtual.Core.Services;
+using InvestorVirtual.Core.Contracts;
 
 public class Program
 {
@@ -20,6 +23,9 @@ public class Program
         builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             .AddEntityFrameworkStores<ApplicationDbContext>();
         builder.Services.AddControllersWithViews();
+
+        builder.Services.AddScoped<ILearningService, LearningService>();
+        builder.Services.AddScoped<IRepository, Repository>();
 
         WebApplication app = builder.Build();
 

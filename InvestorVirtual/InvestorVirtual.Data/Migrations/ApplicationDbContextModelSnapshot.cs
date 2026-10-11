@@ -31,22 +31,29 @@ namespace InvestorVirtual.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AnalystCount")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("This is the count of analysts that have taken part in the analysis of the stock");
 
                     b.Property<int>("Rating")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("This represents the rating from 'Strong-Sell' to 'Strong-Buy' given by the analysts");
 
                     b.Property<string>("Reasoning")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasComment("This is the explanation the analysts give to explain their rating");
 
                     b.Property<decimal>("TargetPrice")
-                        .HasColumnType("DECIMAL(6, 2)");
+                        .HasColumnType("DECIMAL(6, 2)")
+                        .HasComment("This is the price expected by analysts to be reached by the stock");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Analyses");
+                    b.ToTable("Analyses", t =>
+                        {
+                            t.HasComment("This model represents the analysis surrounding each stock based on the events that happen in the world");
+                        });
                 });
 
             modelBuilder.Entity("InvestorVirtual.Data.Models.Event", b =>
@@ -58,24 +65,30 @@ namespace InvestorVirtual.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AnalysisId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("This will reference the analysis associated with the event");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("This will record the date of the event");
 
                     b.Property<int>("NewsId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("This will reference the news associated with the event");
 
                     b.Property<int>("PriceId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("This will reference the price associated with the event");
 
                     b.Property<int>("StockId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("This will reference the stock associated with the event");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("This will hold the title and will cover important aspects of a company's events");
 
                     b.HasKey("Id");
 
@@ -87,7 +100,10 @@ namespace InvestorVirtual.Data.Migrations
 
                     b.HasIndex("StockId");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", t =>
+                        {
+                            t.HasComment("This model represents the main hub that links the price, news, analysis together and then links to the stock");
+                        });
                 });
 
             modelBuilder.Entity("InvestorVirtual.Data.Models.LearningTerm", b =>
@@ -99,20 +115,26 @@ namespace InvestorVirtual.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Category")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment("This will show the category of the term");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("This is the description of the term");
 
                     b.Property<string>("TermName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("This is what the name of the term is");
 
                     b.HasKey("Id");
 
-                    b.ToTable("LearningTerms");
+                    b.ToTable("LearningTerms", t =>
+                        {
+                            t.HasComment("This model is independent from the others and represents the financial terms with descriptions about them for the users to read and learn");
+                        });
 
                     b.HasData(
                         new
@@ -140,7 +162,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 4,
                             Category = 4,
-                            Description = "A quick valuation check that compares a company's stock price to how much profit it actually makes per share. It shows whether a stock is cheap or expensive relative to its real earnings. Example: If a stock trades at $100 and earns $5 per share each year, its P/E ratio is 20 ($100 / $5). This means investors are paying $20 for every $1 of annual profit the company makes",
+                            Description = "A quick valuation check that compares a company's stock price to how much profit it actually makes per share. It shows whether a stock is cheap or expensive relative to its real earnings. Example: If a stock trades at $100 and earns $5 per share each year, its P/E ratio is 20 ($100 / $5). This means investors are paying $20 for every $1 of annual profit the company makes.",
                             TermName = "Price-to-Earnings (P/E) Ratio"
                         },
                         new
@@ -182,7 +204,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 10,
                             Category = 3,
-                            Description = "A chart pattern that looks like the letter \"W\". It happens when a stock price drops to a low point twice, bounces off that level both times, and signals a potential price recovery. It usually bounces back due to funds stepping in to buy on a \"discount\" price after panic sell-offs, because they still have faith in the asset, otherwise they would let it crash through their foundations",
+                            Description = "A chart pattern that looks like the letter \"W\". It happens when a stock price drops to a low point twice, bounces off that level both times, and signals a potential price recovery. It usually bounces back due to funds stepping in to buy on a \"discount\" price after panic sell-offs, because they still have faith in the asset, otherwise they would let it crash through their foundations.",
                             TermName = "Double Bottom"
                         },
                         new
@@ -217,7 +239,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 15,
                             Category = 4,
-                            Description = "A P/E ratio that compares current share price against estimated future earnings projected by financial analysts for the next 12 months. It shows what investors expect the company to earn ahead. This is one of the stones that tips a stock's cost if the company fails to meet these expectations during their quarterly \"Earnings Call\"",
+                            Description = "A P/E ratio that compares current share price against estimated future earnings projected by financial analysts for the next 12 months. It shows what investors expect the company to earn ahead. This is one of the stones that tips a stock's cost if the company fails to meet these expectations during their quarterly \"Earnings Call\".",
                             TermName = "Forward P/E"
                         },
                         new
@@ -337,21 +359,27 @@ namespace InvestorVirtual.Data.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("This is the main story surrounding the stock");
 
                     b.Property<string>("Headline")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasComment("This is the news article's headline");
 
                     b.Property<string>("Source")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("This is the source or sources of the article");
 
                     b.HasKey("Id");
 
-                    b.ToTable("News");
+                    b.ToTable("News", t =>
+                        {
+                            t.HasComment("This model represents the news articles that are written for each of the stocks to keep track of what is happening in the stock market");
+                        });
                 });
 
             modelBuilder.Entity("InvestorVirtual.Data.Models.Price", b =>
@@ -363,17 +391,23 @@ namespace InvestorVirtual.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<long>("BuyVolume")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasComment("This is how much shares of a stock were bought in a specific time span (e.g. a day, a week, a month,)");
 
                     b.Property<decimal>("PriceValue")
-                        .HasColumnType("DECIMAL(6, 2)");
+                        .HasColumnType("DECIMAL(6, 2)")
+                        .HasComment("This is the current price for 1 share of a stock");
 
                     b.Property<long>("SellVolume")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasComment("This is how much shares of a stock were sold in a specific time span (e.g. a day, a week, a month,)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Prices");
+                    b.ToTable("Prices", t =>
+                        {
+                            t.HasComment("This model represents the price movements and buy/sell volume of every stock on a daily basis");
+                        });
                 });
 
             modelBuilder.Entity("InvestorVirtual.Data.Models.Stock", b =>
@@ -387,31 +421,39 @@ namespace InvestorVirtual.Data.Migrations
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("This is the company name");
 
                     b.Property<string>("LogoPath")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("This is the path to the company logo");
 
                     b.Property<string>("Sector")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("This is the sector the company operates in");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(1000)")
+                        .HasComment("This is a short description for the company and their business");
 
                     b.Property<string>("Ticker")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(10)")
+                        .HasComment("This is the company ticker (a short, 3-4 letter, all caps name specific to stocks trading)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stocks");
+                    b.ToTable("Stocks", t =>
+                        {
+                            t.HasComment("This model represents the stocks each user can interact with");
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

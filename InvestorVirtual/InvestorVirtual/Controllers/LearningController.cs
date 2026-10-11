@@ -2,35 +2,37 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using Data;
+using InvestorVirtual.Core.Models;
+using InvestorVirtual.Core.Contracts;
+
+// DEPRECATED USINGS
 using ViewModels.Learning;
+using InvestorVirtual.Data;
 
 using static Common.ApplicationConstants;
+// DEPRECATED USINGS
 
-public class LearningController : Controller
+public class LearningController(ILearningService learningService) : Controller
 {
-    private readonly ApplicationDbContext applicationDbContext;
-
-    public LearningController(ApplicationDbContext applicationDbContext)
-    {
-        this.applicationDbContext = applicationDbContext;
-    }
-
     [HttpGet]
     public IActionResult Index([FromQuery] int page = 1)
     {
-        IEnumerable<LearningIndexViewModel> learningIndexViewModels = this.applicationDbContext.LearningTerms
-            .OrderBy(learningTerm => learningTerm.TermName)
-            .Skip((page - 1) * DefaultPageSize)
-            .Take(DefaultPageSize)
-            .Select(learningTerm => new LearningIndexViewModel
-            {
-                TermName = learningTerm.TermName,
-                Description = learningTerm.Description,
-                Category = learningTerm.Category
-            })
-            .ToArray();
+        // DEPRECATED - logic moved to the service layer
 
-        return View(learningIndexViewModels);
+        // IEnumerable<LearningIndexViewModel> learningIndexViewModels = this.applicationDbContext.LearningTerms
+        //     .OrderBy(learningTerm => learningTerm.TermName)
+        //     .Skip((page - 1) * DefaultPageSize)
+        //     .Take(DefaultPageSize)
+        //     .Select(learningTerm => new LearningIndexViewModel
+        //     {
+        //         TermName = learningTerm.TermName,
+        //         Description = learningTerm.Description,
+        //         Category = learningTerm.Category
+        //     })
+        //     .ToArray();
+
+        IEnumerable<LearningServiceModel> learningTerms = learningService.GetAllLearningTerms(page);
+
+        return View(learningTerms);
     }
 }

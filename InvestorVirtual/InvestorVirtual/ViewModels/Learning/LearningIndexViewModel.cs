@@ -1,6 +1,6 @@
 ﻿namespace InvestorVirtual.ViewModels.Learning;
 
-using Data.Models.Enums;
+using InvestorVirtual.Data.Models.Enums;
 
 public class LearningIndexViewModel
 {

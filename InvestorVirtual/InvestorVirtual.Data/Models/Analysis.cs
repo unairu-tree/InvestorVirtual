@@ -1,26 +1,33 @@
 ﻿namespace InvestorVirtual.Data.Models;
 
+using Microsoft.EntityFrameworkCore;
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using Enums;
 
-using static Common.EntityValidation;
+using static InvestorVirtual.Common.EntityValidation;
 
 // This model represents the analysis surrounding each stock based on the events that happen in the world
+[Comment("This model represents the analysis surrounding each stock based on the events that happen in the world")]
 public class Analysis
 {
     [Key]
     public int Id { get; set; }
 
+    [Comment("This represents the rating from 'Strong-Sell' to 'Strong-Buy' given by the analysts")]
     public Rating Rating { get; set; } // This represents the rating from 'Strong-Sell' to "Strong-Buy" given by the analysts
 
     [Required]
     [MaxLength(ReasoningMaxLength)]
+    [Comment("This is the explanation the analysts give to explain their rating")]
     public string Reasoning { get; set; } = null!; // This is the explanation the analysts give to explain their rating
 
     [Column(TypeName = "DECIMAL(6, 2)")]
+    [Comment("This is the price expected by analysts to be reached by the stock")]
     public decimal TargetPrice { get; set; } // This is the price expected by analysts to be reached by the stock
 
+    [Comment("This is the count of analysts that have taken part in the analysis of the stock")]
     public int AnalystCount { get; set; } // This is the count of analysts that have taken part in the analysis of the stock
 }

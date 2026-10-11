@@ -1,19 +1,25 @@
 ﻿namespace InvestorVirtual.Data.Models;
 
+using Microsoft.EntityFrameworkCore;
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 // This model represents the price movements and buy/sell volume of every stock on a daily basis
+[Comment("This model represents the price movements and buy/sell volume of every stock on a daily basis")]
 public class Price
 {
     [Key]
     public int Id { get; set; }
 
     [Column(TypeName = "DECIMAL(6, 2)")]
+    [Comment("This is the current price for 1 share of a stock")]
     public decimal PriceValue { get; set; } // This is the current price for 1 share of a stock
 
+    [Comment("This is how much shares of a stock were bought in a specific time span (e.g. a day, a week, a month,)")]
     public long BuyVolume { get; set; } // This is how much shares of a stock were bought in a specific time span (e.g. a day, a week, a month,)
 
+    [Comment("This is how much shares of a stock were sold in a specific time span (e.g. a day, a week, a month,)")]
     public long SellVolume { get; set; } // This is how much shares of a stock were sold in a specific time span (e.g. a day, a week, a month,)
 
     [NotMapped] // Not mapped, because we don't really need them to increase the DB storage

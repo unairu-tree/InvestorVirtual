@@ -2,5 +2,8 @@
   <Folder Name="/Solution Items/">
     <File Path="../README.md" />
   </Folder>
+  <Project Path="InvestorVirtual.Common/InvestorVirtual.Common.csproj" Id="fa17316c-011f-4d2e-a782-1d27b08931a4" />
+  <Project Path="InvestorVirtual.Core/InvestorVirtual.Core.csproj" Id="b4265c7f-3dc8-4a54-ba60-3085f9611cb7" />
+  <Project Path="InvestorVirtual.Data/InvestorVirtual.Data.csproj" Id="0f07ae72-290a-43a8-841d-b5ee83f70142" />
   <Project Path="InvestorVirtual/InvestorVirtual.csproj" />
 </Solution>
