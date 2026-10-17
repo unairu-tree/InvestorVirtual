@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using Enums;
 
-using static InvestorVirtual.Common.EntityValidation;
+using static InvestorVirtual.Common.EntityValidation.Analysis;
 
 // This model represents the analysis surrounding each stock based on the events that happen in the world
 [Comment("This model represents the analysis surrounding each stock based on the events that happen in the world")]

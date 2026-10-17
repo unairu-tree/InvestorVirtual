@@ -29,3 +29,79 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* CUSTOM - AI ASSISTED */
+
+/* Keeps text highlighting effects, but removes the 'I' shaped cursor */
+.learning-container {
+    cursor: default;
+}
+
+/* Base card style transitions */
+.card,
+.card .badge,
+.pagination .page-link {
+    transition: all 0.35s ease-in-out, transform 0.25s ease-in-out;
+}
+
+/* Subtle glow effect key words or titles over the dark layout */
+.glow-text {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.5), 0 0 18px rgba(255, 255, 255, 0.35);
+    transition: text-shadow 0.35s ease-in-out;
+}
+
+/* Card outline glow and elevated title glow */
+.card.bg-black:hover {
+    border-color: rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.15);
+}
+
+/* Soft interactive hover enhancement for titles */
+.card:hover .glow-text {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 24px rgba(255, 255, 255, 0.55);
+}
+
+/* Category badge inversion on hover */
+.card:hover .badge {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
+}
+
+/* Description text enhancement on hover */
+.card:hover .card-text {
+    font-weight: 500;
+    color: #e0e0e0 !important;
+}
+
+/* Page buttons hover effect */
+.pagination .page-link:hover {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+/* Navbar background */
+.navbar-financial-emerald {
+    background: linear-gradient(90deg, rgba(3, 47, 27, 0.9) 0%, rgba(6, 95, 70, 0.8) 50%, rgba(4, 120, 87, 0.9) 100%);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+    box-shadow: none;
+}
+.navbar-financial-cyan {
+    background: linear-gradient(90deg, rgba(8, 51, 68, 0.9) 0%, rgba(14, 116, 144, 0.8) 50%, rgba(30, 58, 138, 0.9) 100%);
+    border-bottom: 1px solid rgba(0, 242, 254, 0.3);
+    box-shadow: none;
+}
+.navbar-financial-slate-gold {
+    background: linear-gradient(90deg, rgba(45, 55, 72, 0.9) 0%, rgba(90, 80, 45, 0.85) 50%, rgba(138, 105, 20, 0.9) 100%);
+    border-bottom: 1px solid rgba(180, 140, 30, 0.25);
+    box-shadow: none;
+}
+
+.welcome-banner-nav-match {
+    background: linear-gradient(90deg, rgba(45, 55, 72, 0.45) 0%, rgba(90, 80, 45, 0.3) 50%, rgba(138, 105, 20, 0.2) 100%) !important;
+    color: #ffffff;
+    box-shadow: none;
+}

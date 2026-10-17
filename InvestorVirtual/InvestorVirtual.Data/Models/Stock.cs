@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using System.ComponentModel.DataAnnotations;
 
-using static InvestorVirtual.Common.EntityValidation;
+using static InvestorVirtual.Common.EntityValidation.Stock;
 
 // This model represents the stocks each user can interact with, that includes...
 [Comment("This model represents the stocks each user can interact with")]

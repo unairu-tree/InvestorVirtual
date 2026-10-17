@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using InvestorVirtual.Data;
 namespace InvestorVirtual;
 
 using Microsoft.AspNetCore.Identity;
@@ -20,7 +23,10 @@ public class Program
             options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                IdentityConfigurationOptions(options, builder.Configuration);
+            })
             .AddEntityFrameworkStores<ApplicationDbContext>();
         builder.Services.AddControllersWithViews();
 
@@ -55,5 +61,31 @@ public class Program
            .WithStaticAssets();
 
         app.Run();
+    }
+
+    private static void IdentityConfigurationOptions(IdentityOptions options, IConfiguration configuration)
+    {
+        options.Password.RequireDigit = configuration
+            .GetValue<bool>("Identity:Password:RequireDigit");
+        options.Password.RequiredLength = configuration
+            .GetValue<int>("Identity:Password:RequiredLength");
+        options.Password.RequiredUniqueChars = configuration
+            .GetValue<int>("Identity:Password:RequiredUniqueChars");
+        options.Password.RequireNonAlphanumeric = configuration
+            .GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
+        options.Password.RequireUppercase = configuration
+            .GetValue<bool>("Identity:Password:RequireUppercase");
+        options.Password.RequireLowercase = configuration
+            .GetValue<bool>("Identity:Password:RequireLowercase");
+
+        options.SignIn.RequireConfirmedAccount = configuration
+            .GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
+        options.SignIn.RequireConfirmedEmail = configuration
+            .GetValue<bool>("Identity:SignIn:RequireConfirmedEmail");
+        options.SignIn.RequireConfirmedPhoneNumber = configuration
+            .GetValue<bool>("Identity:SignIn:RequireConfirmedPhoneNumber");
+
+        options.User.RequireUniqueEmail = configuration
+            .GetValue<bool>("Identity:User:RequireUniqueEmail");
     }
 }

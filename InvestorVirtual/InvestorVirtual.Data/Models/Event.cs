@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using static InvestorVirtual.Common.EntityValidation;
+using static InvestorVirtual.Common.EntityValidation.Event;
 
 // This model represents the main hub that links the price, news, analysis together and then links to the stock
 [Comment("This model represents the main hub that links the price, news, analysis together and then links to the stock")]

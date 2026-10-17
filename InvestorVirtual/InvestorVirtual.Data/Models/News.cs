@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using System.ComponentModel.DataAnnotations;
 
-using static InvestorVirtual.Common.EntityValidation;
+using static InvestorVirtual.Common.EntityValidation.News;
 
 // This model represents the news articles that are written for each of the stocks to keep track of what is happening in the stock market
 [Comment("This model represents the news articles that are written for each of the stocks to keep track of what is happening in the stock market")]

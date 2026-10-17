@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 using Enums;
 
-using static InvestorVirtual.Common.EntityValidation;
+using static InvestorVirtual.Common.EntityValidation.LearningTerm;
 
 // This model is independent from the others and represents the financial terms with descriptions about them for the users to read and learn
 [Comment("This model is independent from the others and represents the financial terms with descriptions about them for the users to read and learn")]

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Learning";
 }
 
-<div class="container py-4">
+<div class="container py-4 learning-container">
     <div class="mb-5 text-center">
         <h1 class="text-white fw-bold">Learning</h1>
         <p class="text-secondary">Key terms and market concepts to help you navigate the stock market like a pro.</p>
@@ -23,7 +23,7 @@
                             <span class="badge bg-transparent border border-light text-light rounded-2 mb-3 small">
                                 @term.Category.GetDisplayName()
                             </span>
-                            <h3 class="card-title text-white h5 fw-semibold mb-3">@term.TermName</h3>
+                            <h3 class="card-title text-white h5 fw-semibold mb-3 glow-text">@term.TermName</h3>
                             <p class="card-text text-secondary small lh-base">@term.Description</p>
                         </div>
                     </div>
