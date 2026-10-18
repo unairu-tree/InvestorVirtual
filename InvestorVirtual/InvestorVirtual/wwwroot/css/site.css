@@ -18,7 +18,11 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: 'Inter Variable', sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -32,76 +36,667 @@ body {
 
 /* CUSTOM - AI ASSISTED */
 
+/* FONTS */
+@font-face {
+    font-family: 'Inter Variable';
+    src: url('/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter Italic Variable';
+    src: url('/fonts/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono Variable';
+    src: url('/fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono Italic Variable';
+    src: url('/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Roboto Flex Variable';
+    src: url('/fonts/RobotoFlex-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+/* THEMES (with light and dark mode support) */
+:root, .theme-vaulted-gold {
+    /* Core terminal variables (Dark mode default) - Warm Golden Tint */
+    --terminal-bg: #08080a;
+    --terminal-card-bg: #1c1811;
+    --terminal-text: #f8f9fa;
+    --terminal-border: #594a24;
+    --terminal-shadow: none;
+    --terminal-accent: rgba(234, 179, 8, 0.85);
+    --terminal-glow: rgba(234, 179, 8, 0.25);
+
+    /* Navbar vibrant gradient */
+    --navbar-bg: linear-gradient(90deg, rgba(45, 55, 72, 0.9) 0%, rgba(90, 80, 45, 0.85) 50%, rgba(138, 105, 20, 0.9) 100%);
+    --navbar-border: rgba(180, 140, 30, 0.25);
+    /* Muted backgrounds (Shared by welcome banner & auth cards) */
+    --muted-bg-gradient: linear-gradient(90deg, rgba(45, 55, 72, 0.45) 0%, rgba(90, 80, 45, 0.3) 50%, rgba(138, 105, 20, 0.2) 100%);
+    --muted-banner-text: #ffffff;
+    /* Interactive inputs & buttons */
+    --auth-input-border: rgba(212, 175, 55, 0.6);
+    --auth-input-focus: #eab308;
+    --auth-btn-bg: #d4af37;
+    --auth-btn-hover: #eab308;
+    --auth-btn-text: #111827;
+}
+    .theme-vaulted-gold.light-mode {
+        --terminal-bg: #f8f9fa;
+        --terminal-card-bg: #f5f0e6;
+        --terminal-text: #212529;
+        --terminal-border: #ced4da;
+
+        /* Tiered Light-Mode Shadows */
+        --shadow-rich: 0 7px 20px 5px rgba(0, 0, 0, 0.3) , 0 4px 10px 3px rgba(0, 0, 0, 0.15) !important;
+        --shadow-light: 0 0 20px 2px rgba(0, 0, 0, 0.2) , 0 0 10px 1px rgba(0, 0, 0, 0.1) !important;
+        --shadow-subtle: 0 0 20px 1px rgba(0, 0, 0, 0.15) , 0 0 10px 0 rgba(0, 0, 0, 0.05) !important;
+
+        --navbar-text: #ffffff;
+
+        --muted-banner-text: #111827;
+
+        --auth-label-focus: #b45309;
+        --auth-text: #212529;
+        --auth-placeholder: rgba(33, 37, 41, 0.6);
+    }
+
+.theme-cyber-dusk {
+    --terminal-bg: #0b0914;
+    --terminal-card-bg: #151124;
+    --terminal-text: #f0edf9;
+    --terminal-border: #3f3363;
+    --terminal-shadow: none;
+    --terminal-accent: rgba(168, 85, 247, 0.85);
+    --terminal-glow: rgba(168, 85, 247, 0.25);
+
+    --navbar-bg: linear-gradient(135deg, rgba(35, 18, 58, 0.95) 0%, rgba(70, 25, 120, 0.9) 50%, rgba(168, 85, 247, 0.85) 100%);
+    --navbar-border: rgba(168, 85, 247, 0.35);
+   
+    --muted-bg-gradient: linear-gradient(135deg, rgba(25, 12, 42, 0.6) 0%, rgba(55, 20, 95, 0.35) 50%, rgba(168, 85, 247, 0.2) 100%);
+    --muted-banner-text: #ffffff;
+    
+    --auth-input-border: rgba(192, 132, 252, 0.6);
+    --auth-input-focus: #c084fc;
+    --auth-btn-bg: #a855f7;
+    --auth-btn-hover: #c084fc;
+    --auth-btn-text: #ffffff;
+}
+    .theme-cyber-dusk.light-mode {
+        --terminal-bg: #f3f1f7;
+        --terminal-card-bg: #eee5fb;
+        --terminal-text: #1f1933;
+        --terminal-border: #d0c8e3;
+
+        --shadow-rich: 0 7px 20px 5px rgba(0, 0, 0, 0.3) , 0 4px 10px 3px rgba(0, 0, 0, 0.15) !important;
+        --shadow-light: 0 0 20px 2px rgba(0, 0, 0, 0.2) , 0 0 10px 1px rgba(0, 0, 0, 0.1) !important;
+        --shadow-subtle: 0 0 20px 1px rgba(0, 0, 0, 0.15) , 0 0 10px 0 rgba(0, 0, 0, 0.05) !important;
+
+        --navbar-text: #ffffff;
+
+        --muted-banner-text: #111827;
+
+        --auth-label-focus: #7e22ce;
+        --auth-text: #1f1933;
+        --auth-placeholder: rgba(31, 25, 51, 0.6);
+    }
+
+
+.theme-crimson-emerald {
+    --terminal-bg: #0c0808;
+    --terminal-card-bg: #171010;
+    --terminal-text: #fef2f2;
+    --terminal-border: #573535;
+    --terminal-shadow: none;
+    --terminal-accent: rgba(16, 185, 129, 0.85);
+    --terminal-glow: rgba(16, 185, 129, 0.25);
+    
+    --navbar-bg: linear-gradient(135deg, rgba(185, 28, 28, 0.9) 0%, rgba(180, 130, 20, 0.85) 35%, rgba(132, 204, 22, 0.9) 70%, rgba(16, 185, 129, 0.9) 100%);
+    --navbar-border: rgba(132, 204, 22, 0.35);
+    
+    --muted-bg-gradient: linear-gradient(135deg, rgba(140, 25, 25, 0.45) 0%, rgba(140, 100, 15, 0.3) 35%, rgba(132, 204, 22, 0.25) 70%, rgba(16, 185, 129, 0.2) 100%);
+    --muted-banner-text: #ffffff;
+    
+    --auth-input-border: rgba(16, 185, 129, 0.6);
+    --auth-input-focus: #10b981;
+    --auth-btn-bg: #10b981;
+    --auth-btn-hover: #ef4444;
+    --auth-btn-text: #042f2e;
+}
+    .theme-crimson-emerald.light-mode {
+        --terminal-bg: #fcf4f4;
+        --terminal-card-bg: #f7e6e6;
+        --terminal-text: #2a1515;
+        --terminal-border: #e6bcbc;
+
+        --shadow-rich: 0 7px 20px 5px rgba(0, 0, 0, 0.3) , 0 4px 10px 3px rgba(0, 0, 0, 0.15) !important;
+        --shadow-light: 0 0 20px 2px rgba(0, 0, 0, 0.2) , 0 0 10px 1px rgba(0, 0, 0, 0.1) !important;
+        --shadow-subtle: 0 0 20px 1px rgba(0, 0, 0, 0.15) , 0 0 10px 0 rgba(0, 0, 0, 0.05) !important;
+
+        --navbar-text: #ffffff;
+
+        --muted-banner-text: #111827;
+
+        --auth-label-focus: #047857;
+        --auth-text: #2a1515;
+        --auth-placeholder: rgba(42, 21, 21, 0.6);
+    }
+
+.theme-sky-mint {
+    --terminal-bg: #050b0f;
+    --terminal-card-bg: #0d1721;
+    --terminal-text: #f0fdf4;
+    --terminal-border: #1e3a4c;
+    --terminal-shadow: none;
+    --terminal-accent: rgba(57, 255, 20, 0.85);
+    --terminal-glow: rgba(57, 255, 20, 0.25);
+    
+    --navbar-bg: linear-gradient(90deg, rgba(0, 191, 255, 0.9) 0%, rgba(30, 215, 120, 0.85) 50%, rgba(57, 255, 20, 0.85) 100%);
+    --navbar-border: rgba(57, 255, 20, 0.35);
+    
+    --muted-bg-gradient: linear-gradient(90deg, rgba(0, 191, 255, 0.45) 0%, rgba(30, 215, 120, 0.25) 50%, rgba(57, 255, 20, 0.18) 100%);
+    --muted-banner-text: #ffffff;
+    
+    --auth-input-border: rgba(57, 255, 20, 0.6);
+    --auth-input-focus: #39ff14;
+    --auth-btn-bg: #39ff14;
+    --auth-btn-hover: #00bfff;
+    --auth-btn-text: #051405;
+}
+    .theme-sky-mint.light-mode {
+        --terminal-bg: #f0f9ff;
+        --terminal-card-bg: #e2f0fe;
+        --terminal-text: #0c233b;
+        --terminal-border: #bae6fd;
+
+        --shadow-rich: 0 7px 20px 5px rgba(0, 0, 0, 0.3) , 0 4px 10px 3px rgba(0, 0, 0, 0.15) !important;
+        --shadow-light: 0 0 20px 2px rgba(0, 0, 0, 0.2) , 0 0 10px 1px rgba(0, 0, 0, 0.1) !important;
+        --shadow-subtle: 0 0 20px 1px rgba(0, 0, 0, 0.15) , 0 0 10px 0 rgba(0, 0, 0, 0.05) !important;
+
+        --muted-banner-text: #111827;
+
+        --auth-label-focus: #0077b6;
+        --auth-text: #0c233b;
+        --auth-placeholder: rgba(12, 35, 59, 0.6);
+    }
+
+/* ==========================================
+   DARK MODE: Theme-Specific Glows on Hover
+   ========================================== */
+:root:not(.light-mode) .glow-text {
+    color: var(--terminal-text);
+    text-shadow: 0 0 12px var(--terminal-glow);
+    transition: text-shadow 0.35s ease-in-out;
+}
+
+:root:not(.light-mode) .card:hover {
+    border-color: var(--terminal-accent) !important;
+    box-shadow: 0 0 24px var(--terminal-glow), inset 0 0 15px var(--terminal-glow);
+}
+
+    :root:not(.light-mode) .card:hover .glow-text {
+        text-shadow: 0 0 15px var(--terminal-accent);
+    }
+
+    :root:not(.light-mode) .card:hover .badge {
+        background-color: var(--terminal-text) !important;
+        color: var(--terminal-card-bg) !important;
+        border-color: var(--terminal-text) !important;
+    }
+
+    :root:not(.light-mode) .card:hover .card-text {
+        font-weight: 500;
+        color: var(--terminal-text) !important;
+    }
+
+:root:not(.light-mode) .pagination .page-link:hover {
+    background-color: var(--terminal-text) !important;
+    color: var(--terminal-card-bg) !important;
+    border-color: var(--terminal-text) !important;
+    box-shadow: 0 0 12px var(--terminal-glow);
+}
+
+
+/* ==========================================
+   LIGHT MODE: Clean, Non-Glowing Polish
+   ========================================== */
+html.light-mode .card .badge {
+    background: var(--muted-bg-gradient) !important;
+    border-color: var(--terminal-border) !important;
+    color: var(--terminal-text) !important;
+}
+
+html.light-mode .card:hover {
+    border-color: var(--auth-label-focus) !important;
+    transform: translateY(-5px);
+}
+
+    html.light-mode .card:hover .card-text {
+        color: var(--terminal-text) !important;
+    }
+
+    html.light-mode .card:hover .badge {
+        background-color: var(--terminal-text) !important;
+        color: var(--terminal-card-bg) !important;
+    }
+
+/* Pagination links get the subtle shadow tier in light mode */
+html.light-mode .pagination .page-link {
+    box-shadow: var(--shadow-subtle) !important;
+}
+
+    /* Pagination buttons scale down and highlight with the theme accent on hover in light mode */
+    html.light-mode .pagination .page-link:hover {
+        background-color: var(--terminal-card-bg) !important;
+        color: var(--auth-label-focus) !important;
+        border-color: var(--auth-label-focus) !important;
+        transform: scale(0.9) !important;
+        box-shadow: var(--shadow-subtle) !important;
+    }
+
+/* Fix visibility for <img> based icons in light mode */
+html.light-mode .mode-toggle-btn img.icon-svg {
+    filter: invert(1); /* Flips white SVG icons to dark/black in light mode */
+}
+
+/* If the active state in light mode needs it inverted back or styled differently */
+html.light-mode .mode-toggle-btn.active img.icon-svg {
+    filter: invert(1); /* Keeps it white if the active button has a dark background */
+}
+
+/* WILL BE DEPRECATED SOON */
+/* Helper class to apply theme variables to test containers */
+.theme-test-container {
+    background: var(--muted-bg-gradient);
+    border: 1px solid var(--navbar-border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    color: #ffffff;
+}
+.theme-banner-box {
+    background: var(--navbar-bg);
+    border: 1px solid var(--navbar-border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    color: #ffffff;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+/* WILL BE DEPRECATED SOON */
+
+/* GENERAL STYLES AND EFFECTS */
+
 /* Keeps text highlighting effects, but removes the 'I' shaped cursor */
 .learning-container {
     cursor: default;
 }
 
+/* Force standard default cursor globally across the entire site (in light mode) */
+html.light-mode,
+html.light-mode body,
+html.light-mode input,
+html.light-mode textarea,
+html.light-mode p,
+html.light-mode span,
+html.light-mode div {
+    cursor: default !important;
+}
+
+    /* Ensure interactive elements still show the pointer hand (in light mode) */
+    html.light-mode a,
+    html.light-mode button,
+    html.light-mode .theme-swatch-btn,
+    html.light-mode .mode-toggle-btn,
+    html.light-mode .page-link,
+    html.light-mode label[for] {
+        cursor: pointer !important;
+    }
+
 /* Base card style transitions */
-.card,
-.card .badge,
-.pagination .page-link {
+.card, .card .badge, .pagination .page-link {
     transition: all 0.35s ease-in-out, transform 0.25s ease-in-out;
 }
 
-/* Subtle glow effect key words or titles over the dark layout */
-.glow-text {
-    color: #ffffff;
-    text-shadow: 0 0 12px rgba(255, 255, 255, 0.5), 0 0 18px rgba(255, 255, 255, 0.35);
-    transition: text-shadow 0.35s ease-in-out;
+/* Core Theme Card Architecture */
+.terminal-card {
+    background-color: var(--terminal-card-bg) !important;
+    color: var(--terminal-text) !important;
+    border-color: var(--terminal-border) !important;
 }
 
-/* Card outline glow and elevated title glow */
-.card.bg-black:hover {
-    border-color: rgba(255, 255, 255, 0.8) !important;
-    box-shadow: 0 0 24px rgba(255, 255, 255, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.15);
+    .terminal-card .card-title {
+        color: var(--terminal-text) !important;
+    }
+
+    .terminal-card .card-text {
+        color: var(--terminal-muted, var(--terminal-text)) !important;
+    }
+
+/* Pagination Theme Link Architecture */
+.terminal-page-link {
+    background-color: var(--terminal-card-bg) !important;
+    color: var(--terminal-text) !important;
+    border-color: var(--terminal-border) !important;
 }
 
-/* Soft interactive hover enhancement for titles */
-.card:hover .glow-text {
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 24px rgba(255, 255, 255, 0.55);
+    .terminal-page-link:hover {
+        background-color: var(--terminal-text) !important;
+        color: var(--terminal-card-bg) !important;
+        border-color: var(--terminal-text) !important;
+        box-shadow: 0 0 12px var(--terminal-glow, rgba(255, 255, 255, 0.4));
+    }
+
+/* NAVBAR THEME GROUP */
+.navbar-financial-primary {
+    background: var(--navbar-bg);
+    border-bottom: 1px solid var(--navbar-border);
+    box-shadow: var(--terminal-shadow);
 }
 
-/* Category badge inversion on hover */
-.card:hover .badge {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    border-color: #ffffff !important;
+    /* Dynamic Navbar Text */
+    .navbar-financial-primary .navbar-brand,
+    .navbar-financial-primary .nav-link {
+        color: var(--navbar-text, #ffffff) !important;
+    }
+
+/* 1. Rich shadow for the navbar down-cast */
+html.light-mode .navbar-financial-primary {
+    box-shadow: var(--shadow-rich) !important;
 }
 
-/* Description text enhancement on hover */
-.card:hover .card-text {
-    font-weight: 500;
-    color: #e0e0e0 !important;
+/* 2. Lighter shadow for login/register cards and welcome screen banner */
+html.light-mode .auth-card-muted,
+html.light-mode .welcome-banner {
+    box-shadow: var(--shadow-light) !important;
 }
 
-/* Page buttons hover effect */
-.pagination .page-link:hover {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    border-color: #ffffff !important;
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+/* 3. Even lighter/minimal shadow for learning term boxes / terminal cards */
+html.light-mode .terminal-card {
+    box-shadow: var(--shadow-subtle) !important;
 }
 
-/* Navbar background */
-.navbar-financial-emerald {
-    background: linear-gradient(90deg, rgba(3, 47, 27, 0.9) 0%, rgba(6, 95, 70, 0.8) 50%, rgba(4, 120, 87, 0.9) 100%);
-    border-bottom: 1px solid rgba(16, 185, 129, 0.3);
-    box-shadow: none;
-}
-.navbar-financial-cyan {
-    background: linear-gradient(90deg, rgba(8, 51, 68, 0.9) 0%, rgba(14, 116, 144, 0.8) 50%, rgba(30, 58, 138, 0.9) 100%);
-    border-bottom: 1px solid rgba(0, 242, 254, 0.3);
-    box-shadow: none;
-}
-.navbar-financial-slate-gold {
-    background: linear-gradient(90deg, rgba(45, 55, 72, 0.9) 0%, rgba(90, 80, 45, 0.85) 50%, rgba(138, 105, 20, 0.9) 100%);
-    border-bottom: 1px solid rgba(180, 140, 30, 0.25);
-    box-shadow: none;
+/* Fix badge text and borders to respect theme variables in light mode */
+html.light-mode .badge,
+html.light-mode .badge.border-light,
+html.light-mode .badge.border-secondary {
+    color: var(--terminal-text) !important;
+    border-color: var(--terminal-border) !important;
+    background-color: rgba(0, 0, 0, 0.03) !important;
 }
 
-.welcome-banner-nav-match {
-    background: linear-gradient(90deg, rgba(45, 55, 72, 0.45) 0%, rgba(90, 80, 45, 0.3) 50%, rgba(138, 105, 20, 0.2) 100%) !important;
-    color: #ffffff;
-    box-shadow: none;
+/* Sky-Mint Exception: Keep navbar text dark against the bright background */
+.theme-sky-mint .navbar-financial-primary .navbar-brand,
+.theme-sky-mint .navbar-financial-primary .nav-link {
+    color: #0f172a !important;
 }
+
+/* WELCOME & AUTH MUTED BACKGROUND GROUP */
+.welcome-banner,
+.auth-card-muted {
+    background: var(--muted-bg-gradient) !important;
+    box-shadow: var(--terminal-shadow);
+}
+
+.welcome-banner, .muted-banner-class {
+    background: var(--muted-bg-gradient);
+    color: var(--muted-banner-text) !important;
+}
+
+    /* Ensure any headings or paragraphs inside the banner inherit it */
+    .welcome-banner *, .muted-banner-class * {
+        color: var(--muted-banner-text) !important;
+    }
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.auth-card-muted {
+    width: 100%;
+    max-width: 440px;
+    border: none !important;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: var(--terminal-shadow);
+    color: var(--terminal-text);
+}
+
+.auth-title-muted {
+    font-size: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--terminal-text);
+    letter-spacing: -0.5px;
+}
+
+/* AUTH INPUTS & CONTROLS GROUP */
+.form-floating.auth-group-muted {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.auth-input-muted {
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid var(--auth-input-border) !important;
+    border-radius: 0 !important;
+    color: var(--terminal-text) !important;
+    box-shadow: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    font-family: 'Roboto Flex Variable', sans-serif;
+}
+
+    .auth-input-muted:focus {
+        background-color: transparent !important;
+        border-bottom-color: var(--auth-input-focus) !important;
+        box-shadow: none !important;
+        font-family: 'Roboto Flex Variable', sans-serif;
+    }
+
+    .auth-input-muted::placeholder {
+        color: var(--auth-placeholder, rgba(255, 255, 255, 0.35)) !important;
+        opacity: 1;
+        font-family: 'Roboto Flex Variable', sans-serif;
+    }
+
+/* Fix Bootstrap floating label positioning and background clash for custom inputs */
+.form-floating.auth-group-muted > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 1rem 0rem;
+    pointer-events: none;
+    border: none;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+    background-color: transparent !important; /* Removes any background color card/box mask */
+}
+
+/* Fix where the label moves to when focused or filled */
+.form-floating.auth-group-muted > .auth-input-muted:focus ~ label,
+.form-floating.auth-group-muted > .auth-input-muted:not(:placeholder-shown) ~ label {
+    color: var(--auth-input-focus) !important;
+    opacity: 1 !important;
+    transform: scale(0.85) translateY(-1.75rem) translateX(0rem) !important;
+}
+
+/* Light mode token override */
+html.light-mode .form-floating > .form-control:focus ~ label,
+html.light-mode .form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: var(--auth-label-focus, var(--auth-text)) !important;
+}
+
+/* Ensure the pseudo-element background mask Bootstrap uses is completely cleared */
+.form-floating > label::after {
+    background-color: transparent !important;
+}
+
+.auth-btn-primary {
+    background-color: var(--auth-btn-bg);
+    color: var(--auth-btn-text);
+    font-weight: 600;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+    .auth-btn-primary:hover {
+        background-color: var(--auth-btn-hover);
+        color: #000;
+    }
+
+.auth-link-muted {
+    color: var(--auth-text, #cbd5e1); /* Falls back to #cbd5e1 in dark, uses theme auth text in light */
+    opacity: 0.85; /* Softens it slightly while keeping it fully legible */
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: 'Inter Variable', sans-serif;
+    font-style: italic;
+}
+
+    .auth-link-muted:hover {
+        color: var(--auth-text, #ffffff);
+        opacity: 1;
+        text-decoration: underline;
+    }
+
+/* Explicit Text Caret (I-beam cursor) Visibility Fix */
+:root:not(.light-mode) input,
+:root:not(.light-mode) textarea {
+    caret-color: var(--auth-input-focus) !important;
+}
+
+html.light-mode input,
+html.light-mode textarea {
+    caret-color: var(--auth-label-focus) !important;
+}
+
+/* FOOTER STYLES AND THEMES */
+.terminal-footer {
+    border-top: 1px solid var(--navbar-border);
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    padding: 0.75rem 0;
+}
+
+.theme-switcher-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Circular theme swatch buttons */
+.theme-swatch-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    padding: 0;
+    outline: none;
+}
+
+    .theme-swatch-btn:hover {
+        transform: scale(1.15);
+    }
+
+:root:not(.light-mode) .theme-swatch-btn:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+:root:not(.light-mode) .theme-swatch-btn.active {
+    border-color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+html.light-mode .theme-swatch-btn {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+    html.light-mode .theme-swatch-btn:hover {
+        border-color: rgba(0, 0, 0, 0.6);
+    }
+
+    html.light-mode .theme-swatch-btn.active {
+        border-color: var(--auth-label-focus);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), var(--shadow-light);
+        transform: scale(0.8);
+    }
+
+/* Swatch gradients matching the theme variants */
+.swatch-vaulted-gold {
+    background: linear-gradient(135deg, #2d3748 0%, #5a502d 50%, #8a6914 100%);
+}
+
+.swatch-cyber-dusk {
+    background: linear-gradient(135deg, #23123a 0%, #461978 50%, #a855f7 100%);
+}
+
+.swatch-crimson-emerald {
+    background: linear-gradient(135deg, #b91c1c 0%, #b48214 35%, #84cc16 70%, #10b981 100%);
+}
+
+.swatch-sky-mint {
+    background: linear-gradient(135deg, #00bfff 0%, #1ed778 50%, #39ff14 100%);
+}
+
+/* Vertical separator between swatches and mode toggles */
+.theme-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0 0.25rem;
+}
+
+/* Light / Dark mode icon buttons */
+.mode-toggle-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #94a3b8;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .mode-toggle-btn:hover {
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .mode-toggle-btn.active {
+        color: var(--auth-input-focus);
+        border-color: var(--auth-input-focus);
+        background: rgba(255, 255, 255, 0.1);
+    }

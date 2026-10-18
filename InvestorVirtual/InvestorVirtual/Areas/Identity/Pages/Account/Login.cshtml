@@ -5,6 +5,9 @@
     ViewData["Title"] = "Log in";
 }
 
+@*
+Old View Code:
+
 <h1>@ViewData["Title"]</h1>
 <div class="row">
     <div class="col-md-4">
@@ -39,6 +42,42 @@
                 </div>
             </form>
         </section>
+    </div>
+</div>
+*@
+
+<div class="auth-wrapper">
+    <div class="auth-card-muted">
+        <h1 class="auth-title-muted">Log in</h1>
+
+        <form id="account" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+            <div class="form-floating auth-group-muted">
+                <input asp-for="Input.Email" class="form-control auth-input-muted" autocomplete="username" aria-required="true" placeholder="Your email" />
+                <label asp-for="Input.Email">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating auth-group-muted">
+                <input asp-for="Input.Password" class="form-control auth-input-muted" autocomplete="current-password" aria-required="true" placeholder="Your password" />
+                <label asp-for="Input.Password">Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-4">
+                <input class="form-check-input" asp-for="Input.RememberMe" />
+                <label asp-for="Input.RememberMe" class="form-check-label">
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+
+            <button id="login-submit" type="submit" class="w-100 btn auth-btn-primary mb-3">Log in</button>
+
+            <div class="text-center">
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="auth-link-muted">Register as a new user</a>
+            </div>
+        </form>
     </div>
 </div>
 

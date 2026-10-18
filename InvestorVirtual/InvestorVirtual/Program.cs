@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using InvestorVirtual.Data;
 namespace InvestorVirtual;
 
 using Microsoft.AspNetCore.Identity;

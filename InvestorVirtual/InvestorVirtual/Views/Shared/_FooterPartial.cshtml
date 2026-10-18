@@ -1,0 +1,53 @@
+﻿<!-- Partial view for theme switching functionality -->
+
+<footer class="border-top text-muted py-1">
+    <div class="container-fluid px-4 d-flex flex-column flex-sm-row justify-content-between align-items-center gap-1" style="min-height: 40px;">
+        <!-- Original Footer -->
+        <div class="small text-secondary text-center text-sm-start">
+            &copy; @DateTime.Now.Year - InvestorVirtual - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-secondary text-decoration-underline">Privacy</a>
+        </div>
+
+        <!-- Swatches & Toggles -->
+        <div class="theme-switcher-container d-flex align-items-center gap-2">
+            <!-- Swatches -->
+            <button type="button"
+                    class="theme-swatch-btn swatch-vaulted-gold active"
+                    data-theme="theme-vaulted-gold"
+                    title="Vaulted Gold"></button>
+
+            <button type="button"
+                    class="theme-swatch-btn swatch-cyber-dusk"
+                    data-theme="theme-cyber-dusk"
+                    title="Cyber Dusk"></button>
+
+            <button type="button"
+                    class="theme-swatch-btn swatch-crimson-emerald"
+                    data-theme="theme-crimson-emerald"
+                    title="Crimson Emerald"></button>
+
+            <button type="button"
+                    class="theme-swatch-btn swatch-sky-mint"
+                    data-theme="theme-sky-mint"
+                    title="Sky Mint"></button>
+
+            <!-- Divider -->
+            <div class="theme-divider"></div>
+
+            <!-- Dark Mode Button with Local SVG -->
+            <button type="button"
+                    class="mode-toggle-btn active"
+                    data-mode="dark"
+                    title="Dark Mode">
+                <img src="~/images/icons/dark_mode.svg" alt="Dark Mode" class="icon-svg" />
+            </button>
+
+            <!-- Light Mode Button with Local SVG -->
+            <button type="button"
+                    class="mode-toggle-btn"
+                    data-mode="light"
+                    title="Light Mode">
+                <img src="~/images/icons/light_mode.svg" alt="Light Mode" class="icon-svg" />
+            </button>
+        </div>
+    </div>
+</footer>
