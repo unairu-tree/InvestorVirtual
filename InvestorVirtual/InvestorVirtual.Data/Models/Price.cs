@@ -16,16 +16,15 @@ public class Price
     [Comment("This is the current price for 1 share of a stock")]
     public decimal PriceValue { get; set; } // This is the current price for 1 share of a stock
 
-    [Comment("This is how much shares of a stock were bought in a specific time span (e.g. a day, a week, a month,)")]
-    public long BuyVolume { get; set; } // This is how much shares of a stock were bought in a specific time span (e.g. a day, a week, a month,)
+    [Comment("This is how much shares of a stock were bought/sold in a specific time span (e.g. a day, a week, a month,)")]
+    public long Volume { get; set; } // This is how much shares of a stock were bought/sold in a specific time span (e.g. a day, a week, a month,)
 
-    [Comment("This is how much shares of a stock were sold in a specific time span (e.g. a day, a week, a month,)")]
-    public long SellVolume { get; set; } // This is how much shares of a stock were sold in a specific time span (e.g. a day, a week, a month,)
+    [Comment("This is a boolean that will determine if the volume is bullish or bearish, if the volume is bullish it will be true, if it is bearish it will be false")]
+    public bool IsBullishVolume { get; set; } // This is a boolean that will determine if the volume is bullish or bearish, if the volume is bullish it will be true, if it is bearish it will be false
 
-    [NotMapped] // Not mapped, because we don't really need them to increase the DB storage
-    public long TotalVolume => BuyVolume + SellVolume;  // This calculates the total volume of market movements
-                                                        // Will calculate dynamically every time we reference it and will not exist anywhere before that
-    [NotMapped]
-    public bool IsBullishVolume => BuyVolume >= SellVolume; // This checks if buyers or sellers were driving the market movements that day
-                                                            // Will dynamically return true/false every time we reference it and will not exist anywhere before that
+    [ForeignKey(nameof(Event))]
+    [Comment("This will reference the event associated with the price")]
+    public int EventId { get; set; } // Here I reference the event
+
+    public virtual Event Event { get; set; } = null!;
 }

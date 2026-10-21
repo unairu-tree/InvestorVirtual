@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X7 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:#F52719}
+   ]]>
+  </style>
+ </defs>
+ <g id="tesla">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_2279486474752">
+   <g>
+    <path class="fil0" d="M396 90l10 -17c-100,-39 -200,-39 -300,0l9 17c94,-37 188,-37 281,0z"/>
+    <path class="fil0" d="M256 110l-31 -37c-35,3 -70,11 -105,25 10,14 23,25 40,31 0,-18 19,-25 55,-22l41 234 41 -234c37,-3 55,4 56,22 16,-6 30,-17 40,-31 -35,-14 -70,-22 -106,-25l-31 37z"/>
+   </g>
+   <path class="fil0" d="M137 434c5,0 8,-3 9,-8l-54 0c1,5 4,8 9,8l14 0 0 34 8 0 0 -34 14 0z"/>
+   <path class="fil0" d="M207 434c4,0 7,-3 8,-8l-48 0c1,5 4,8 8,8l32 0z"/>
+   <path class="fil0" d="M207 451c4,0 7,-3 8,-8l-48 0c1,5 4,8 8,8l32 0z"/>
+   <path class="fil0" d="M207 468c4,-1 7,-3 8,-8l-48 0c1,5 4,7 8,8l32 0z"/>
+   <path class="fil0" d="M277 434c4,0 7,-3 8,-8l-37 0 -9 0 0 26 39 0 0 8 -31 0c-4,1 -7,4 -8,8l47 0 0 -25 -38 0 0 -9 29 0z"/>
+   <path class="fil0" d="M347 468c5,-1 7,-3 8,-8l-37 0 0 -34 -9 0 0 42c13,0 26,0 38,0z"/>
+   <path class="fil0" d="M412 434c4,0 7,-3 8,-8l-49 0c2,5 4,8 9,8l32 0z"/>
+   <path class="fil0" d="M373 468l8 0 0 -16 30 0 0 16 8 0 0 -25c-15,0 -31,0 -46,0l0 25z"/>
+  </g>
+ </g>
+</svg>

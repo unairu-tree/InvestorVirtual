@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using static InvestorVirtual.Common.EntityValidation.News;
 
@@ -26,4 +27,10 @@ public class News
     [MaxLength(SourceMaxLength)]
     [Comment("This is the source or sources of the article")]
     public string Source { get; set; } = null!; // This is the source or sources of the article
+
+    [ForeignKey(nameof(Event))]
+    [Comment("This will reference the event associated with the news")]
+    public int EventId { get; set; } // Here I reference the event
+
+    public virtual Event Event { get; set; } = null!;
 }

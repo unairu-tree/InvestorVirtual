@@ -30,4 +30,10 @@ public class Analysis
 
     [Comment("This is the count of analysts that have taken part in the analysis of the stock")]
     public int AnalystCount { get; set; } // This is the count of analysts that have taken part in the analysis of the stock
+
+    [ForeignKey(nameof(Event))]
+    [Comment("This will reference the event associated with the analysis")]
+    public int EventId { get; set; } // Here I reference the event
+
+    public virtual Event Event { get; set; } = null!;
 }

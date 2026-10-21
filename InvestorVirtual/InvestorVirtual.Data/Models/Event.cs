@@ -28,21 +28,9 @@ public class Event
 
     public virtual Stock Stock { get; set; } = null!;
 
-    [ForeignKey(nameof(Price))]
-    [Comment("This will reference the price associated with the event")]
-    public int PriceId { get; set; } // Here I reference the price
-
     public virtual Price Price { get; set; } = null!;
 
-    [ForeignKey(nameof(News))]
-    [Comment("This will reference the news associated with the event")]
-    public int NewsId { get; set; } // Here I reference the news
-
     public virtual News News { get; set; } = null!;
-
-    [ForeignKey(nameof(Analysis))]
-    [Comment("This will reference the analysis associated with the event")]
-    public int AnalysisId { get; set; } // Here I reference the analysis
 
     public virtual Analysis Analysis { get; set; } = null!;
 }

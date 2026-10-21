@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X7 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil2 {fill:url(#id0)}
+    .fil1 {fill:url(#id1)}
+    .fil0 {fill:url(#id2)}
+   ]]>
+  </style>
+  <linearGradient id="id0" gradientUnits="userSpaceOnUse" x1="155.376" y1="185.55" x2="402.272" y2="185.55">
+   <stop offset="0" style="stop-opacity:1; stop-color:#FFD478"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#F78F1E"/>
+  </linearGradient>
+  <linearGradient id="id1" gradientUnits="userSpaceOnUse" x1="197.325" y1="214.416" x2="351.685" y2="368.777">
+   <stop offset="0" style="stop-opacity:1; stop-color:#585A5B"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#E1E1E3"/>
+  </linearGradient>
+  <linearGradient id="id2" gradientUnits="userSpaceOnUse" x1="109.729" y1="150.998" x2="173.687" y2="150.998">
+   <stop offset="0" style="stop-opacity:1; stop-color:#CBCBCD"/>
+   <stop offset="0.501961" style="stop-opacity:1; stop-color:#A3A4A6"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#CBCBCD"/>
+  </linearGradient>
+ </defs>
+ <g id="celsius">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_2279564934288">
+   <path class="fil0" d="M174 151c0,-18 -15,-32 -32,-32 -18,0 -32,14 -32,32 0,18 14,32 32,32 17,0 32,-14 32,-32zm-46 0c0,-8 6,-14 14,-14 7,0 13,6 13,14 0,8 -6,14 -13,14 -8,0 -14,-6 -14,-14z"/>
+   <path class="fil1" d="M313 191c-81,-4 -121,16 -158,61 0,83 63,141 136,141 45,0 78,-19 103,-46 -17,-21 -36,-34 -56,-34 -24,0 -28,10 -49,10 -37,0 -63,-30 -63,-66 0,-41 41,-66 87,-66z"/>
+   <path class="fil2" d="M155 252c37,-45 77,-65 158,-61 0,0 0,0 1,0 35,0 70,-20 88,-72l-108 0c-71,0 -138,53 -139,132 0,0 0,1 0,1z"/>
+  </g>
+ </g>
+</svg>

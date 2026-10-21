@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X7 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:#79B51A}
+    .fil1 {fill:white}
+   ]]>
+  </style>
+ </defs>
+ <g id="nvidia">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_2279497976720">
+   <rect class="fil0" width="512" height="512"/>
+   <g>
+    <path class="fil1" d="M208 136l146 0 0 154 -146 0 0 -18c3,1 6,1 10,1 41,0 87,-16 120,-39 -9,-4 -19,-10 -28,-16 -30,29 -62,43 -92,43 -4,0 -7,0 -10,-1l0 -12c3,0 7,1 11,1 28,-1 58,-21 81,-49 -27,-30 -56,-44 -84,-44 -3,0 -6,0 -8,1l0 -21zm0 101l0 -43c0,0 0,0 1,0 12,0 20,9 26,24 7,-6 14,-12 21,-17 -13,-12 -26,-19 -40,-19 -3,0 -6,0 -8,0l0 -14c2,0 4,0 6,0 25,0 45,12 61,33 -16,24 -37,38 -55,38 -4,0 -9,-1 -12,-2z"/>
+    <path class="fil1" d="M208 182c-14,2 -30,10 -44,22 6,23 23,39 44,44l0 -11c-12,-4 -20,-14 -26,-31 7,-7 15,-12 26,-12l0 -12zm0 -25c-27,2 -58,18 -86,44 17,40 48,67 86,71l0 -12c-31,-4 -53,-27 -63,-58 19,-20 41,-32 63,-34l0 -11z"/>
+    <path class="fil1" d="M160 376l-16 0 0 -32c0,-8 -4,-12 -13,-12l-13 0 0 44 -16 0 0 -57 32 0c17,0 26,8 26,26l0 31z"/>
+    <polygon class="fil1" points="182,376 204,376 224,319 206,319 193,365 180,319 163,319 "/>
+    <rect class="fil1" x="230" y="319" width="15.5336" height="56.9167"/>
+    <path class="fil1" d="M257 319l15 0 13 0c14,0 27,6 27,29 0,23 -12,28 -27,28l-13 0 -15 0 0 -57zm15 11l0 34 8 0c12,0 17,-6 17,-17 0,-11 -6,-17 -17,-17l-8 0z"/>
+    <rect class="fil1" x="320" y="319" width="15.5336" height="56.9167"/>
+    <path class="fil1" d="M366 319l22 0 22 57 -17 0 -3 -9 -28 0 -3 9 -16 0 23 -57zm20 37l-10 -28 -10 28 20 0z"/>
+   </g>
+  </g>
+ </g>
+</svg>
