@@ -1,6 +1,6 @@
 # 🚀 InvestorVirtual
 
-> A short, one-sentence description of what this project does and its purpose.
+> Hobby-styled learning based web application for stock market investment concepts, built with ASP.NET Core MVC and Entity Framework Core.
 
 ![.NET Version](https://img.shields.io/badge/.NET-10.0-purple)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-10.0-blue)
@@ -230,8 +230,6 @@ Key settings in `appsettings.json`:
   }
 }
 ```
-
-> ⚠️ **Never commit sensitive data** (passwords, API keys) to source control. Use `appsettings.Development.json` or environment variables for local secrets.
 
 ---
 
