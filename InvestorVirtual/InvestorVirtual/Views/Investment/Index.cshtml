@@ -10,6 +10,48 @@
         <p class="text-secondary">Explore available simulated equities and company sectors.</p>
     </div>
 
+    <!-- Search & Filter Controls Container (styled with terminal card & matching inputs) -->
+    <div class="card terminal-card border p-4 rounded-4 mb-5 shadow-sm">
+        <form method="get" asp-action="Index" class="row g-3 align-items-end">
+            <!-- Search by Name / Ticker -->
+            <div class="col-md-4">
+                <label class="form-label small text-secondary fw-semibold mb-1">Search Asset</label>
+                <input type="text" name="searchQuery" class="form-control auth-input-muted border rounded-2 px-3 py-2" placeholder="Ticker or Company Name..." value="@Context.Request.Query["searchQuery"]" />
+            </div>
+
+            <!-- Search by Sector / Industry -->
+            <div class="col-md-4">
+                <label class="form-label small text-secondary fw-semibold mb-1">Sector / Industry</label>
+                <input type="text" name="sector" class="form-control auth-input-muted border rounded-2 px-3 py-2" placeholder="e.g. Technology (Semiconductors)..." value="@Context.Request.Query["sector"]" />
+            </div>
+
+            <!-- Sorting Selection -->
+            <div class="col-md-3">
+                <label class="form-label small text-secondary fw-semibold mb-1">Sort By</label>
+                <select name="sorting" class="form-select auth-input-muted border rounded-2 px-3 py-2">
+                    @{
+                        string? currentSort = Context.Request.Query["sorting"];
+                    }
+                    <option value="AddedAsc" selected="@(currentSort == "AddedAsc" || string.IsNullOrEmpty(currentSort))" class="bg-dark text-light">Added - Ascending</option>
+                    <option value="AddedDesc" selected="@(currentSort == "AddedDesc")" class="bg-dark text-light">Added - Descending</option>
+                    <option value="AlphabeticalAsc" selected="@(currentSort == "AlphabeticalAsc")" class="bg-dark text-light">Alphabetically - Ascending</option>
+                    <option value="AlphabeticalDesc" selected="@(currentSort == "AlphabeticalDesc")" class="bg-dark text-light">Alphabetically - Descending</option>
+
+                    <option value="PerformanceAsc" disabled class="bg-dark">Performance (%) - Ascending (Coming Soon)</option>
+                    <option value="PerformanceDesc" disabled class="bg-dark">Performance (%) - Descending (Coming Soon)</option>
+                </select>
+            </div>
+
+            <!-- Filter Action Button -->
+            <div class="col-md-1">
+                <label class="form-label small text-secondary fw-semibold mb-1 opacity-0 d-none d-md-block">Action</label>
+                <button type="submit" class="btn auth-btn-primary w-100 d-flex align-items-center justify-content-center" style="height: 38px;" title="Search">
+                    <img src="@Url.Content("~/images/icons/search.svg")" alt="Search" class="search-icon-svg" style="width: 18px; height: 18px; filter: brightness(0);" />
+                </button>
+            </div>
+        </form>
+    </div>
+
     @if (Model != null && Model.Any())
     {
         <!-- 2-Column Grid Matching Learning Layout -->

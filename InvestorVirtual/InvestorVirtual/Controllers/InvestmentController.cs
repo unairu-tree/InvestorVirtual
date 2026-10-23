@@ -7,13 +7,15 @@ using InvestorVirtual.Core.Contracts;
 
 public class InvestmentController(IInvestmentService investmentService) : BaseController
 {
-    public IActionResult Index()
+    [HttpGet]
+    public IActionResult Index(string? searchQuery, string? sector, string? sorting)
     {
-        IEnumerable<AllAssetsModel> allAssets = investmentService.GetAllAssets();
+        IEnumerable<AllAssetsModel> allAssets = investmentService.GetAllAssets(searchQuery, sector, sorting);
 
         return View(allAssets);
     }
 
+    [HttpGet]
     public IActionResult Portfolio()
     {
         return View();

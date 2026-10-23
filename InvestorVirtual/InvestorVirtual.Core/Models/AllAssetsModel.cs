@@ -1,5 +1,6 @@
 ﻿namespace InvestorVirtual.Core.Models;
 
+// Data flow from the database (trusted) to the client (untrusted)
 public class AllAssetsModel
 {
     public string Ticker { get; set; } = null!;

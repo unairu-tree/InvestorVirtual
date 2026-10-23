@@ -2,9 +2,11 @@
 
 using InvestorVirtual.Data.Models.Enums;
 
+// Data flow from the database (trusted) to the client (untrusted)
 public class LearningServiceModel
 {
-    // Data flow from the database (trusted) to the client (untrusted)
+    public int Id { get; set; }
+
     public string TermName { get; set; } = null!;
 
     public string Description { get; set; } = null!;

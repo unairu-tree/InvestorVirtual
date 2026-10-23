@@ -35,5 +35,5 @@ public class Event
     public virtual Analysis Analysis { get; set; } = null!;
 
     [Comment("Soft-delete boolean")]
-    public bool isDeleted { get; set; } = false;
+    public bool IsDeleted { get; set; }
 }

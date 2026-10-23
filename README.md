@@ -48,10 +48,10 @@ It demonstrates core concepts like MVC architecture, Entity Framework Core, and 
 | JavaScript                  | -        | Client-side scripting                                         |
 | HTML                        | -        | Markup language                                               |
 | CSS                         | -        | Styling language                                              |
-| Gemini AI                   | -        | For CSS, JS, HTML, Data seeding, Company description summary. |
+| Gemini AI                   | Gemini 3 | For CSS, JS, HTML, Data seeding, Company description summary. |
 | Yahoo Finance               | -        | For stock data and company information                        |
 | Grammarly Character Counter | -        | For checking character count in text                          |
-| CorelDrawX7                 | -        | For company logo svg creation                                 |
+| CorelDraw                   | X7       | For company logo svg creation                                 |
 
 ---
 
@@ -113,42 +113,43 @@ Alternatively, you can use Ctrl + F5 to run without debugging.
 ```
 InvestorVirtual/
 │
-├── wwwroot/                        # Static files (CSS, JS, images)
-├── Areas/                          # Identity
-├── Controllers/                    # MVC Controllers
-├── ViewModels/                     # ViewModels
-├── Views/                          # Razor Views (.cshtml)
-├── appsettings.json                # App configuration
-├── Program.cs                      # App entry point and middleware setup
-├── InvestorVirtual.Common/
-|   ├── Extensions/                 # Extension methods
-|   ├── ApplicationConstants.cs     # Application-wide constants
-|   └── EntityValidation.cs         # Entity validation attributes
-├── InvestorVirtual.Core
-|   ├── Contracts/				    # Interfaces for services and repositories
-|   ├── Models/                     # DTO models
-|   └── Services/                   # Business logic services
-└── InvestorVirtual.Data
-    ├── Common/						# Repository base classes and interfaces
-    ├── Configuration/				# Data model seeding configuration
-    ├── Migrations/					# EF Core migrations
-    ├── Models/						# Database models
-    └── ApplicationDbContext.cs		# EF Core DbContext
+├── wwwroot/                      # Static files (CSS, JS, images)
+├── Areas/                        # Identity
+├── Controllers/                  # MVC Controllers
+├── ViewModels/                   # ViewModels
+├── Views/                        # Razor Views (.cshtml)
+├── appsettings.json              # App configuration
+├── Program.cs                    # App entry point and middleware setup
+├── InvestorVirtual.Common/    
+|   ├── Extensions/               # Extension methods
+|   ├── ApplicationConstants.cs   # Application-wide constants
+|   └── EntityValidation.cs       # Entity validation attributes
+├── InvestorVirtual.Core       
+|   ├── Contracts/                # Interfaces for services and repositories
+|   ├── Models/                   # DTO models
+|   └── Services/                 # Business logic services
+└── InvestorVirtual.Data       
+    ├── Common/                   # Repository base classes and interfaces
+    ├── Configuration/            # Data model seeding configuration
+    ├── Migrations/               # EF Core migrations
+    ├── Models/                   # Database models
+    └── ApplicationDbContext.cs   # EF Core DbContext
 ```
 
 ---
 
 ## ✨ Features
 
-- [ ] User registration and login (ASP.NET Identity)
-- [ ] Role specific actions and management (ASP.NET Identity)
+- [x] User registration and login (ASP.NET Identity)
 - [ ] CRUD operations for [LearningTerm.cs]
 - [ ] RESTful API endpoints
 - [ ] Input validation (server-side & client-side)
 - [ ] Responsive UI with Bootstrap
+- [x] Theme changing, including pallets and light/dark mode
 - [ ] Charts for visualizing stock data (using Chart.js or similar)
 - [ ] Interactive investing with virtual currency
 - [ ] Day cycle simulation for stock market (using background services)
+- [ ] Role specific actions and management (ASP.NET Identity)
 
 ---
 

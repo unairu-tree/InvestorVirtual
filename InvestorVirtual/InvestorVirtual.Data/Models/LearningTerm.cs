@@ -26,4 +26,7 @@ public class LearningTerm
 
     [Comment("This will show the category of the term")]
     public TermCategory Category { get; set; } // This will show the category of the term
+
+    [Comment("Soft-delete boolean")]
+    public bool IsDeleted { get; set; }
 }

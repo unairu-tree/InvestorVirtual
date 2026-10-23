@@ -977,6 +977,10 @@ namespace InvestorVirtual.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasComment("This will record the date of the event");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Soft-delete boolean");
+
                     b.Property<int>("StockId")
                         .HasColumnType("int")
                         .HasComment("This will reference the stock associated with the event");
@@ -1001,6 +1005,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 1,
                             Date = new DateTime(2025, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 1,
                             Title = "AI Infrastructure Demand Surge"
                         },
@@ -1008,6 +1013,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 2,
                             Date = new DateTime(2025, 1, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 1,
                             Title = "DeepSeek Sentiment Correction"
                         },
@@ -1015,6 +1021,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 3,
                             Date = new DateTime(2025, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 1,
                             Title = "Next-Gen Architecture Reveal"
                         },
@@ -1022,6 +1029,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 4,
                             Date = new DateTime(2025, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 1,
                             Title = "Q1 Earnings Blowout & Guidance"
                         },
@@ -1029,6 +1037,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 5,
                             Date = new DateTime(2025, 7, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 1,
                             Title = "Supply Chain & Chip Yield Updates"
                         },
@@ -1036,6 +1045,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 6,
                             Date = new DateTime(2025, 8, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 1,
                             Title = "Q2 Record Revenue Announcement"
                         },
@@ -1043,6 +1053,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 7,
                             Date = new DateTime(2025, 10, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 1,
                             Title = "Major Tech Giant Partnership Expansion"
                         },
@@ -1050,6 +1061,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 8,
                             Date = new DateTime(2025, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 1,
                             Title = "Q3 Earnings & Margin Stabilization"
                         },
@@ -1057,6 +1069,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 9,
                             Date = new DateTime(2025, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 1,
                             Title = "Global Regulatory & Export headwinds"
                         },
@@ -1064,6 +1077,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 10,
                             Date = new DateTime(2025, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 1,
                             Title = "Year-End Market Positioning Review"
                         },
@@ -1071,6 +1085,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 11,
                             Date = new DateTime(2025, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 2,
                             Title = "Cloud Infrastructure (OCI) Growth Metrics"
                         },
@@ -1078,6 +1093,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 12,
                             Date = new DateTime(2025, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 2,
                             Title = "Multi-Cloud Database Partnership"
                         },
@@ -1085,6 +1101,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 13,
                             Date = new DateTime(2025, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 2,
                             Title = "Q3 Fiscal Earnings & Cloud Backlog"
                         },
@@ -1092,6 +1109,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 14,
                             Date = new DateTime(2025, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 2,
                             Title = "Enterprise AI Integration Expansion"
                         },
@@ -1099,6 +1117,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 15,
                             Date = new DateTime(2025, 6, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 2,
                             Title = "Q4 Fiscal Year Financial Results"
                         },
@@ -1106,6 +1125,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 16,
                             Date = new DateTime(2025, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 2,
                             Title = "Data Center Expansion CapEx Announcement"
                         },
@@ -1113,6 +1133,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 17,
                             Date = new DateTime(2025, 9, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 2,
                             Title = "Q1 Fiscal Earnings & Margin Analysis"
                         },
@@ -1120,6 +1141,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 18,
                             Date = new DateTime(2025, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 2,
                             Title = "Government & Defense Cloud Contract Win"
                         },
@@ -1127,6 +1149,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 19,
                             Date = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 2,
                             Title = "Q2 Fiscal Earnings & Revenue Acceleration"
                         },
@@ -1134,6 +1157,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 20,
                             Date = new DateTime(2025, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 2,
                             Title = "Annual Tech Summit & Strategic Outlook"
                         },
@@ -1141,6 +1165,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 21,
                             Date = new DateTime(2025, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 3,
                             Title = "Q4 2024 Earnings & Strong 2025 Outlook"
                         },
@@ -1148,6 +1173,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 22,
                             Date = new DateTime(2025, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 3,
                             Title = "Zepbound Supply Expansion & Distribution Update"
                         },
@@ -1155,6 +1181,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 23,
                             Date = new DateTime(2025, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 3,
                             Title = "Q1 2025 Earnings & Mounjaro Volume Growth"
                         },
@@ -1162,6 +1189,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 24,
                             Date = new DateTime(2025, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 3,
                             Title = "Phase III Orforglipron Oral Incretin Trial Data"
                         },
@@ -1169,6 +1197,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 25,
                             Date = new DateTime(2025, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 3,
                             Title = "FDA Fast-Track Approval for Next-Gen Biotech Pipeline"
                         },
@@ -1176,6 +1205,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 26,
                             Date = new DateTime(2025, 8, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 3,
                             Title = "Q2 Earnings Drop: Price Cuts Offset Record Volume"
                         },
@@ -1183,6 +1213,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 27,
                             Date = new DateTime(2025, 9, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 3,
                             Title = "Zepbound Direct-to-Consumer Price Reduction"
                         },
@@ -1190,6 +1221,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 28,
                             Date = new DateTime(2025, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 3,
                             Title = "Q3 Earnings Blowout & Full-Year Guidance Bump"
                         },
@@ -1197,6 +1229,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 29,
                             Date = new DateTime(2025, 11, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 3,
                             Title = "Trillion-Dollar Market Cap Milestone Surge"
                         },
@@ -1204,6 +1237,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 30,
                             Date = new DateTime(2025, 12, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 3,
                             Title = "Global Manufacturing Facilities CapEx Roadmap"
                         },
@@ -1211,6 +1245,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 31,
                             Date = new DateTime(2025, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 4,
                             Title = "HBM3E Mass Production & NVIDIA Supply Qualification"
                         },
@@ -1218,6 +1253,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 32,
                             Date = new DateTime(2025, 3, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 4,
                             Title = "Q2 Fiscal Earnings Beat & HBM Capacity Sold Out"
                         },
@@ -1225,6 +1261,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 33,
                             Date = new DateTime(2025, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 4,
                             Title = "PC & Mobile Memory Pricing Softness Concerns"
                         },
@@ -1232,6 +1269,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 34,
                             Date = new DateTime(2025, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 4,
                             Title = "Q3 Fiscal Earnings & Gross Margin Expansion"
                         },
@@ -1239,6 +1277,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 35,
                             Date = new DateTime(2025, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 4,
                             Title = "CHIPS Act Federal Grant Expansion & Idaho Fab Milestone"
                         },
@@ -1246,6 +1285,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 36,
                             Date = new DateTime(2025, 9, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 4,
                             Title = "Q4 Fiscal Earnings Blowout & AI Memory Supercycle"
                         },
@@ -1253,6 +1293,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 37,
                             Date = new DateTime(2025, 10, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 4,
                             Title = "International Trade Regulation & Export Friction"
                         },
@@ -1260,6 +1301,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 38,
                             Date = new DateTime(2025, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 4,
                             Title = "Next-Gen HBM4 Sampling Announcement"
                         },
@@ -1267,6 +1309,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 39,
                             Date = new DateTime(2025, 12, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 4,
                             Title = "Q1 Fiscal 2026 Earnings & Record Revenue Guidance"
                         },
@@ -1274,6 +1317,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 40,
                             Date = new DateTime(2025, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 4,
                             Title = "Year-End Enterprise SSD & Server DRAM Demand Surge"
                         },
@@ -1281,6 +1325,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 41,
                             Date = new DateTime(2025, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 5,
                             Title = "Q4 2024 Earnings & Record Annual Production Milestone"
                         },
@@ -1288,6 +1333,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 42,
                             Date = new DateTime(2025, 3, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 5,
                             Title = "Permian & Guyana Low-Cost Volume Expansion"
                         },
@@ -1295,6 +1341,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 43,
                             Date = new DateTime(2025, 4, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 5,
                             Title = "Q1 Earnings & Crude Oil Price Volatility Pullback"
                         },
@@ -1302,6 +1349,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 44,
                             Date = new DateTime(2025, 6, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 5,
                             Title = "Low-Carbon Solutions & Lithium Extraction Roadmap"
                         },
@@ -1309,6 +1357,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 45,
                             Date = new DateTime(2025, 7, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 5,
                             Title = "Q2 Earnings Beat Despite Soft Refining Margins"
                         },
@@ -1316,6 +1365,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 46,
                             Date = new DateTime(2025, 9, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 5,
                             Title = "Guyana Yellowtail Early Start-Up & Offshore Milestone"
                         },
@@ -1323,6 +1373,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 47,
                             Date = new DateTime(2025, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 5,
                             Title = "Q3 Earnings Release & Share Buyback Pace Update"
                         },
@@ -1330,6 +1381,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 48,
                             Date = new DateTime(2025, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 5,
                             Title = "Annual Dividend Increase & Capital Allocation Strategy"
                         },
@@ -1337,6 +1389,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 49,
                             Date = new DateTime(2025, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 5,
                             Title = "Global Refinery Throughput & Energy Products Surge"
                         },
@@ -1344,6 +1397,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 50,
                             Date = new DateTime(2025, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 5,
                             Title = "Year-End Strategic Asset Review & Output Peak"
                         },
@@ -1351,6 +1405,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 51,
                             Date = new DateTime(2025, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 6,
                             Title = "Q4 2024 Vehicle Delivery & Production Report"
                         },
@@ -1358,6 +1413,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 52,
                             Date = new DateTime(2025, 2, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 6,
                             Title = "Next-Gen Vehicle Platform & Cost Reduction Roadmap"
                         },
@@ -1365,6 +1421,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 53,
                             Date = new DateTime(2025, 4, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 6,
                             Title = "Q1 2025 Deliveries Miss & Margin Pressures"
                         },
@@ -1372,6 +1429,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 54,
                             Date = new DateTime(2025, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 6,
                             Title = "Full Self-Driving (FSD) Supervisory Expansion Milestone"
                         },
@@ -1379,6 +1437,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 55,
                             Date = new DateTime(2025, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 6,
                             Title = "Q2 Deliveries Recovery & Energy Storage Record"
                         },
@@ -1386,6 +1445,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 56,
                             Date = new DateTime(2025, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 6,
                             Title = "Robotaxi Fleet Expansion & Autonomous Testing Update"
                         },
@@ -1393,6 +1453,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 57,
                             Date = new DateTime(2025, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 6,
                             Title = "Q3 Earnings & Pre-Tax Credit Delivery Surge"
                         },
@@ -1400,6 +1461,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 58,
                             Date = new DateTime(2025, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 6,
                             Title = "Energy Storage Division Gigafactory Capacity Scale-Up"
                         },
@@ -1407,6 +1469,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 59,
                             Date = new DateTime(2025, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 6,
                             Title = "Regulatory Credit Fluctuations & Market Adaptation"
                         },
@@ -1414,6 +1477,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 60,
                             Date = new DateTime(2025, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 6,
                             Title = "Year-End Delivery Push and Autonomous Progress Review"
                         },
@@ -1421,6 +1485,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 61,
                             Date = new DateTime(2025, 2, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 7,
                             Title = "Q4 2024 Earnings & Record Annual Revenue"
                         },
@@ -1428,6 +1493,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 62,
                             Date = new DateTime(2025, 3, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 7,
                             Title = "Electron Launch Cadence Record & HASTE Mission Win"
                         },
@@ -1435,6 +1501,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 63,
                             Date = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 7,
                             Title = "Q1 2025 Financial Results & Space Systems Expansion"
                         },
@@ -1442,6 +1509,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 64,
                             Date = new DateTime(2025, 6, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 7,
                             Title = "Neutron Hot-Fire Test Milestone & Launch Complex Progress"
                         },
@@ -1449,6 +1517,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 65,
                             Date = new DateTime(2025, 7, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 7,
                             Title = "SDA Defense Satellite Constellation Contract Award"
                         },
@@ -1456,6 +1525,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 66,
                             Date = new DateTime(2025, 8, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 7,
                             Title = "Q2 Earnings & Backlog Expansion Milestone"
                         },
@@ -1463,6 +1533,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 67,
                             Date = new DateTime(2025, 9, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 7,
                             Title = "Stage 1 Tank Test Setback & Schedule Adjustment"
                         },
@@ -1470,6 +1541,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 68,
                             Date = new DateTime(2025, 11, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 7,
                             Title = "Q3 Financial Results & Commercial Satellite Fleet Contract"
                         },
@@ -1477,6 +1549,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 69,
                             Date = new DateTime(2025, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 7,
                             Title = "U.S. Space Force Dedicated Launch Selection"
                         },
@@ -1484,6 +1557,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 70,
                             Date = new DateTime(2025, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 7,
                             Title = "Year-End Launch Milestone & Annual Backlog Review"
                         },
@@ -1491,6 +1565,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 71,
                             Date = new DateTime(2025, 2, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 8,
                             Title = "Q4 2024 Earnings & Liquid Cooling Backlog Surge"
                         },
@@ -1498,6 +1573,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 72,
                             Date = new DateTime(2025, 3, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 8,
                             Title = "Next-Gen Thermal Management & Direct-to-Chip Expansion"
                         },
@@ -1505,6 +1581,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 73,
                             Date = new DateTime(2025, 4, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 8,
                             Title = "Q1 2025 Financial Results & Operating Margin Expansion"
                         },
@@ -1512,6 +1589,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 74,
                             Date = new DateTime(2025, 6, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 8,
                             Title = "Strategic Partnership for Hyperscale AI Data Center Power"
                         },
@@ -1519,6 +1597,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 75,
                             Date = new DateTime(2025, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 8,
                             Title = "Q2 Earnings Beat & Full-Year Guidance Revision"
                         },
@@ -1526,6 +1605,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 76,
                             Date = new DateTime(2025, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 8,
                             Title = "Global Manufacturing Capacity Scaling Announcement"
                         },
@@ -1533,6 +1613,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 77,
                             Date = new DateTime(2025, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 8,
                             Title = "Q3 Earnings Release & Record Order Intake"
                         },
@@ -1540,6 +1621,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 78,
                             Date = new DateTime(2025, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 8,
                             Title = "Supply Chain Optimization and Lead-Time Reduction Milestone"
                         },
@@ -1547,6 +1629,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 79,
                             Date = new DateTime(2025, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 8,
                             Title = "High-Density Power Infrastructure Product Launch"
                         },
@@ -1554,6 +1637,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 80,
                             Date = new DateTime(2025, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 8,
                             Title = "Year-End Investor Summit & Long-Term Growth Targets"
                         },
@@ -1561,6 +1645,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 81,
                             Date = new DateTime(2025, 2, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 9,
                             Title = "Q4 2024 Earnings & Omnichannel Distribution Update"
                         },
@@ -1568,6 +1653,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 82,
                             Date = new DateTime(2025, 3, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 9,
                             Title = "Celsius Essentials Line Expansion & Fitness Gym Rollout"
                         },
@@ -1575,6 +1661,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 83,
                             Date = new DateTime(2025, 5, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 9,
                             Title = "Q1 2025 Financial Results & Convenience Store Market Share"
                         },
@@ -1582,6 +1669,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 84,
                             Date = new DateTime(2025, 6, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 9,
                             Title = "International Expansion Launch in Major European Retailers"
                         },
@@ -1589,6 +1677,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 85,
                             Date = new DateTime(2025, 8, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 9,
                             Title = "Q2 Earnings Beat & Brand Portfolio Integration"
                         },
@@ -1596,6 +1685,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 86,
                             Date = new DateTime(2025, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 9,
                             Title = "New Flavor Lineup & Fall Promotional Campaign Debut"
                         },
@@ -1603,6 +1693,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 87,
                             Date = new DateTime(2025, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 9,
                             Title = "Q3 Earnings Release & Direct-Store-Delivery Efficiency"
                         },
@@ -1610,6 +1701,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 88,
                             Date = new DateTime(2025, 11, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 9,
                             Title = "Club Store and Foodservice Channel Penetration Growth"
                         },
@@ -1617,6 +1709,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 89,
                             Date = new DateTime(2025, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 9,
                             Title = "Hydration Powder Stick Product Line Expansion"
                         },
@@ -1624,6 +1717,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 90,
                             Date = new DateTime(2025, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 9,
                             Title = "Year-End Retail Scan Data & Market Position Review"
                         },
@@ -1631,6 +1725,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 91,
                             Date = new DateTime(2025, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 10,
                             Title = "Q4 2024 U.S. Macro GDP Print & Index Rebalancing"
                         },
@@ -1638,6 +1733,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 92,
                             Date = new DateTime(2025, 3, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 10,
                             Title = "Federal Reserve Rate Path Shift & Market Reaction"
                         },
@@ -1645,6 +1741,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 93,
                             Date = new DateTime(2025, 4, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 10,
                             Title = "Q1 S&P 500 Corporate Earnings Season Kickoff"
                         },
@@ -1652,6 +1749,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 94,
                             Date = new DateTime(2025, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 10,
                             Title = "Mid-Year Inflation Data Print & Index Sector Rotation"
                         },
@@ -1659,6 +1757,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 95,
                             Date = new DateTime(2025, 7, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 10,
                             Title = "Q2 Broad Market Earnings Beat & Index Highs"
                         },
@@ -1666,6 +1765,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 96,
                             Date = new DateTime(2025, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 10,
                             Title = "Jackson Hole Economic Symposium & Macro Volatility"
                         },
@@ -1673,6 +1773,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 97,
                             Date = new DateTime(2025, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 10,
                             Title = "Q3 S&P 500 Composite Earnings & Tech Sector Rally"
                         },
@@ -1680,6 +1781,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 98,
                             Date = new DateTime(2025, 11, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 10,
                             Title = "U.S. Fiscal Policy & Treasury Yield Fluctuation Impact"
                         },
@@ -1687,6 +1789,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 99,
                             Date = new DateTime(2025, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 10,
                             Title = "FOMC Rate Decision & Year-End Window Dressing"
                         },
@@ -1694,6 +1797,7 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 100,
                             Date = new DateTime(2025, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             StockId = 10,
                             Title = "Year-End Index Performance Close & Asset Inflows"
                         });
@@ -1716,6 +1820,10 @@ namespace InvestorVirtual.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasComment("This is the description of the term");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Soft-delete boolean");
+
                     b.Property<string>("TermName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -1735,6 +1843,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 1,
                             Category = 1,
                             Description = "Anything of value that a person or company owns. It can be physical (like cash, land, or machinery) or financial (like stocks and bonds) that can be converted into money or used to generate future earnings (selling with a profit or through dividends).",
+                            IsDeleted = false,
                             TermName = "Asset"
                         },
                         new
@@ -1742,6 +1851,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 2,
                             Category = 1,
                             Description = "Money or debts that a person or company owes to others. Examples include bank loans, unpaid bills, mortgages, or credit card balances.",
+                            IsDeleted = false,
                             TermName = "Liability"
                         },
                         new
@@ -1749,6 +1859,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 3,
                             Category = 1,
                             Description = "The actual net worth of an owner's share in a business or asset. It is calculated simply as what you own (Assets) minus what you owe (Liabilities).",
+                            IsDeleted = false,
                             TermName = "Equity"
                         },
                         new
@@ -1756,6 +1867,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 4,
                             Category = 4,
                             Description = "A quick valuation check that compares a company's stock price to how much profit it actually makes per share. It shows whether a stock is cheap or expensive relative to its real earnings. Example: If a stock trades at $100 and earns $5 per share each year, its P/E ratio is 20 ($100 / $5). This means investors are paying $20 for every $1 of annual profit the company makes.",
+                            IsDeleted = false,
                             TermName = "Price-to-Earnings (P/E) Ratio"
                         },
                         new
@@ -1763,6 +1875,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 5,
                             Category = 4,
                             Description = "The total market value of a company. It is calculated by multiplying the price of a single stock share by the total number of shares that exist. It shows how big a company really is (Small-Cap vs. Large-Cap).",
+                            IsDeleted = false,
                             TermName = "Market Capitalization (Market Cap)"
                         },
                         new
@@ -1770,6 +1883,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 6,
                             Category = 2,
                             Description = "A simple score from 0 to 100 that shows if a stock has been bought or sold too quickly. A score above 70 usually means a stock is overbought (overpriced), while below 30 means it is oversold (bargain price).",
+                            IsDeleted = false,
                             TermName = "Relative Strength Index (RSI)"
                         },
                         new
@@ -1777,6 +1891,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 7,
                             Category = 2,
                             Description = "A line on a chart that shows the average closing price of a stock over a specific number of days (like 20, 50, or 200 days). It smoothes out daily price bounces to show the overall trend direction. Investors usually have 20, 50 and 200 day SMAs active at the same time, which they use to analyze market trends.",
+                            IsDeleted = false,
                             TermName = "Simple Moving Average (SMA)"
                         },
                         new
@@ -1784,6 +1899,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 8,
                             Category = 2,
                             Description = "Similar to an SMA, but it gives more weight to the most recent prices. This makes it react faster to fresh news or sudden price changes than a standard moving average.",
+                            IsDeleted = false,
                             TermName = "Exponential Moving Average (EMA)"
                         },
                         new
@@ -1791,6 +1907,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 9,
                             Category = 3,
                             Description = "A visual price chart shape that looks like three peaks (a tall middle \"head\" between two lower \"shoulders\"). It usually signals that an upward price trend is running out of steam and may turn downward.",
+                            IsDeleted = false,
                             TermName = "Head and Shoulders"
                         },
                         new
@@ -1798,6 +1915,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 10,
                             Category = 3,
                             Description = "A chart pattern that looks like the letter \"W\". It happens when a stock price drops to a low point twice, bounces off that level both times, and signals a potential price recovery. It usually bounces back due to funds stepping in to buy on a \"discount\" price after panic sell-offs, because they still have faith in the asset, otherwise they would let it crash through their foundations.",
+                            IsDeleted = false,
                             TermName = "Double Bottom"
                         },
                         new
@@ -1805,6 +1923,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 11,
                             Category = 1,
                             Description = "A market period where prices are steadily rising and general investor sentiment is optimistic. It is named after a bull, which attacks by thrusting its horns upward.",
+                            IsDeleted = false,
                             TermName = "Bullish Market (Bull Market)"
                         },
                         new
@@ -1812,6 +1931,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 12,
                             Category = 1,
                             Description = "A market period where stock prices fall significantly (typically 20% or more from recent highs) and market sentiment is pessimistic. It is named after a bear, which attacks by swiping its paws downward.",
+                            IsDeleted = false,
                             TermName = "Bearish Market (Bear Market)"
                         },
                         new
@@ -1819,6 +1939,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 13,
                             Category = 4,
                             Description = "A company's net profit divided by its total number of stock shares. It shows how much profit a company generates for every single share of stock issued. Example: If a company makes $10 million in profit and has 5 million issued shares to investors, its EPS is $2 (10 million / 5 million).",
+                            IsDeleted = false,
                             TermName = "EPS (Earnings Per Share)"
                         },
                         new
@@ -1826,6 +1947,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 14,
                             Category = 4,
                             Description = "A P/E ratio that compares current share price against real, proven earnings over the past 12 months (last 4 quarters). It reflects actual historical performance rather than future promises.",
+                            IsDeleted = false,
                             TermName = "Trailing P/E"
                         },
                         new
@@ -1833,6 +1955,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 15,
                             Category = 4,
                             Description = "A P/E ratio that compares current share price against estimated future earnings projected by financial analysts for the next 12 months. It shows what investors expect the company to earn ahead. This is one of the stones that tips a stock's cost if the company fails to meet these expectations during their quarterly \"Earnings Call\".",
+                            IsDeleted = false,
                             TermName = "Forward P/E"
                         },
                         new
@@ -1840,6 +1963,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 16,
                             Category = 1,
                             Description = "A 12-month accounting period used by companies for financial reporting and tax purposes. It does not always align with the calendar year (Jan 1–Dec 31); for instance, Apple's fiscal year ends in late September.",
+                            IsDeleted = false,
                             TermName = "Fiscal Year"
                         },
                         new
@@ -1847,6 +1971,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 17,
                             Category = 1,
                             Description = "A 3-month chunk of a company's fiscal year (Q1, Q2, Q3, Q4). Public companies publish official financial updates and earnings reports at the end of every fiscal quarter usually called \"Earnings Calls\".",
+                            IsDeleted = false,
                             TermName = "Fiscal Quarter"
                         },
                         new
@@ -1854,6 +1979,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 18,
                             Category = 1,
                             Description = "A cash payout that a profitable company shares directly with its stockholders, usually paid out quarterly. It rewards long-term investors simply for owning shares in the business.",
+                            IsDeleted = false,
                             TermName = "Dividend"
                         },
                         new
@@ -1861,6 +1987,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 19,
                             Category = 1,
                             Description = "A percentage that shows how much a company pays out in dividends each year relative to its current stock price. It measures the cash return you get on your investment, similar to an interest rate at a bank. Example: If a company's stock price is $100 and it pays $4.00 in total dividends per year, its Dividend Yield is 4% ($4 / $100). If the stock price rises to $200 while the dividend stays $4, the yield drops to 2%. If you want to calculate this cash yield yourself you would have to calculate what is x% out of the company's current share price and multiply that by the total amount of shares you own.",
+                            IsDeleted = false,
                             TermName = "Dividend Yield"
                         },
                         new
@@ -1868,6 +1995,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 20,
                             Category = 1,
                             Description = "The cutoff date that determines who gets paid the upcoming dividend. You must buy the stock before this date to receive the dividend. If you buy on or after the ex-dividend date, the dividend payment goes to the previous owner.",
+                            IsDeleted = false,
                             TermName = "Ex-Dividend Date (Ex-Date)"
                         },
                         new
@@ -1875,6 +2003,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 21,
                             Category = 1,
                             Description = "A portion of a single equity share, allowing you to buy stock based on a specific dollar amount rather than the full share price. Depending on the brokerage or trading platform, fractional shares may either pay a proportional dividend (e.g., holding 0.5 shares yields half the dividend payout) or no dividend at all if the platform limits payouts strictly to whole shares.",
+                            IsDeleted = false,
                             TermName = "Fractional Shares"
                         },
                         new
@@ -1882,6 +2011,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 22,
                             Category = 1,
                             Description = "A digital service or app that connects investors to financial exchanges to buy and sell stocks, ETFs, and other assets. Platforms differ in features, such as supporting fractional share execution, commission structures, and specific dividend distribution policies.",
+                            IsDeleted = false,
                             TermName = "Investment Platform (Brokerage)"
                         },
                         new
@@ -1889,6 +2019,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 23,
                             Category = 1,
                             Description = "The total number of shares bought and sold for a specific stock during a set period (usually one trading day). Higher volume means high activity and liquidity, making it easier to enter or exit a position without moving the price drastically.",
+                            IsDeleted = false,
                             TermName = "Trading Volume (Volume)"
                         },
                         new
@@ -1896,6 +2027,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 24,
                             Category = 1,
                             Description = "Trading activity where orders are executed at or above the seller's asking price. High buying volume shows strong market demand and typically pushes the stock price upward.",
+                            IsDeleted = false,
                             TermName = "Buying Volume (Buy-Side Volume)"
                         },
                         new
@@ -1903,6 +2035,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 25,
                             Category = 1,
                             Description = "Trading activity where sellers are eager to exit and fulfill orders at or below the buyer's bidding price. High selling volume indicates panic, profit-taking, or heavy supply, pushing the price downward.",
+                            IsDeleted = false,
                             TermName = "Selling Volume (Sell-Side Volume)"
                         },
                         new
@@ -1910,6 +2043,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 26,
                             Category = 1,
                             Description = "A rapid stock price change (e.g., 10%–20%) occurring on low trading volume, typically caused by sudden news, major geopolitical events, or quarterly earnings calls. When unexpected news drops, institutional algorithms and market makers instantly update their buy/sell quotes to a new level. The price shifts dramatically without needing massive retail trading volume simply because no buyers or sellers are willing to execute orders at the previous price.",
+                            IsDeleted = false,
                             TermName = "Low-Volume Sentiment Shift (Institutional Repricing)"
                         },
                         new
@@ -1917,6 +2051,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 27,
                             Category = 3,
                             Description = "A bullish pattern that occurs when a short-term moving average (like the 50-day SMA, or faster 20-day SMA) crosses above a longer-term moving average (like the 200-day or 50-day SMA). It signals that recent buying momentum is accelerating upward and a sustained bull trend may be starting.",
+                            IsDeleted = false,
                             TermName = "Golden Cross"
                         },
                         new
@@ -1924,6 +2059,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 28,
                             Category = 3,
                             Description = "A bearish pattern that occurs when a short-term moving average (like the 50-day SMA, or faster 20-day SMA) drops below a longer-term moving average (like the 200-day or 50-day SMA). It signals that downward selling pressure is taking over and further price decline may follow.",
+                            IsDeleted = false,
                             TermName = "Death Cross"
                         },
                         new
@@ -1931,6 +2067,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 29,
                             Category = 3,
                             Description = "A slang term for a stock whose price is plummeting rapidly with no signs of stopping. Trying to buy it during the steep drop is called \"catching a falling knife\"—a high-risk attempt to guess the bottom that often leads to quick losses before the price stabilizes.",
+                            IsDeleted = false,
                             TermName = "Falling Knife"
                         },
                         new
@@ -1938,6 +2075,7 @@ namespace InvestorVirtual.Data.Migrations
                             Id = 30,
                             Category = 3,
                             Description = "A temporary, short-lived price recovery during a severe, long-term downtrend. It gives a false impression that the stock has bottomed out, but the price quickly resumes falling once the brief surge in buying runs out of steam.",
+                            IsDeleted = false,
                             TermName = "Dead Cat Bounce"
                         });
                 });
@@ -3635,6 +3773,10 @@ namespace InvestorVirtual.Data.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasComment("This is the company name");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Soft-delete boolean");
+
                     b.Property<string>("LogoPath")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -3671,7 +3813,8 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 1,
                             CompanyName = "NVIDIA Corporation",
-                            LogoPath = "wwwroot/images/logos/nvidia.svg",
+                            IsDeleted = false,
+                            LogoPath = "images/logos/nvidia.svg",
                             Sector = "Technology (Semiconductors)",
                             ShortDescription = "NVIDIA Corporation is a leading data center-scale AI infrastructure and computing company operating globally through two primary business segments: Compute & Networking, and Graphics. Compute & Networking: Provides accelerated computing and networking platforms, AI hardware and software solutions, and autonomous/electric vehicle technology. Graphics: Offers GeForce GPUs for gaming and personal computers, alongside Quadro and NVIDIA RTX GPUs for enterprise workstations. The company serves the gaming, professional visualization, data center, and automotive markets, selling to OEMs, cloud providers, and system integrators. It maintains key strategic collaborations with Cisco, ChipAgents, and MediaTek to advance AI computing and next-generation chip technology. Founded in 1993, NVIDIA is headquartered in Santa Clara, California.",
                             Ticker = "NVDA"
@@ -3680,7 +3823,8 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 2,
                             CompanyName = "Oracle Corporation",
-                            LogoPath = "wwwroot/images/logos/oracle.svg",
+                            IsDeleted = false,
+                            LogoPath = "images/logos/oracle.svg",
                             Sector = "Technology (Software - Infrastructure)",
                             ShortDescription = "Oracle Corporation delivers global enterprise information technology solutions, offering integrated cloud, license, hardware, and support services. The company operates across major infrastructure and software domains: Cloud Software (SaaS): Includes enterprise applications like Oracle Fusion Cloud (ERP, EPM, SCM, HCM), NetSuite, Oracle Health, and targeted sales, service, and marketing suites. Infrastructure & Database: Features the Oracle Database, MySQL, Java, and Oracle Autonomous Database, alongside cloud compute, storage, networking, AI, and machine learning capabilities. Hardware & Services: Provides engineered systems, enterprise servers, storage solutions, and operating systems, backed by specialized consulting and technical support. Oracle serves businesses, government agencies, and educational institutions globally via direct and indirect channels. Founded in 1977, the company is headquartered in Austin, Texas.",
                             Ticker = "ORCL"
@@ -3689,7 +3833,8 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 3,
                             CompanyName = "Eli Lilly and Company",
-                            LogoPath = "wwwroot/images/logos/lilly.svg",
+                            IsDeleted = false,
+                            LogoPath = "images/logos/lilly.svg",
                             Sector = "Healthcare (Drug Manufacturers - General)",
                             ShortDescription = "Eli Lilly and Company is a global pharmaceutical corporation that discovers, develops, manufactures, and markets human prescription medications across several key therapeutic areas. Cardiometabolic & Obesity: Offers blockbusters like Trulicity and Mounjaro for type 2 diabetes, Zepbound for obesity, Jardiance, and an extensive portfolio of insulins (Humalog, Humulin). Oncology: Provides cancer treatments including Verzenio and Cyramza for breast and gastric cancers, Retevmo, and Jaypirca. Immunology & Neuroscience: Markets treatments such as Taltz and Olumiant for autoimmune conditions, Emgality for migraines, and Kisunla for Alzheimer's disease. The company leverages strategic alliances with partners like Boehringer Ingelheim and Roche to co-develop therapies. Founded in 1876, Eli Lilly is headquartered in Indianapolis, Indiana.",
                             Ticker = "LLY"
@@ -3698,7 +3843,8 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 4,
                             CompanyName = "Micron Technology, Inc.",
-                            LogoPath = "wwwroot/images/logos/micron.svg",
+                            IsDeleted = false,
+                            LogoPath = "images/logos/micron.svg",
                             Sector = "Technology (Semiconductors)",
                             ShortDescription = "Micron Technology, Inc. engages in the provision of semiconductor memory and storage products in the United States, Taiwan, Mainland China, other Asia Pacific countries, Japan, Europe, and internationally. It operates through Cloud Memory Business Unit, Core Data Center Business Unit, Mobile and Client Business Unit, and Automotive and Embedded Business Unit segments. The company provides dynamic random access memory (DRAM) products, including High-Bandwidth Memory, doublie data rate, low-power DRAM, and graphics DRAM products; NAND products comprising solid state drives, managed NAND, and multi-chip packages; and NOR products. The company sells its products under the Micron brand name and private labels through its own direct sales force, sales or representative offices, as well as through distributors, retailers, and independent sales representatives. Micron Technology, Inc. was founded in 1978 and is headquartered in Boise, Idaho.",
                             Ticker = "MU"
@@ -3707,7 +3853,8 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 5,
                             CompanyName = "ExxonMobil Holdings Corporation",
-                            LogoPath = "wwwroot/images/logos/exxonmobil.svg",
+                            IsDeleted = false,
+                            LogoPath = "images/logos/exxonmobil.svg",
                             Sector = "Energy (Oil & Gas Integrated)",
                             ShortDescription = "ExxonMobil Holdings Corporation is a global energy and petrochemical enterprise engaged in the exploration, production, and sale of crude oil, natural gas, and derivative products. It operates through four main segments: Upstream & Energy Products: Explores for and produces oil and gas, and provides finished fuels, aromatics, catalysts, and aviation fuel. Chemical & Specialty Products: Manufactures olefins, polyolefins, finished lubricants, basestocks, waxes, and resins under the Exxon, Esso, and Mobil brands. Low-Carbon Solutions: Pursues lower-emission business opportunities, including carbon capture, hydrogen, lower-emission fuels, and lithium extraction. Formerly Exxon Mobil Corporation, the company rebranded to ExxonMobil Holdings Corporation in July 2026. Founded in 1870, it is headquartered in Spring, Texas.",
                             Ticker = "XOM"
@@ -3716,7 +3863,8 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 6,
                             CompanyName = "Tesla, Inc.",
-                            LogoPath = "wwwroot/images/logos/tesla.svg",
+                            IsDeleted = false,
+                            LogoPath = "images/logos/tesla.svg",
                             Sector = "Consumer Cyclical (Auto Manufacturers)",
                             ShortDescription = "Tesla, Inc. designs, manufactures, leases, and sells electric vehicles, alongside energy generation and storage systems globally. The company operates through two primary business segments: Automotive: Offers consumer electric sedans and sport utility vehicles via direct and used sales, supported by the global Tesla Supercharger network. This segment also includes automotive regulatory credits, insurance, financing, and self-driving/AI software development. Energy Generation & Storage: Designs, installs, and leases solar products (solar panels and Solar Roof) and lithium-ion battery energy storage systems (Powerwall and Megapack) for residential, commercial, industrial, and utility clients. Formerly known as Tesla Motors, Inc., the company rebranded to Tesla, Inc. in February 2017. Incorporated in 2003, it is headquartered in Austin, Texas.",
                             Ticker = "TSLA"
@@ -3725,7 +3873,8 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 7,
                             CompanyName = "Rocket Lab Corporation",
-                            LogoPath = "wwwroot/images/logos/rocketlab.svg",
+                            IsDeleted = false,
+                            LogoPath = "images/logos/rocketlab.svg",
                             Sector = "Industrials (Aerospace & Defense)",
                             ShortDescription = "Rocket Lab Corporation is an end-to-end space company providing launch services and space systems solutions globally. It operates through two primary business segments: Launch Services: Designs and manufactures small and medium-class rockets. It operates the Electron orbital launch vehicle for small spacecraft and is developing the Neutron rocket for large constellation deployments, interplanetary missions, and human spaceflight. Space Systems: Provides comprehensive spacecraft design, manufacturing, components, optical systems, flight/ground software, and on-orbit constellation management. The company serves commercial enterprises, aerospace prime contractors, and government agencies. Formerly Rocket Lab USA, Inc., it rebranded to Rocket Lab Corporation in August 2021. Founded in 2006, it is headquartered in Long Beach, California.",
                             Ticker = "RKLB"
@@ -3734,7 +3883,8 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 8,
                             CompanyName = "Vertiv Holdings Co",
-                            LogoPath = "wwwroot/images/logos/vertiv.svg",
+                            IsDeleted = false,
+                            LogoPath = "images/logos/vertiv.svg",
                             Sector = "Industrials (Electrical Equipment & Parts)",
                             ShortDescription = "Vertiv Holdings Co designs, manufactures, and services critical digital infrastructure technologies and lifecycle solutions globally for data centers, communication networks, and industrial environments. Its portfolio powers and cools infrastructure vital for artificial intelligence, cloud services, and e-commerce through several core areas: Power & Thermal Management: Offers AC/DC power management, switchgear, busbars, and comprehensive air and liquid cooling thermal systems. Integrated Solutions: Provides modular solutions, hardware, racks, power distribution units, energy storage solutions, and infrastructure software. Lifecycle Services: Delivers predictive analytics, remote monitoring, preventative maintenance, consulting, and engineering services to optimize system deployments. Vertiv markets its solutions under recognized brands including Vertiv, Liebert, NetSure, Geist, and Avocent via direct sales, OEMs, and channel partners. The company headquarters are in Westerville, Ohio.",
                             Ticker = "VRT"
@@ -3743,7 +3893,8 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 9,
                             CompanyName = "Celsius Holdings, Inc.",
-                            LogoPath = "wwwroot/images/logos/celsius.svg",
+                            IsDeleted = false,
+                            LogoPath = "images/logos/celsius.svg",
                             Sector = "Consumer Defensive (Beverages - Non-Alcoholic)",
                             ShortDescription = "Celsius Holdings, Inc. develops, processes, markets, and distributes functional energy drinks and hydration products globally. The company focuses on the health, wellness, and fitness beverage markets through targeted product lines: Core Beverages: Offers ready-to-drink functional energy beverages and on-the-go powder sticks under the CELSIUS brand, including the amino-infused CELSIUS ESSENTIALS. Hydration Portfolio: Provides CELSIUS Hydration, a line of zero-sugar electrolyte powders, alongside additional products under the Alani Nu and Rockstar brand names. The company distributes its products through a broad omni-channel network including direct-to-store delivery, supermarkets, convenience stores, gyms, fitness centers, and e-commerce platforms. Formerly known as Vector Ventures, Inc., it rebranded to Celsius Holdings, Inc. in January 2007. Founded in 2004, it is headquartered in Boca Raton, Florida.",
                             Ticker = "CELH"
@@ -3752,7 +3903,8 @@ namespace InvestorVirtual.Data.Migrations
                         {
                             Id = 10,
                             CompanyName = "Vanguard S&P 500 Acc UCITS ETF",
-                            LogoPath = "wwwroot/images/logos/vuaa.svg",
+                            IsDeleted = false,
+                            LogoPath = "images/logos/vuaa.svg",
                             Sector = "Exchange Traded Fund (Largest US stocks)",
                             ShortDescription = "The Vanguard S&P 500 UCITS ETF (Acc) offers investors the opportunity to participate in the performance of the 500 largest listed US companies. The S&P 500 index represents the most important US industries and is considered an indicator for the development of the entire US stock market.",
                             Ticker = "VUAA"

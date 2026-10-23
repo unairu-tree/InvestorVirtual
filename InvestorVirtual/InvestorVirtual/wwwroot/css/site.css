@@ -790,3 +790,26 @@ a.text-decoration-none:hover .hover-card {
     cursor: pointer;
     transform: translateY(-3px);
 }
+
+/* High contrast placeholder text for terminal inputs */
+.form-control::placeholder,
+.form-select::placeholder {
+    color: var(--terminal-text) !important;
+    opacity: 0.5; /* Clear and readable without being overly aggressive */
+}
+
+html.light-mode .form-control::placeholder,
+html.light-mode .form-select::placeholder {
+    color: var(--terminal-text) !important;
+    opacity: 0.6;
+}
+
+/* Force dark icon fill over bright primary buttons in dark mode */
+:root:not(.light-mode) .search-icon-svg {
+    filter: brightness(0) !important; /* Turns white SVG black so it pops on gold/mint buttons */
+}
+
+/* Ensure visibility in light mode if needed */
+html.light-mode .search-icon-svg {
+    filter: brightness(0) !important;
+}

@@ -41,5 +41,5 @@ public class Stock
     public virtual ICollection<Event> Events { get; set; } = new HashSet<Event>();
 
     [Comment("Soft-delete boolean")]
-    public bool isDeleted { get; set; } = false;
+    public bool IsDeleted { get; set; }
 }
