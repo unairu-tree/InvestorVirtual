@@ -3,12 +3,29 @@ namespace InvestorVirtual.Controllers;
 using System.Diagnostics;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using ViewModels;
+using InvestorVirtual.Core.Models;
+using InvestorVirtual.Core.Contracts;
 
-public class HomeController : Controller
+[AllowAnonymous]
+public class HomeController(IHomeService homeService) : BaseController
 {
+    [HttpGet]
     public IActionResult Index()
+    {
+        IEnumerable<AssetShowcaseModel> assetShowcases = homeService.GetAssetShowcases();
+
+        return View(assetShowcases);
+    }
+
+    public IActionResult About()
+    {
+        return View();
+    }
+
+    public IActionResult Journey()
     {
         return View();
     }

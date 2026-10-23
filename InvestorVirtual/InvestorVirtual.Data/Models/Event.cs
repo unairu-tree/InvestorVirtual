@@ -33,4 +33,7 @@ public class Event
     public virtual News News { get; set; } = null!;
 
     public virtual Analysis Analysis { get; set; } = null!;
+
+    [Comment("Soft-delete boolean")]
+    public bool isDeleted { get; set; } = false;
 }

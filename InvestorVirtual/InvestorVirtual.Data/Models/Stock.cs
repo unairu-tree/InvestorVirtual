@@ -39,4 +39,7 @@ public class Stock
     public string LogoPath { get; set; } = null!; // the company logo
 
     public virtual ICollection<Event> Events { get; set; } = new HashSet<Event>();
+
+    [Comment("Soft-delete boolean")]
+    public bool isDeleted { get; set; } = false;
 }

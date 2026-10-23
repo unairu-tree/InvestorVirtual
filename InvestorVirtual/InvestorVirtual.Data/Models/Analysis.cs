@@ -36,4 +36,6 @@ public class Analysis
     public int EventId { get; set; } // Here I reference the event
 
     public virtual Event Event { get; set; } = null!;
+
+    // Lacks soft-delete boolean because all analysies are queried through the event, which has a soft-delete boolean
 }

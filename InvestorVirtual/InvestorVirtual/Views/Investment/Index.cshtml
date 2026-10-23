@@ -1,127 +1,34 @@
-﻿@{
-    ViewData["Title"] = "Theme Preview Testbed";
+﻿@model IEnumerable<AllAssetsModel>
+
+@{
+    ViewData["Title"] = "Market Assets";
 }
 
-<!-- THEME TESTING SINCE THIS VIEW HAS NOT BEEN IMPLEMENTED YET -->
-
 <div class="container py-4">
-    <h2 class="mb-4">Terminal Theme Preview & Validation</h2>
-
-    <!-- THEME 1: VAULTED GOLD -->
-    <div class="theme-test-container theme-vaulted-gold">
-        <h4 class="text-warning mb-3">1. Vaulted Gold Theme</h4>
-        <div class="row g-4 align-items-center">
-            <!-- Left Box: Bright Gradient (Navbar style) -->
-            <div class="col-md-5">
-                <div class="theme-banner-box">
-                    Navbar / Bright Gradient Sample
-                </div>
-            </div>
-            <!-- Right Box: Muted Card with Mock Login Form -->
-            <div class="col-md-7">
-                <div class="auth-card-muted m-0 max-w-100">
-                    <h3 class="auth-title-muted mb-3" style="font-size: 1.3rem;">Mock Auth Test</h3>
-                    <div class="form-floating auth-group-muted mb-3">
-                        <input type="email" class="form-control auth-input-muted" placeholder=" " value="user@terminal.com" />
-                        <label>Email Address</label>
-                    </div>
-                    <div class="form-floating auth-group-muted mb-3">
-                        <input type="password" class="form-control auth-input-muted" placeholder=" " value="password123" />
-                        <label>Password</label>
-                    </div>
-                    <button type="button" class="w-100 btn auth-btn-primary mb-3">Action Button</button>
-                    <div class="text-center">
-                        <a href="#" class="auth-link-muted">Sample helper link text</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="mb-5 text-center">
+        <h1 class="fw-bold glow-text">Market Assets</h1>
+        <p class="text-secondary">Explore available simulated equities and company sectors.</p>
     </div>
 
-    <!-- THEME 2: CYBER DUSK -->
-    <div class="theme-test-container theme-cyber-dusk">
-        <h4 class="text-purple mb-3" style="color: #c084fc;">2. Cyber Dusk Theme</h4>
-        <div class="row g-4 align-items-center">
-            <div class="col-md-5">
-                <div class="theme-banner-box">
-                    Navbar / Bright Gradient Sample
+    @if (Model != null && Model.Any())
+    {
+        <!-- 2-Column Grid Matching Learning Layout -->
+        <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+            @foreach (var asset in Model)
+            {
+                <div class="col">
+                    <partial name="_AssetCardPartial" model="asset" />
                 </div>
-            </div>
-            <div class="col-md-7">
-                <div class="auth-card-muted m-0 max-w-100">
-                    <h3 class="auth-title-muted mb-3" style="font-size: 1.3rem;">Mock Auth Test</h3>
-                    <div class="form-floating auth-group-muted mb-3">
-                        <input type="email" class="form-control auth-input-muted" placeholder=" " value="user@terminal.com" />
-                        <label>Email Address</label>
-                    </div>
-                    <div class="form-floating auth-group-muted mb-3">
-                        <input type="password" class="form-control auth-input-muted" placeholder=" " value="password123" />
-                        <label>Password</label>
-                    </div>
-                    <button type="button" class="w-100 btn auth-btn-primary mb-3">Action Button</button>
-                    <div class="text-center">
-                        <a href="#" class="auth-link-muted">Sample helper link text</a>
-                    </div>
-                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="card terminal-card border p-5 rounded-4 text-center">
+            <div class="card-body">
+                <h4 class="fw-bold mb-2 glow-text">No Assets Found</h4>
+                <p class="text-secondary mb-0">The simulation ledger currently contains no active equities.</p>
             </div>
         </div>
-    </div>
-
-    <!-- THEME 3: CRIMSON EMERALD -->
-    <div class="theme-test-container theme-crimson-emerald">
-        <h4 class="text-success mb-3">3. Crimson Emerald Theme</h4>
-        <div class="row g-4 align-items-center">
-            <div class="col-md-5">
-                <div class="theme-banner-box">
-                    Navbar / Bright Gradient Sample
-                </div>
-            </div>
-            <div class="col-md-7">
-                <div class="auth-card-muted m-0 max-w-100">
-                    <h3 class="auth-title-muted mb-3" style="font-size: 1.3rem;">Mock Auth Test</h3>
-                    <div class="form-floating auth-group-muted mb-3">
-                        <input type="email" class="form-control auth-input-muted" placeholder=" " value="user@terminal.com" />
-                        <label>Email Address</label>
-                    </div>
-                    <div class="form-floating auth-group-muted mb-3">
-                        <input type="password" class="form-control auth-input-muted" placeholder=" " value="password123" />
-                        <label>Password</label>
-                    </div>
-                    <button type="button" class="w-100 btn auth-btn-primary mb-3">Action Button</button>
-                    <div class="text-center">
-                        <a href="#" class="auth-link-muted">Sample helper link text</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- THEME 4: SKY-MINT -->
-    <div class="theme-test-container theme-sky-mint">
-        <h4 class="text-info mb-3">4. Sky-Mint Theme</h4>
-        <div class="row g-4 align-items-center">
-            <div class="col-md-5">
-                <div class="theme-banner-box">
-                    Navbar / Bright Gradient Sample
-                </div>
-            </div>
-            <div class="col-md-7">
-                <div class="auth-card-muted m-0 max-w-100">
-                    <h3 class="auth-title-muted mb-3" style="font-size: 1.3rem;">Mock Auth Test</h3>
-                    <div class="form-floating auth-group-muted mb-3">
-                        <input type="email" class="form-control auth-input-muted" placeholder=" " value="user@terminal.com" />
-                        <label>Email Address</label>
-                    </div>
-                    <div class="form-floating auth-group-muted mb-3">
-                        <input type="password" class="form-control auth-input-muted" placeholder=" " value="password123" />
-                        <label>Password</label>
-                    </div>
-                    <button type="button" class="w-100 btn auth-btn-primary mb-3">Action Button</button>
-                    <div class="text-center">
-                        <a href="#" class="auth-link-muted">Sample helper link text</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    }
 </div>

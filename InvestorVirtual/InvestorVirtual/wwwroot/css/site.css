@@ -700,3 +700,93 @@ html.light-mode .theme-swatch-btn {
         border-color: var(--auth-input-focus);
         background: rgba(255, 255, 255, 0.1);
     }
+
+.footer-link {
+    transition: color 0.2s ease-in-out;
+}
+
+    .footer-link:hover {
+        color: var(--auth-input-focus, #d4af37) !important;
+        text-decoration: underline !important;
+    }
+
+/* ASSET SHOWCASE TICKER MARQUEE */
+.asset-ticker-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    padding: 1rem 0;
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.asset-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker-scroll 35s linear infinite;
+}
+
+.asset-ticker-wrapper:hover .asset-ticker-track {
+    animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Enlarged Asset Showcase Card */
+.asset-ticker-card {
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    background-color: var(--terminal-card-bg);
+    border: 1px solid var(--terminal-border);
+    border-radius: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem;
+    margin-right: 1.25rem;
+    transition: all 0.35s ease-in-out, transform 0.25s ease-in-out;
+}
+
+    .asset-ticker-card img {
+        width: 52px;
+        height: 52px;
+        object-fit: contain;
+    }
+
+    .asset-ticker-card span {
+        font-size: 1.05rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: var(--terminal-text);
+    }
+
+/* DYNAMIC HERO SUBTITLE CROSSFADE */
+.subtitle-fade-text {
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out;
+}
+
+    .subtitle-fade-text.fade-out {
+        opacity: 0;
+    }
+
+/* CLICKABLE ASSET CARD WRAPPER */
+a.text-decoration-none .hover-card {
+    transition: all 0.35s ease-in-out, transform 0.25s ease-in-out;
+}
+
+a.text-decoration-none:hover .hover-card {
+    cursor: pointer;
+    transform: translateY(-3px);
+}

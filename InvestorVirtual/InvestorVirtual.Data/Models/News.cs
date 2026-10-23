@@ -33,4 +33,6 @@ public class News
     public int EventId { get; set; } // Here I reference the event
 
     public virtual Event Event { get; set; } = null!;
+
+    // Lacks soft-delete boolean because all news articles are queried through the event, which has a soft-delete boolean
 }

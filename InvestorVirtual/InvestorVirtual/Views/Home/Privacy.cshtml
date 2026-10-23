@@ -1,6 +1,36 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container py-5">
+    <!-- Header Banner -->
+    <div class="welcome-banner p-4 rounded-4 mb-4 text-center">
+        <h1 class="h2 fw-bold mb-2 glow-text">Privacy Policy</h1>
+        <p class="text-secondary mb-0">Last updated: October 2026</p>
+    </div>
+
+    <!-- Content Card -->
+    <div class="card terminal-card border p-4 p-md-5 rounded-4 shadow-sm">
+        <div class="card-body">
+            <h3 class="h5 fw-bold glow-text mb-3">1. Information We Collect</h3>
+            <p class="text-secondary mb-4">
+                InvestorVirtual operates primarily as a local simulation sandbox. When you register an account, we store basic credentials required for authentication (such as your username, email, and secure password hash) and the relational data tied directly to your active simulation portfolios, watchlists, and transaction logs.
+            </p>
+
+            <h3 class="h5 fw-bold glow-text mb-3">2. How Your Data is Used</h3>
+            <p class="text-secondary mb-4">
+                All data collected is utilized strictly to power core platform features: maintaining your ledger history, calculating portfolio balances, tracking milestone progression, and managing your custom stock watchlists. We do not sell, trade, or distribute your personal or transactional data to third parties.
+            </p>
+
+            <h3 class="h5 fw-bold glow-text mb-3">3. Data Security & Integrity</h3>
+            <p class="text-secondary mb-4">
+                We implement industry-standard database practices, including secure foreign-key constraints and soft-delete architectures (`isDeleted` flags), to safeguard your simulation data against accidental corruption or unauthorized modifications.
+            </p>
+
+            <h3 class="h5 fw-bold glow-text mb-3">4. Changes to This Policy</h3>
+            <p class="text-secondary mb-0">
+                As InvestorVirtual evolves through new feature implementations and course milestones, this privacy statement may be updated to reflect changes in our backend logic or security protocols.
+            </p>
+        </div>
+    </div>
+</div>

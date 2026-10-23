@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using static InvestorVirtual.Common.ApplicationConstants;
+
 // This model represents the price movements and buy/sell volume of every stock on a daily basis
 [Comment("This model represents the price movements and buy/sell volume of every stock on a daily basis")]
 public class Price
@@ -12,7 +14,7 @@ public class Price
     [Key]
     public int Id { get; set; }
 
-    [Column(TypeName = "DECIMAL(6, 2)")]
+    [Column(TypeName = PricePerShareColumnType)]
     [Comment("This is the current price for 1 share of a stock")]
     public decimal PriceValue { get; set; } // This is the current price for 1 share of a stock
 
@@ -27,4 +29,6 @@ public class Price
     public int EventId { get; set; } // Here I reference the event
 
     public virtual Event Event { get; set; } = null!;
+
+    // Lacks soft-delete boolean because all prices are queried through the event, which has a soft-delete boolean
 }

@@ -1,0 +1,22 @@
+﻿@model AllAssetsModel
+
+<a href="@Url.Action("Details", "Investment", new { ticker = Model.Ticker })" class="text-decoration-none">
+    <div class="card terminal-card border rounded-3 h-100 p-3 shadow-sm hover-card">
+        <div class="card-body d-flex align-items-center justify-content-between">
+            <!-- Left Side: Company Info & Sector -->
+            <div class="me-3 overflow-hidden">
+                <h3 class="card-title h5 fw-semibold mb-1 glow-text text-truncate">
+                    @Model.CompanyName <span class="opacity-75">(@Model.Ticker)</span>
+                </h3>
+                <span class="badge border border-secondary rounded-pill small text-secondary">
+                    @Model.Sector
+                </span>
+            </div>
+
+            <!-- Right Side: Logo Box -->
+            <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-3 bg-opacity-10 bg-light p-2" style="width: 56px; height: 56px;">
+                <img src="@Url.Content(Model.LogoPath)" alt="@Model.Ticker Logo" style="max-width: 40px; max-height: 40px; object-fit: contain;" />
+            </div>
+        </div>
+    </div>
+</a>

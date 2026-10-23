@@ -2,11 +2,16 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-public class InvestmentController : Controller
+using InvestorVirtual.Core.Models;
+using InvestorVirtual.Core.Contracts;
+
+public class InvestmentController(IInvestmentService investmentService) : BaseController
 {
     public IActionResult Index()
     {
-        return View();
+        IEnumerable<AllAssetsModel> allAssets = investmentService.GetAllAssets();
+
+        return View(allAssets);
     }
 
     public IActionResult Portfolio()
