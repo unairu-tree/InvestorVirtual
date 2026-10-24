@@ -1,7 +1,7 @@
 ﻿namespace InvestorVirtual.Core.Services;
 
 using InvestorVirtual.Core.Contracts;
-using InvestorVirtual.Core.Models;
+using InvestorVirtual.Core.Models.Response;
 using InvestorVirtual.Data.Common;
 using InvestorVirtual.Data.Models;
 

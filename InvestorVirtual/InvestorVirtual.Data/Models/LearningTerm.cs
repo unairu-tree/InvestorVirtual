@@ -16,6 +16,11 @@ public class LearningTerm
     public int Id { get; set; }
 
     [Required]
+    [MaxLength(SlugMaxLength)]
+    [Comment("This is the field that will hold the slug used for extra security and SEO")]
+    public string Slug { get; set; } = null!;
+
+    [Required]
     [MaxLength(TermNameMaxLength)]
     [Comment("This is what the name of the term is")]
     public string TermName { get; set; } = null!; // This is what the name of the term is

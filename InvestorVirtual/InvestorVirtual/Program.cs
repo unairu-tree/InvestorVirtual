@@ -27,10 +27,11 @@ public class Program
             .AddEntityFrameworkStores<ApplicationDbContext>();
         builder.Services.AddControllersWithViews();
 
+        builder.Services.AddScoped<IRepository, Repository>();
+        builder.Services.AddScoped<IHomeService, HomeService>();
         builder.Services.AddScoped<ILearningService, LearningService>();
         builder.Services.AddScoped<IInvestmentService, InvestmentService>();
-        builder.Services.AddScoped<IHomeService, HomeService>();
-        builder.Services.AddScoped<IRepository, Repository>();
+        builder.Services.AddScoped<ITermCategoryService, TermCategoryService>();
 
         WebApplication app = builder.Build();
 

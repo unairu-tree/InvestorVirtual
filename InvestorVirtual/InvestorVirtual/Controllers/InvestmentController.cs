@@ -2,8 +2,8 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using InvestorVirtual.Core.Models;
 using InvestorVirtual.Core.Contracts;
+using InvestorVirtual.Core.Models.Response;
 
 public class InvestmentController(IInvestmentService investmentService) : BaseController
 {

@@ -543,9 +543,11 @@ html.light-mode .badge.border-secondary {
     transform: scale(0.85) translateY(-1.75rem) translateX(0rem) !important;
 }
 
-/* Light mode token override */
+/* Light mode token override for inputs AND selects */
 html.light-mode .form-floating > .form-control:focus ~ label,
-html.light-mode .form-floating > .form-control:not(:placeholder-shown) ~ label {
+html.light-mode .form-floating > .form-control:not(:placeholder-shown) ~ label,
+html.light-mode .form-floating > .form-select:focus ~ label,
+html.light-mode .form-floating > .form-select:not([value=""]) ~ label {
     color: var(--auth-label-focus, var(--auth-text)) !important;
 }
 

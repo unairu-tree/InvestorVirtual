@@ -19,6 +19,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public virtual DbSet<LearningTerm> LearningTerms { get; set; } = null!;
 
+    public virtual DbSet<Transaction> Transactions { get; set; } = null!;
+
+    public virtual DbSet<Portfolio> Portfolios { get; set; } = null!;
+
+    public virtual DbSet<PortfolioStock> PortfolioStocks { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

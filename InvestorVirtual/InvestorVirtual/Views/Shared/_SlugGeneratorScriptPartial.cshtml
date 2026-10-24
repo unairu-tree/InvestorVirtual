@@ -1,0 +1,31 @@
+﻿<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const nameInput = document.getElementById('TermNameInput');
+        const slugInput = document.getElementById('SlugInput');
+
+        // If editing an existing term, check if slug already has text
+        let userEditedSlug = slugInput.value.trim().length > 0;
+
+        // Track if user manually modified the slug field
+        slugInput.addEventListener('input', function () {
+            userEditedSlug = slugInput.value.trim().length > 0;
+        });
+
+        // Auto-generate slug dynamically as user types name
+        nameInput.addEventListener('input', function () {
+            if (!userEditedSlug) {
+                slugInput.value = nameInput.value
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[^a-z0-9\s-]/g, '')  // Remove special characters
+                    .replace(/[\s+]+/g, '-')       // Convert spaces to hyphens
+                    .replace(/-+/g, '-');          // Remove duplicate hyphens
+
+                // Instantly trigger jQuery validation to clear any live error messages
+                if (window.jQuery && $(slugInput).length) {
+                    $(slugInput).valid();
+                }
+            }
+        });
+    });
+</script>

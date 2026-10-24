@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Learning\" />
     <Folder Include="wwwroot\images\logos\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\images\icons\" />

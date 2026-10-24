@@ -1824,6 +1824,12 @@ namespace InvestorVirtual.Data.Migrations
                         .HasColumnType("bit")
                         .HasComment("Soft-delete boolean");
 
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasComment("This is the field that will hold the slug used for extra security and SEO");
+
                     b.Property<string>("TermName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -1844,6 +1850,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "Anything of value that a person or company owns. It can be physical (like cash, land, or machinery) or financial (like stocks and bonds) that can be converted into money or used to generate future earnings (selling with a profit or through dividends).",
                             IsDeleted = false,
+                            Slug = "asset",
                             TermName = "Asset"
                         },
                         new
@@ -1852,6 +1859,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "Money or debts that a person or company owes to others. Examples include bank loans, unpaid bills, mortgages, or credit card balances.",
                             IsDeleted = false,
+                            Slug = "liability",
                             TermName = "Liability"
                         },
                         new
@@ -1860,6 +1868,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "The actual net worth of an owner's share in a business or asset. It is calculated simply as what you own (Assets) minus what you owe (Liabilities).",
                             IsDeleted = false,
+                            Slug = "equity",
                             TermName = "Equity"
                         },
                         new
@@ -1868,6 +1877,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 4,
                             Description = "A quick valuation check that compares a company's stock price to how much profit it actually makes per share. It shows whether a stock is cheap or expensive relative to its real earnings. Example: If a stock trades at $100 and earns $5 per share each year, its P/E ratio is 20 ($100 / $5). This means investors are paying $20 for every $1 of annual profit the company makes.",
                             IsDeleted = false,
+                            Slug = "pe-ratio",
                             TermName = "Price-to-Earnings (P/E) Ratio"
                         },
                         new
@@ -1876,6 +1886,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 4,
                             Description = "The total market value of a company. It is calculated by multiplying the price of a single stock share by the total number of shares that exist. It shows how big a company really is (Small-Cap vs. Large-Cap).",
                             IsDeleted = false,
+                            Slug = "market-cap",
                             TermName = "Market Capitalization (Market Cap)"
                         },
                         new
@@ -1884,6 +1895,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 2,
                             Description = "A simple score from 0 to 100 that shows if a stock has been bought or sold too quickly. A score above 70 usually means a stock is overbought (overpriced), while below 30 means it is oversold (bargain price).",
                             IsDeleted = false,
+                            Slug = "rsi",
                             TermName = "Relative Strength Index (RSI)"
                         },
                         new
@@ -1892,6 +1904,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 2,
                             Description = "A line on a chart that shows the average closing price of a stock over a specific number of days (like 20, 50, or 200 days). It smoothes out daily price bounces to show the overall trend direction. Investors usually have 20, 50 and 200 day SMAs active at the same time, which they use to analyze market trends.",
                             IsDeleted = false,
+                            Slug = "sma",
                             TermName = "Simple Moving Average (SMA)"
                         },
                         new
@@ -1900,6 +1913,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 2,
                             Description = "Similar to an SMA, but it gives more weight to the most recent prices. This makes it react faster to fresh news or sudden price changes than a standard moving average.",
                             IsDeleted = false,
+                            Slug = "ema",
                             TermName = "Exponential Moving Average (EMA)"
                         },
                         new
@@ -1908,6 +1922,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 3,
                             Description = "A visual price chart shape that looks like three peaks (a tall middle \"head\" between two lower \"shoulders\"). It usually signals that an upward price trend is running out of steam and may turn downward.",
                             IsDeleted = false,
+                            Slug = "head-and-shoulders",
                             TermName = "Head and Shoulders"
                         },
                         new
@@ -1916,6 +1931,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 3,
                             Description = "A chart pattern that looks like the letter \"W\". It happens when a stock price drops to a low point twice, bounces off that level both times, and signals a potential price recovery. It usually bounces back due to funds stepping in to buy on a \"discount\" price after panic sell-offs, because they still have faith in the asset, otherwise they would let it crash through their foundations.",
                             IsDeleted = false,
+                            Slug = "double-bottom",
                             TermName = "Double Bottom"
                         },
                         new
@@ -1924,6 +1940,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "A market period where prices are steadily rising and general investor sentiment is optimistic. It is named after a bull, which attacks by thrusting its horns upward.",
                             IsDeleted = false,
+                            Slug = "bull-market",
                             TermName = "Bullish Market (Bull Market)"
                         },
                         new
@@ -1932,6 +1949,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "A market period where stock prices fall significantly (typically 20% or more from recent highs) and market sentiment is pessimistic. It is named after a bear, which attacks by swiping its paws downward.",
                             IsDeleted = false,
+                            Slug = "bear-market",
                             TermName = "Bearish Market (Bear Market)"
                         },
                         new
@@ -1940,6 +1958,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 4,
                             Description = "A company's net profit divided by its total number of stock shares. It shows how much profit a company generates for every single share of stock issued. Example: If a company makes $10 million in profit and has 5 million issued shares to investors, its EPS is $2 (10 million / 5 million).",
                             IsDeleted = false,
+                            Slug = "eps",
                             TermName = "EPS (Earnings Per Share)"
                         },
                         new
@@ -1948,6 +1967,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 4,
                             Description = "A P/E ratio that compares current share price against real, proven earnings over the past 12 months (last 4 quarters). It reflects actual historical performance rather than future promises.",
                             IsDeleted = false,
+                            Slug = "trailing-pe",
                             TermName = "Trailing P/E"
                         },
                         new
@@ -1956,6 +1976,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 4,
                             Description = "A P/E ratio that compares current share price against estimated future earnings projected by financial analysts for the next 12 months. It shows what investors expect the company to earn ahead. This is one of the stones that tips a stock's cost if the company fails to meet these expectations during their quarterly \"Earnings Call\".",
                             IsDeleted = false,
+                            Slug = "forward-pe",
                             TermName = "Forward P/E"
                         },
                         new
@@ -1964,6 +1985,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "A 12-month accounting period used by companies for financial reporting and tax purposes. It does not always align with the calendar year (Jan 1–Dec 31); for instance, Apple's fiscal year ends in late September.",
                             IsDeleted = false,
+                            Slug = "fiscal-year",
                             TermName = "Fiscal Year"
                         },
                         new
@@ -1972,6 +1994,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "A 3-month chunk of a company's fiscal year (Q1, Q2, Q3, Q4). Public companies publish official financial updates and earnings reports at the end of every fiscal quarter usually called \"Earnings Calls\".",
                             IsDeleted = false,
+                            Slug = "fiscal-quarter",
                             TermName = "Fiscal Quarter"
                         },
                         new
@@ -1980,6 +2003,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "A cash payout that a profitable company shares directly with its stockholders, usually paid out quarterly. It rewards long-term investors simply for owning shares in the business.",
                             IsDeleted = false,
+                            Slug = "dividend",
                             TermName = "Dividend"
                         },
                         new
@@ -1988,6 +2012,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "A percentage that shows how much a company pays out in dividends each year relative to its current stock price. It measures the cash return you get on your investment, similar to an interest rate at a bank. Example: If a company's stock price is $100 and it pays $4.00 in total dividends per year, its Dividend Yield is 4% ($4 / $100). If the stock price rises to $200 while the dividend stays $4, the yield drops to 2%. If you want to calculate this cash yield yourself you would have to calculate what is x% out of the company's current share price and multiply that by the total amount of shares you own.",
                             IsDeleted = false,
+                            Slug = "dividend-yield",
                             TermName = "Dividend Yield"
                         },
                         new
@@ -1996,6 +2021,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "The cutoff date that determines who gets paid the upcoming dividend. You must buy the stock before this date to receive the dividend. If you buy on or after the ex-dividend date, the dividend payment goes to the previous owner.",
                             IsDeleted = false,
+                            Slug = "ex-date",
                             TermName = "Ex-Dividend Date (Ex-Date)"
                         },
                         new
@@ -2004,6 +2030,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "A portion of a single equity share, allowing you to buy stock based on a specific dollar amount rather than the full share price. Depending on the brokerage or trading platform, fractional shares may either pay a proportional dividend (e.g., holding 0.5 shares yields half the dividend payout) or no dividend at all if the platform limits payouts strictly to whole shares.",
                             IsDeleted = false,
+                            Slug = "fractional-shares",
                             TermName = "Fractional Shares"
                         },
                         new
@@ -2012,6 +2039,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "A digital service or app that connects investors to financial exchanges to buy and sell stocks, ETFs, and other assets. Platforms differ in features, such as supporting fractional share execution, commission structures, and specific dividend distribution policies.",
                             IsDeleted = false,
+                            Slug = "brokerage",
                             TermName = "Investment Platform (Brokerage)"
                         },
                         new
@@ -2020,6 +2048,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "The total number of shares bought and sold for a specific stock during a set period (usually one trading day). Higher volume means high activity and liquidity, making it easier to enter or exit a position without moving the price drastically.",
                             IsDeleted = false,
+                            Slug = "trading-volume",
                             TermName = "Trading Volume (Volume)"
                         },
                         new
@@ -2028,6 +2057,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "Trading activity where orders are executed at or above the seller's asking price. High buying volume shows strong market demand and typically pushes the stock price upward.",
                             IsDeleted = false,
+                            Slug = "buying-volume",
                             TermName = "Buying Volume (Buy-Side Volume)"
                         },
                         new
@@ -2036,6 +2066,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "Trading activity where sellers are eager to exit and fulfill orders at or below the buyer's bidding price. High selling volume indicates panic, profit-taking, or heavy supply, pushing the price downward.",
                             IsDeleted = false,
+                            Slug = "selling-volume",
                             TermName = "Selling Volume (Sell-Side Volume)"
                         },
                         new
@@ -2044,6 +2075,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 1,
                             Description = "A rapid stock price change (e.g., 10%–20%) occurring on low trading volume, typically caused by sudden news, major geopolitical events, or quarterly earnings calls. When unexpected news drops, institutional algorithms and market makers instantly update their buy/sell quotes to a new level. The price shifts dramatically without needing massive retail trading volume simply because no buyers or sellers are willing to execute orders at the previous price.",
                             IsDeleted = false,
+                            Slug = "low-volume-sentiment-shift",
                             TermName = "Low-Volume Sentiment Shift (Institutional Repricing)"
                         },
                         new
@@ -2052,6 +2084,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 3,
                             Description = "A bullish pattern that occurs when a short-term moving average (like the 50-day SMA, or faster 20-day SMA) crosses above a longer-term moving average (like the 200-day or 50-day SMA). It signals that recent buying momentum is accelerating upward and a sustained bull trend may be starting.",
                             IsDeleted = false,
+                            Slug = "golden-cross",
                             TermName = "Golden Cross"
                         },
                         new
@@ -2060,6 +2093,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 3,
                             Description = "A bearish pattern that occurs when a short-term moving average (like the 50-day SMA, or faster 20-day SMA) drops below a longer-term moving average (like the 200-day or 50-day SMA). It signals that downward selling pressure is taking over and further price decline may follow.",
                             IsDeleted = false,
+                            Slug = "death-cross",
                             TermName = "Death Cross"
                         },
                         new
@@ -2068,6 +2102,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 3,
                             Description = "A slang term for a stock whose price is plummeting rapidly with no signs of stopping. Trying to buy it during the steep drop is called \"catching a falling knife\"—a high-risk attempt to guess the bottom that often leads to quick losses before the price stabilizes.",
                             IsDeleted = false,
+                            Slug = "falling-knife",
                             TermName = "Falling Knife"
                         },
                         new
@@ -2076,6 +2111,7 @@ namespace InvestorVirtual.Data.Migrations
                             Category = 3,
                             Description = "A temporary, short-lived price recovery during a severe, long-term downtrend. It gives a false impression that the stock has bottomed out, but the price quickly resumes falling once the brief surge in buying runs out of steam.",
                             IsDeleted = false,
+                            Slug = "dead-cat-bounce",
                             TermName = "Dead Cat Bounce"
                         });
                 });
@@ -2919,6 +2955,55 @@ namespace InvestorVirtual.Data.Migrations
                             EventId = 100,
                             Headline = "Year-End Index Review Confirms Another Banner Year for U.S. Equities",
                             Source = "CNBC"
+                        });
+                });
+
+            modelBuilder.Entity("InvestorVirtual.Data.Models.Portfolio", b =>
+                {
+                    b.Property<string>("Guid")
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("Matches the user's GUID.");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("DECIMAL(18, 2)")
+                        .HasComment("The current balance of the portfolio, representing the amount of money available for investment.");
+
+                    b.Property<string>("UserGuid")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("The GUID of the user to whom this portfolio belongs.");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Indicates whether this portfolio is soft-deleted.");
+
+                    b.HasKey("Guid");
+
+                    b.HasIndex("UserGuid");
+
+                    b.ToTable("Portfolios", t =>
+                        {
+                            t.HasComment("This model represents the portfolio that the user creates upon starting a simulation. It will be the central hub of operations, showing the user's investment holdings, their watchlist, and their current balance.");
+                        });
+                });
+
+            modelBuilder.Entity("InvestorVirtual.Data.Models.PortfolioStock", b =>
+                {
+                    b.Property<string>("PortfolioGuid")
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("The GUID of the portfolio to which this stock belongs.");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("int")
+                        .HasComment("The ID of the stock that is watchlisted.");
+
+                    b.HasKey("PortfolioGuid", "StockId");
+
+                    b.HasIndex("StockId");
+
+                    b.ToTable("PortfolioStocks", t =>
+                        {
+                            t.HasComment("This is the mapping table that is used for handling a portfolio's watchlist.");
                         });
                 });
 
@@ -3911,6 +3996,51 @@ namespace InvestorVirtual.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("InvestorVirtual.Data.Models.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsBuyOrder")
+                        .HasColumnType("bit")
+                        .HasComment("Indicates whether this transaction is a buy order (true) or a sell order (false).");
+
+                    b.Property<int>("MilestoneStep")
+                        .HasColumnType("int")
+                        .HasComment("The step in the milestone sequence to which this transaction belongs.");
+
+                    b.Property<string>("PortfolioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasComment("The GUID of the portfolio to which this transaction belongs.");
+
+                    b.Property<decimal>("PricePerShare")
+                        .HasColumnType("DECIMAL(6, 2)")
+                        .HasComment("The price per share at the time of the transaction.");
+
+                    b.Property<decimal>("Shares")
+                        .HasColumnType("DECIMAL(18, 2)")
+                        .HasComment("The number of shares involved in this transaction.");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("int")
+                        .HasComment("The ID of the stock involved in this transaction.");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PortfolioId");
+
+                    b.HasIndex("StockId");
+
+                    b.ToTable("Transactions", t =>
+                        {
+                            t.HasComment("Represents a transaction in the portfolio, either a buy or sell order.");
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -4146,6 +4276,36 @@ namespace InvestorVirtual.Data.Migrations
                     b.Navigation("Event");
                 });
 
+            modelBuilder.Entity("InvestorVirtual.Data.Models.Portfolio", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("InvestorVirtual.Data.Models.PortfolioStock", b =>
+                {
+                    b.HasOne("InvestorVirtual.Data.Models.Portfolio", "Portfolio")
+                        .WithMany("PortfolioStocks")
+                        .HasForeignKey("PortfolioGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InvestorVirtual.Data.Models.Stock", "Stock")
+                        .WithMany()
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Portfolio");
+
+                    b.Navigation("Stock");
+                });
+
             modelBuilder.Entity("InvestorVirtual.Data.Models.Price", b =>
                 {
                     b.HasOne("InvestorVirtual.Data.Models.Event", "Event")
@@ -4155,6 +4315,25 @@ namespace InvestorVirtual.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("InvestorVirtual.Data.Models.Transaction", b =>
+                {
+                    b.HasOne("InvestorVirtual.Data.Models.Portfolio", "Portfolio")
+                        .WithMany("Transactions")
+                        .HasForeignKey("PortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InvestorVirtual.Data.Models.Stock", "Stock")
+                        .WithMany()
+                        .HasForeignKey("StockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Portfolio");
+
+                    b.Navigation("Stock");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -4218,6 +4397,13 @@ namespace InvestorVirtual.Data.Migrations
 
                     b.Navigation("Price")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("InvestorVirtual.Data.Models.Portfolio", b =>
+                {
+                    b.Navigation("PortfolioStocks");
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("InvestorVirtual.Data.Models.Stock", b =>

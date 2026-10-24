@@ -1,4 +1,4 @@
-﻿namespace InvestorVirtual.Core.Models;
+﻿namespace InvestorVirtual.Core.Models.Response;
 
 // Data flow from the database (trusted) to the client (untrusted)
 public class AssetShowcaseModel

@@ -9,4 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 public class BaseController : Controller
 {
     protected string? GetUserId() => User?.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    protected bool IsUserAuthenticated() => User?.Identity?.IsAuthenticated ?? false;
 }

@@ -1,6 +1,6 @@
 ﻿namespace InvestorVirtual.Core.Contracts;
 
-using InvestorVirtual.Core.Models;
+using InvestorVirtual.Core.Models.Response;
 
 // This is the interface inherited by the services responsible for passing data to the home controller
 public interface IHomeService

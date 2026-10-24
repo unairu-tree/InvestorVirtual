@@ -2,9 +2,8 @@
 
 using InvestorVirtual.Data.Common;
 using InvestorVirtual.Data.Models;
-
-using InvestorVirtual.Core.Models;
 using InvestorVirtual.Core.Contracts;
+using InvestorVirtual.Core.Models.Response;
 
 // This is the home service inheriting and implementing the tasks from the interface
 public class HomeService(IRepository repository) : IHomeService

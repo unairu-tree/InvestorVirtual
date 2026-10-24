@@ -5,9 +5,9 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-using ViewModels;
-using InvestorVirtual.Core.Models;
+using InvestorVirtual.ViewModels;
 using InvestorVirtual.Core.Contracts;
+using InvestorVirtual.Core.Models.Response;
 
 [AllowAnonymous]
 public class HomeController(IHomeService homeService) : BaseController

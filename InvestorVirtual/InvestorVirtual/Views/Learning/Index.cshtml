@@ -35,12 +35,12 @@
                     {
                         <div class="position-absolute top-0 end-0 p-3 d-flex align-items-center gap-2">
                             <!-- Edit Button (Keeps theme settings via auth-btn-primary style) -->
-                            <a asp-action="Edit" asp-route-id="@term.Id" class="btn auth-btn-primary d-flex align-items-center justify-content-center p-2 rounded-2" style="width: 32px; height: 32px;" title="Edit Term">
+                            <a asp-action="Edit" asp-route-id="@term.Id" asp-route-slug="@term.Slug" class="btn auth-btn-primary d-flex align-items-center justify-content-center p-2 rounded-2" style="width: 32px; height: 32px;" title="Edit Term">
                                 <img src="@Url.Content("~/images/icons/edit.svg")" alt="Edit" style="width: 16px; height: 16px; filter: brightness(0);" />
                             </a>
 
                             <!-- Delete Button (Custom non-theme red styling) -->
-                            <a asp-action="Delete" asp-route-id="@term.Id" class="btn d-flex align-items-center justify-content-center p-2 rounded-2 text-white" style="width: 32px; height: 32px; background-color: #dc2626;" title="Delete Term" onmouseover="this.style.backgroundColor='#b91c1c'" onmouseout="this.style.backgroundColor='#dc2626'">
+                            <a asp-action="Delete" asp-route-id="@term.Id" asp-route-slug="@term.Slug" class="btn d-flex align-items-center justify-content-center p-2 rounded-2 text-white" style="width: 32px; height: 32px; background-color: #dc2626;" title="Delete Term" onmouseover="this.style.backgroundColor='#b91c1c'" onmouseout="this.style.backgroundColor='#dc2626'">
                                 <img src="@Url.Content("~/images/icons/delete.svg")" alt="Delete" style="width: 16px; height: 16px; filter: brightness(0) invert(1);" />
                             </a>
                         </div>
@@ -61,15 +61,13 @@
 
     <nav aria-label="Learning terms navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link terminal-page-link rounded-3 px-3 py-2 me-1" href="@Url.Action("Index", new { page = 1 })">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link terminal-page-link rounded-3 px-3 py-2 me-1" href="@Url.Action("Index", new { page = 2 })">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link terminal-page-link rounded-3 px-3 py-2" href="@Url.Action("Index", new { page = 3 })">3</a>
-            </li>
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                    <a class="page-link terminal-page-link rounded-3 px-3 py-2 me-1"
+                       href="@Url.Action("Index", new { page = i })">@i</a>
+                </li>
+            }
         </ul>
     </nav>
 </div>
