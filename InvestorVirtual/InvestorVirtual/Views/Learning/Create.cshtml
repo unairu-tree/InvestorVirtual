@@ -17,46 +17,8 @@
         <!-- Form Card Container with a wider max-width override -->
         <div class="auth-card-muted p-4 p-md-5 rounded shadow-sm mx-auto" style="max-width: 680px; width: 100%;">
             <form asp-action="Create" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3 small" role="alert"></div>
 
-                <!-- Term Name Field -->
-                <div class="form-floating auth-group-muted mb-3">
-                    <input asp-for="TermName" class="form-control auth-input-muted" id="TermNameInput" placeholder="The name of the term..." maxlength="100" autocomplete="off" required />
-                    <label asp-for="TermName">Term Name</label>
-                    <span asp-validation-for="TermName" class="text-danger small"></span>
-                </div>
-
-                <!-- Slug Field -->
-                <div class="form-floating auth-group-muted mb-1">
-                    <input asp-for="Slug" class="form-control auth-input-muted" id="SlugInput" placeholder="Example: name-of-term" maxlength="100" autocomplete="off" />
-                    <label asp-for="Slug">URL Slug</label>
-                    <span asp-validation-for="Slug" class="text-danger small"></span>
-                </div>
-                <!-- Fixed: Explicitly using terminal text variable for visibility -->
-                <div class="small mb-4" style="color: var(--terminal-text); opacity: 0.75;">
-                    <i class="bi bi-info-circle me-1"></i>
-                    Optional: Auto-generated from name if left empty. Use lowercase letters, numbers, and hyphens only.
-                </div>
-
-                <!-- Description Field -->
-                <div class="form-floating auth-group-muted mb-4">
-                    <textarea asp-for="Description" class="form-control auth-input-muted" placeholder="The definition of what the term means..." style="height: 100px;" required></textarea>
-                    <label asp-for="Description">Description</label>
-                    <span asp-validation-for="Description" class="text-danger small"></span>
-                </div>
-
-                <!-- Category Field -->
-                <div class="form-floating auth-group-muted mb-3">
-                    <select asp-for="CategoryId" class="form-select auth-input-muted" style="background-color: var(--terminal-card-bg); color: var(--terminal-text);">
-                        <option value="" style="background-color: var(--terminal-card-bg); color: var(--terminal-text);">-- Select Category --</option>
-                        @foreach (var category in Model.Categories)
-                        {
-                            <option value="@category.Id" style="background-color: var(--terminal-card-bg); color: var(--terminal-text);">@category.Name</option>
-                        }
-                    </select>
-                    <label asp-for="CategoryId">Term Category</label>
-                    <span asp-validation-for="CategoryId" class="text-danger"></span>
-                </div>
+                <partial name="_LearningTermFormPartial" model="Model" />
 
                 <!-- Action Buttons -->
                 <div class="d-flex flex-column gap-2 mt-4">

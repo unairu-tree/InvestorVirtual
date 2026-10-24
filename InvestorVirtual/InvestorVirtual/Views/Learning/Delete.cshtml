@@ -1,0 +1,61 @@
+﻿@model LearningServiceModel
+
+@{
+    ViewData["Title"] = "Delete Learning Term";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <!-- Warning Banner / Header -->
+            <div class="text-center mb-4">
+                <h2 class="fw-bold glow-text">Delete Term</h2>
+                <p class="text-danger font-monospace small">Are you sure you want to permanently remove this entry?</p>
+            </div>
+
+            <!-- Terminal Card Container -->
+            <div class="card terminal-card shadow-sm p-4 border rounded-3">
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <label class="form-label small font-monospace">TERM NAME</label>
+                        <div class="fs-5 fw-semibold text-break">@Model.TermName</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small font-monospace">SLUG</label>
+                        <div class="font-monospace">@Model.Slug</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small font-monospace">DESCRIPTION</label>
+                        <p class="card-text text-break">@Model.Description</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small font-monospace">CATEGORY</label>
+                        <div>
+                            <span class="badge border border-secondary px-2 py-1">@Model.Category</span>
+                        </div>
+                    </div>
+
+                    <!-- Delete Form Actions -->
+                    <form asp-action="Delete" asp-route-id="@Model.Id" asp-route-slug="@Model.Slug" method="post" class="d-flex justify-content-between align-items-center gap-3 pt-3 border-top border-secondary border-opacity-25">
+                        @Html.AntiForgeryToken()
+
+                        <a asp-action="Index" class="btn btn-outline-secondary w-50 py-2">
+                            Cancel
+                        </a>
+
+                        <button type="submit" class="btn btn-danger w-50 py-2 fw-semibold">
+                            Confirm Delete
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

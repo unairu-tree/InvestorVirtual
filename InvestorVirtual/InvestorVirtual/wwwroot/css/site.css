@@ -389,6 +389,11 @@ html.light-mode div {
         color: var(--terminal-muted, var(--terminal-text)) !important;
     }
 
+    .terminal-card .form-label {
+        color: var(--terminal-text) !important;
+        opacity: 1 !important;
+    }
+
 /* Pagination Theme Link Architecture */
 .terminal-page-link {
     background-color: var(--terminal-card-bg) !important;
@@ -814,4 +819,35 @@ html.light-mode .form-select::placeholder {
 /* Ensure visibility in light mode if needed */
 html.light-mode .search-icon-svg {
     filter: brightness(0) !important;
+}
+
+/* For sidebar menu on phones and tablets */
+#appSidebar {
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
+    max-height: 500px; /* Adjust based on content height */
+}
+
+    #appSidebar.collapsed {
+        max-height: 0;
+    }
+
+/* Themed mobile offcanvas drawer */
+.offcanvas.mobile-partial {
+    width: 280px;
+    background-color: var(--terminal-card-bg) !important;
+    border-right: 1px solid var(--terminal-border);
+    color: var(--terminal-text) !important;
+}
+
+    /* Ensure all links and text inside the mobile offcanvas respect theme text color */
+    .offcanvas.mobile-partial .nav-link,
+    .offcanvas.mobile-partial .offcanvas-title,
+    .offcanvas.mobile-partial div {
+        color: var(--terminal-text) !important;
+    }
+
+/* Light mode exception: invert the close button so it's dark and visible */
+html.light-mode .offcanvas.mobile-partial .btn-close {
+    filter: invert(1) grayscale(100%);
 }

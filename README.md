@@ -141,10 +141,10 @@ InvestorVirtual/
 ## ✨ Features
 
 - [x] User registration and login (ASP.NET Identity)
-- [ ] CRUD operations for [LearningTerm.cs]
-- [ ] RESTful API endpoints
-- [ ] Input validation (server-side & client-side)
-- [ ] Responsive UI with Bootstrap
+- [x] CRUD operations for [LearningTerm.cs]
+- [x] RESTful API endpoints
+- [x] Input validation (server-side & client-side)
+- [x] Responsive UI with Bootstrap
 - [x] Theme changing, including pallets and light/dark mode
 - [ ] Charts for visualizing stock data (using Chart.js or similar)
 - [ ] Interactive investing with virtual currency

@@ -66,6 +66,16 @@ public class LearningController(ILearningService learningService, ITermCategoryS
             return View(model);
         }
 
+        if (learningService.LearningTermExists(model.TermName, model.Slug))
+        {
+            ModelState.AddModelError(string.Empty, "A learning term with this name or slug already exists.");
+
+            // Re-populating the "multi-way" model's category collection
+            model.Categories = termCategoryService.GetAllCategories();
+            return View(model);
+        }
+
+        // Using try-catch here to catch the deeper error and show it to the end user as well
         try
         {
             LearningTermRequestModel serviceModel = new LearningTermRequestModel
@@ -77,10 +87,12 @@ public class LearningController(ILearningService learningService, ITermCategoryS
             };
 
             learningService.AddLeraningTerm(serviceModel);
+
+            TempData["SuccessMessage"] = "Successfully added new learning term!";
         }
         catch (Exception)
         {
-            ModelState.AddModelError(string.Empty, "An unexpected error occurred while saving your data! Please try again later or contact an administrator!");
+            TempData["ErrorMessage"] = "An unexpected error occurred while saving your data! Please try again later or contact an administrator!";
 
             // Re-populating the "multi-way" model's category collection
             model.Categories = termCategoryService.GetAllCategories();
@@ -94,12 +106,117 @@ public class LearningController(ILearningService learningService, ITermCategoryS
     [Route("Learning/Edit/{id}/{slug}")]
     public IActionResult Edit(int id, string slug)
     {
-        return View();
+        LearningServiceModel? existingTerm = learningService.GetLearningTerm(id, slug);
+
+        if (existingTerm == null)
+        {
+            return NotFound();
+        }
+
+        LearningTermInputModel model = new LearningTermInputModel
+        {
+            TermName = existingTerm.TermName,
+            Slug = existingTerm.Slug,
+            Description = existingTerm.Description,
+            CategoryId = (int)existingTerm.Category,
+            Categories = termCategoryService.GetAllCategories()
+        };
+
+        return View(model);
     }
 
     [HttpPost]
-    public IActionResult Edit(LearningTermInputModel model)
+    [Route("Learning/Edit/{id}/{slug}")]
+    public IActionResult Edit(int id, string slug, LearningTermInputModel model)
     {
+        LearningServiceModel? existingTerm = learningService.GetLearningTerm(id, slug);
+
+        if (existingTerm == null)
+        {
+            TempData["ErrorMessage"] = "Security validation failed! Editing aborted!";
+            return RedirectToAction(nameof(Index));
+        }
+
+        if (!ModelState.IsValid)
+        {
+            // Re-populating the "multi-way" model's category collection
+            model.Categories = termCategoryService.GetAllCategories();
+            return View(model);
+        }
+
+        if (learningService.LearningTermExistsForEdit(id, model.TermName, model.Slug))
+        {
+            ModelState.AddModelError(string.Empty, "A learning term with this name already exists.");
+
+            // Re-populating the "multi-way" model's category collection
+            model.Categories = termCategoryService.GetAllCategories();
+            return View(model);
+        }
+
+        try
+        {
+            LearningTermRequestModel serviceModel = new LearningTermRequestModel
+            {
+                TermName = model.TermName,
+                Slug = model.Slug,
+                Description = model.Description,
+                CategoryId = model.CategoryId
+            };
+
+            learningService.EditLearningTerm(id, slug, serviceModel);
+
+            TempData["SuccessMessage"] = "Successfully edited the learning term!";
+        }
+        catch (Exception)
+        {
+            TempData["ErrorMessage"] = "An unexpected error occurred while saving your data! Please try again later or contact an administrator!";
+
+            // Re-populating the "multi-way" model's category collection
+            model.Categories = termCategoryService.GetAllCategories();
+            return View(model);
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpGet]
+    [Route("Learning/Delete/{id}/{slug}")]
+    public async Task<IActionResult> Delete(int id, string slug) // Using both the ID and Slug so the user does not tamper their way into opening a wrong term deletion screen
+    {
+        LearningServiceModel? term = learningService.GetLearningTerm(id, slug);
+
+        if (term == null)
+        {
+            return NotFound();
+        }
+
+        return View(term);
+    }
+
+    [HttpPost]
+    [ActionName("Delete")]
+    [Route("Learning/Delete/{id}/{slug}")]
+    public IActionResult DeleteConfirmed(int id, string slug) // Using both the ID and Slug so even if the user opens a deletion screen normally, they don't tamper their way into deleting the wrong term
+    {
+        LearningServiceModel? term = learningService.GetLearningTerm(id, slug);
+
+        if (term == null)
+        {
+            TempData["ErrorMessage"] = "Security validation failed! Deletion aborted!";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        try
+        {
+            learningService.DeleteLearningTerm(id); // Not sending the slug down to .Core since it has already been checked for tampering
+            TempData["SuccessMessage"] = "Learning term successfully deleted!";
+        }
+        catch (Exception)
+        {
+            TempData["ErrorMessage"] = "An error occurred while trying to delete the term.";
+        }
+
         return RedirectToAction(nameof(Index));
     }
 }

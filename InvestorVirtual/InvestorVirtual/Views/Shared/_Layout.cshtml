@@ -22,25 +22,55 @@
 </head>
 <body class="d-flex flex-column" style="min-height: 100dvh;">
     <header style="min-height: 60px;">
-        <nav class="navbar navbar-expand-sm navbar-financial-primary mb-3">
+
+        <!-- 1. DESKTOP NAVBAR (Completely untouched, hidden on mobile screens: d-none d-md-flex) -->
+        <nav class="navbar navbar-expand navbar-financial-primary mb-3 d-none d-md-flex">
             <div class="container-fluid justify-content-between align-items-center">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
+                <div class="navbar-nav">
+                    <partial name="_NavMenuPartial" />
+                </div>
                 <a class="navbar-brand fw-bold position-absolute start-50 translate-middle-x" asp-area="" asp-controller="Home" asp-action="Index">InvestorVirtual</a>
-
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between w-100">
-                    <div class="navbar-nav">
-                        <partial name="_NavMenuPartial" />
-                    </div>
-                    <div class="navbar-nav ms-auto">
-                        <partial name="_LoginPartial" />
-                    </div>
+                <div class="navbar-nav ms-auto">
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
+
+        <!-- 2. MOBILE NAVBAR (Visible ONLY on mobile/tablets: d-md-none) -->
+        <nav class="navbar navbar-financial-primary mb-3 d-md-none">
+            <div class="container-fluid align-items-center">
+                <!-- Hamburger Button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileDrawer" aria-controls="mobileDrawer" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Centered Brand Logo -->
+                <a class="navbar-brand fw-bold position-absolute start-50 translate-middle-x" asp-area="" asp-controller="Home" asp-action="Index">InvestorVirtual</a>
+            </div>
+        </nav>
+
+        <!-- 3. MOBILE OFFCANVAS SLIDING DRAWER (Partial Width) -->
+        <div class="offcanvas offcanvas-start mobile-partial text-white d-md-none" tabindex="-1" id="mobileDrawer" aria-labelledby="mobileDrawerLabel">
+            <div class="offcanvas-header border-bottom border-secondary">
+                <h5 class="offcanvas-title fw-bold" id="mobileDrawerLabel">InvestorVirtual</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column justify-content-between p-4">
+
+                <!-- Top Section: Main Navigation Links -->
+                <div>
+                    <ul class="navbar-nav">
+                        <partial name="_NavMenuPartial" />
+                    </ul>
+                </div>
+
+                <!-- Bottom Section: Login / Logout Nav -->
+                <div class="mt-auto pt-3 border-top border-secondary">
+                    <partial name="_LoginPartial" />
+                </div>
+
+            </div>
+        </div>
+
     </header>
     <div class="container flex-grow-1">
         <main role="main" class="pb-3">
@@ -49,6 +79,7 @@
     </div>
 
     <partial name="_FooterPartial" />
+    <partial name="_NotificationPartial" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
