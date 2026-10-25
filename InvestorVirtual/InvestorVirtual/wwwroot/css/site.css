@@ -851,3 +851,25 @@ html.light-mode .search-icon-svg {
 html.light-mode .offcanvas.mobile-partial .btn-close {
     filter: invert(1) grayscale(100%);
 }
+
+/* Fix badge text and borders to respect theme variables in light mode, but preserve status colors */
+html.light-mode .badge:not(.bg-success):not(.bg-danger),
+html.light-mode .badge.border-light:not(.bg-success):not(.bg-danger),
+html.light-mode .badge.border-secondary:not(.bg-success):not(.bg-danger) {
+    color: var(--terminal-text) !important;
+    border-color: var(--terminal-border) !important;
+    background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Explicit status enforcement for light mode */
+html.light-mode .badge.bg-success {
+    background-color: #198754 !important;
+    color: #ffffff !important;
+    border-color: #198754 !important;
+}
+
+html.light-mode .badge.bg-danger {
+    background-color: #dc3545 !important;
+    color: #ffffff !important;
+    border-color: #dc3545 !important;
+}

@@ -32,6 +32,7 @@ public class Program
         builder.Services.AddScoped<ILearningService, LearningService>();
         builder.Services.AddScoped<IInvestmentService, InvestmentService>();
         builder.Services.AddScoped<ITermCategoryService, TermCategoryService>();
+        builder.Services.AddScoped<IDaySimulationService, DaySimulationService>();
 
         WebApplication app = builder.Build();
 

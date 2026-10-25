@@ -25,6 +25,10 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public virtual DbSet<PortfolioStock> PortfolioStocks { get; set; } = null!;
 
+    public virtual DbSet<DaySimulation> DaySimulations { get; set; } = null!;
+
+    public virtual DbSet<Watchlist> Watchlists { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

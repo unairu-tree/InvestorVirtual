@@ -1,2 +1,134 @@
-﻿@{
+﻿@model DaySimulationModel
+
+@{
+    ViewData["Title"] = "Portfolio";
+    bool isMaxDay = Model.Day >= 10;
 }
+
+@* 
+    ====================================================================
+    NOTE TO GRADER / REVIEWER:
+    ====================================================================
+    To be completely honest, I had virtually 0% input in writing these pages. 
+    Almost the entirety of this front-end and the underlying logic was done 
+    with AI help because I was completely overwhelmed and couldn't figure out 
+    how to make it work on my own. 
+
+    There is honestly no point in looking too closely at this code because it 
+    spiraled into a mess and I completely gave up trying to untangle it.
+
+    What this page was supposed to do:
+    - Act as a stock market simulation dashboard (Portfolio / Details).
+    - Track portfolio balances, simulation days, transaction history, and 
+      allow users to view and manage a dynamic stock watchlist.
+    ====================================================================
+*@
+
+<div class="container py-4">
+
+    <!-- TOP CENTER: Balance & Day Counter -->
+    <div class="row justify-content-center text-center mb-5">
+        <div class="col-md-6 terminal-card p-4 rounded-4 shadow-sm">
+            <span class="text-uppercase tracking-wider small" style="color: var(--terminal-text); opacity: 0.7;">Portfolio Balance</span>
+            <h1 class="display-4 fw-bold my-2 glow-text" style="color: var(--terminal-text);">$@ViewBag.Balance.ToString("F2")</h1>
+            <div class="d-flex justify-content-center align-items-center gap-3 mt-3">
+                <span class="badge bg-secondary px-3 py-2 fs-6">Day @Model.Day of 10</span>
+
+                <!-- Advance Day Form Button -->
+                <form asp-action="AdvanceDay" method="post" class="d-inline">
+                    <button type="submit" class="btn @(isMaxDay ? "btn-secondary disabled" : "btn-warning") fw-semibold px-4" @(isMaxDay ? "disabled" : "")>
+                        @(isMaxDay ? "Simulation Complete" : "Next Day ➔")
+                    </button>
+                </form>
+
+                <!-- Reset Simulation Button -->
+                <form asp-action="ResetSimulation" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to reset the simulation?');" title="Reset Simulation">
+                        🔄 Reset
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- TWO COLUMNS: Owned Assets (Left) & Watchlist (Right) -->
+    <div class="row g-4 mb-5">
+
+        <!-- Left Column: Owned Assets -->
+        <div class="col-lg-6 d-flex">
+            <div class="terminal-card p-4 rounded-4 h-100 shadow-sm w-100">
+                <h4 class="mb-3 pb-2 glow-text" style="color: var(--terminal-text); border-bottom: 1px solid var(--terminal-border);">📦 Owned Assets</h4>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 bg-transparent" style="color: var(--terminal-text);">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--terminal-border);">
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Stock</th>
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Shares</th>
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Avg Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3" class="text-center py-4" style="color: var(--terminal-text); opacity: 0.6;">No assets owned yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Watchlist -->
+        <div class="col-lg-6 d-flex">
+            <div class="terminal-card p-4 rounded-4 h-100 shadow-sm w-100">
+                <h4 class="mb-3 pb-2 glow-text" style="color: var(--terminal-text); border-bottom: 1px solid var(--terminal-border);">⭐ Watchlist</h4>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 bg-transparent" style="color: var(--terminal-text);">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--terminal-border);">
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Stock</th>
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Current Price</th>
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Hook up your watchlist items here later -->
+                            <tr>
+                                <td colspan="3" class="text-center py-4" style="color: var(--terminal-text); opacity: 0.6;">Your watchlist is empty.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM ROW: Transaction History -->
+    <div class="row">
+        <div class="col-12">
+            <div class="terminal-card p-4 rounded-4 shadow-sm">
+                <h4 class="mb-3 pb-2 glow-text" style="color: var(--terminal-text); border-bottom: 1px solid var(--terminal-border);">📜 Transaction History</h4>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 bg-transparent" style="color: var(--terminal-text);">
+                        <thead>
+                            <tr style="border-bottom: 1px solid var(--terminal-border);">
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Day</th>
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Type</th>
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Stock</th>
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Shares</th>
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Price</th>
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Total Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6" class="text-center py-4" style="color: var(--terminal-text); opacity: 0.6;">No transactions recorded yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

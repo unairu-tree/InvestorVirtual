@@ -965,6 +965,33 @@ namespace InvestorVirtual.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("InvestorVirtual.Data.Models.DaySimulation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int")
+                        .HasComment("The simulation starts on day 1 and has a maximum of 10 days");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DaySimulations", t =>
+                        {
+                            t.HasComment("This is a solo model used for the day simulation mechanic of the app");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Day = 1
+                        });
+                });
+
             modelBuilder.Entity("InvestorVirtual.Data.Models.Event", b =>
                 {
                     b.Property<int>("Id")
