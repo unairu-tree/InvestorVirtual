@@ -160,10 +160,10 @@ Describe how to use the main features of the app after launching it. Add screens
 ```
 1. Navigate to /Register to create an account.
 2. Log in at /Login.
-3. Use the dashboard to manage your [entities].
+3. Navigate around the site.
+4. Test CRUD operations in 'Learning'.
+5. Optional: Navigate around the app while logged out to test the usage of '[Authorize]'.
 ```
-
-> 💡 **Tip:** You can add screenshots using: `![Screenshot](docs/screenshot.png)`
 
 ---
 
