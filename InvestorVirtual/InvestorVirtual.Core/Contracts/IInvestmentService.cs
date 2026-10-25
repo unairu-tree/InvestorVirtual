@@ -16,4 +16,9 @@ public interface IInvestmentService
 
     // A method to check if the stock is already in a watchlist
     bool IsInWatchlist(string userId, string ticker);
+
+    // A helper method that extracts the portfolio tied to the user id (or creates one automatically if a portfolio does not exist)
+    string GetOrCreatePortfolioGuid(string userId);
+
+    PortfolioResponseModel GetPortfolioViewModel(string portfolioGuid);
 }

@@ -1,8 +1,10 @@
-﻿@model DaySimulationModel
+﻿@model PortfolioViewModel
 
 @{
-    ViewData["Title"] = "Portfolio";
-    bool isMaxDay = Model.Day >= 10;
+    ViewData["Title"] = "Portfolio Dashboard";
+    bool isMaxDay = Model?.Simulation?.Day >= 10;
+    decimal balance = Model?.Portfolio?.Balance ?? 0m;
+    int currentDay = Model?.Simulation?.Day ?? 1;
 }
 
 @* 
@@ -28,22 +30,25 @@
 
     <!-- TOP CENTER: Balance & Day Counter -->
     <div class="row justify-content-center text-center mb-5">
-        <div class="col-md-6 terminal-card p-4 rounded-4 shadow-sm">
+        <div class="col-md-8 col-lg-6 terminal-card p-4 rounded-4 shadow-sm">
             <span class="text-uppercase tracking-wider small" style="color: var(--terminal-text); opacity: 0.7;">Portfolio Balance</span>
-            <h1 class="display-4 fw-bold my-2 glow-text" style="color: var(--terminal-text);">$@ViewBag.Balance.ToString("F2")</h1>
-            <div class="d-flex justify-content-center align-items-center gap-3 mt-3">
-                <span class="badge bg-secondary px-3 py-2 fs-6">Day @Model.Day of 10</span>
+            <h1 class="display-4 fw-bold my-2 glow-text" style="color: var(--terminal-text);">$@balance.ToString("F2")</h1>
+            
+            <div class="d-flex justify-content-center align-items-center gap-3 mt-3 flex-wrap">
+                <span class="badge px-3 py-2 fs-6 border" style="background-color: var(--terminal-card-bg); color: var(--terminal-text); border-color: var(--terminal-border) !important;">
+                    Day @currentDay of 10
+                </span>
 
                 <!-- Advance Day Form Button -->
                 <form asp-action="AdvanceDay" method="post" class="d-inline">
-                    <button type="submit" class="btn @(isMaxDay ? "btn-secondary disabled" : "btn-warning") fw-semibold px-4" @(isMaxDay ? "disabled" : "")>
+                    <button type="submit" class="btn @(isMaxDay ? "btn-secondary disabled" : "btn-warning") fw-semibold px-4 shadow-sm" @(isMaxDay ? "disabled" : "")>
                         @(isMaxDay ? "Simulation Complete" : "Next Day ➔")
                     </button>
                 </form>
 
                 <!-- Reset Simulation Button -->
                 <form asp-action="ResetSimulation" method="post" class="d-inline">
-                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to reset the simulation?');" title="Reset Simulation">
+                    <button type="submit" class="btn btn-outline-danger btn-sm px-3 py-2" onclick="return confirm('Are you sure you want to reset the simulation?');" title="Reset Simulation">
                         🔄 Reset
                     </button>
                 </form>
@@ -56,21 +61,37 @@
 
         <!-- Left Column: Owned Assets -->
         <div class="col-lg-6 d-flex">
-            <div class="terminal-card p-4 rounded-4 h-100 shadow-sm w-100">
+            <div class="terminal-card p-4 rounded-4 h-100 shadow-sm w-100 d-flex flex-column">
                 <h4 class="mb-3 pb-2 glow-text" style="color: var(--terminal-text); border-bottom: 1px solid var(--terminal-border);">📦 Owned Assets</h4>
-                <div class="table-responsive">
+                <div class="table-responsive flex-grow-1">
                     <table class="table align-middle mb-0 bg-transparent" style="color: var(--terminal-text);">
                         <thead>
                             <tr style="border-bottom: 1px solid var(--terminal-border);">
-                                <th class="bg-transparent" style="color: var(--terminal-text);">Stock</th>
-                                <th class="bg-transparent" style="color: var(--terminal-text);">Shares</th>
-                                <th class="bg-transparent" style="color: var(--terminal-text);">Avg Price</th>
+                                <th class="bg-transparent text-start" style="color: var(--terminal-text);">Stock</th>
+                                <th class="bg-transparent text-end" style="color: var(--terminal-text);">Shares</th>
+                                <th class="bg-transparent text-end" style="color: var(--terminal-text);">Price</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="3" class="text-center py-4" style="color: var(--terminal-text); opacity: 0.6;">No assets owned yet.</td>
-                            </tr>
+                            @if (Model?.Portfolio?.PortfolioStocks != null && Model.Portfolio.PortfolioStocks.Any())
+                            {
+                                @foreach (var item in Model.Portfolio.PortfolioStocks)
+                                {
+                                    <tr style="border-bottom: 1px solid var(--terminal-border); opacity: 0.9;">
+                                        <td class="bg-transparent text-start fw-semibold" style="color: var(--terminal-text);">
+                                            @item.Stock?.Ticker
+                                        </td>
+                                        <td class="bg-transparent text-end" style="color: var(--terminal-text);">1</td>
+                                        <td class="bg-transparent text-end" style="color: var(--terminal-text);">    ?? "0.00")</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center py-4" style="color: var(--terminal-text); opacity: 0.6;">No assets owned yet.</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -79,22 +100,35 @@
 
         <!-- Right Column: Watchlist -->
         <div class="col-lg-6 d-flex">
-            <div class="terminal-card p-4 rounded-4 h-100 shadow-sm w-100">
+            <div class="terminal-card p-4 rounded-4 h-100 shadow-sm w-100 d-flex flex-column">
                 <h4 class="mb-3 pb-2 glow-text" style="color: var(--terminal-text); border-bottom: 1px solid var(--terminal-border);">⭐ Watchlist</h4>
-                <div class="table-responsive">
+                <div class="table-responsive flex-grow-1">
                     <table class="table align-middle mb-0 bg-transparent" style="color: var(--terminal-text);">
                         <thead>
                             <tr style="border-bottom: 1px solid var(--terminal-border);">
-                                <th class="bg-transparent" style="color: var(--terminal-text);">Stock</th>
-                                <th class="bg-transparent" style="color: var(--terminal-text);">Current Price</th>
-                                <th class="bg-transparent" style="color: var(--terminal-text);">Action</th>
+                                <th class="bg-transparent text-start" style="color: var(--terminal-text);">Stock</th>
+                                <th class="bg-transparent text-end" style="color: var(--terminal-text);">Current Price</th>
+                                <th class="bg-transparent text-end" style="color: var(--terminal-text);">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Hook up your watchlist items here later -->
-                            <tr>
-                                <td colspan="3" class="text-center py-4" style="color: var(--terminal-text); opacity: 0.6;">Your watchlist is empty.</td>
-                            </tr>
+                            @if (Model?.Portfolio?.PortfolioStocks != null && Model.Portfolio.PortfolioStocks.Any())
+                            {
+                                @foreach (var item in Model.Portfolio.PortfolioStocks)
+                                {
+                                    string ticker = item.Stock?.Ticker ?? "N/A";
+                                    // Update this line to point to how your price is accessed through the event/stock
+                                    decimal price = 0m; // e.g., item.Stock?.Price or whatever your property is
+                            
+                                    <tr style="border-bottom: 1px solid var(--terminal-border); opacity: 0.9;">
+                                        <td class="bg-transparent text-start fw-semibold" style="color: var(--terminal-text);">
+                                            @ticker
+                                        </td>
+                                        <td class="bg-transparent text-end" style="color: var(--terminal-text);">1</td>
+                                        <td class="bg-transparent text-end" style="color: var(--terminal-text);">$@price.ToString("F2")</td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -112,7 +146,7 @@
                     <table class="table align-middle mb-0 bg-transparent" style="color: var(--terminal-text);">
                         <thead>
                             <tr style="border-bottom: 1px solid var(--terminal-border);">
-                                <th class="bg-transparent" style="color: var(--terminal-text);">Day</th>
+                                <th class="bg-transparent" style="color: var(--terminal-text);">Step</th>
                                 <th class="bg-transparent" style="color: var(--terminal-text);">Type</th>
                                 <th class="bg-transparent" style="color: var(--terminal-text);">Stock</th>
                                 <th class="bg-transparent" style="color: var(--terminal-text);">Shares</th>
@@ -121,9 +155,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="6" class="text-center py-4" style="color: var(--terminal-text); opacity: 0.6;">No transactions recorded yet.</td>
-                            </tr>
+                            @if (Model?.Transactions != null && Model.Transactions.Any())
+                            {
+                                @foreach (var tx in Model.Transactions)
+                                {
+                                    <tr style="border-bottom: 1px solid var(--terminal-border);">
+                                        <td class="bg-transparent" style="color: var(--terminal-text);">Step @tx.MilestoneStep</td>
+                                        <td class="bg-transparent" style="color: var(--terminal-text);">
+                                            <span class="badge @(tx.IsBuyOrder ? "bg-success" : "bg-danger")">
+                                                @(tx.IsBuyOrder ? "Buy" : "Sell")
+                                            </span>
+                                        </td>
+                                        <td class="bg-transparent fw-semibold" style="color: var(--terminal-text);">@tx.Stock?.Ticker</td>
+                                        <td class="bg-transparent" style="color: var(--terminal-text);">@tx.Shares</td>
+                                        <td class="bg-transparent" style="color: var(--terminal-text);">$@tx.PricePerShare.ToString("F2")</td>
+                                        <td class="bg-transparent fw-bold" style="color: var(--terminal-text);">$@tx.TotalValue.ToString("F2")</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center py-4" style="color: var(--terminal-text); opacity: 0.6;">No transactions recorded yet.</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

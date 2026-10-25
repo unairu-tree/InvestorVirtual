@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using InvestorVirtual.Core.Contracts;
 using InvestorVirtual.Core.Models.Response;
+using InvestorVirtual.ViewModels.Investment;
 
 public class InvestmentController(IInvestmentService investmentService, IDaySimulationService simulationService) : BaseController
 {
@@ -41,7 +42,9 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
             return RedirectToPage("/Account/Login", new { area = "Identity" });
         }
 
-        bool isBookmarked = investmentService.ToggleWatchlist(userId, ticker);
+        string portfolioGuid = investmentService.GetOrCreatePortfolioGuid(userId);
+
+        bool isBookmarked = investmentService.ToggleWatchlist(portfolioGuid, ticker);
 
         if (isBookmarked)
         {
@@ -58,12 +61,28 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
     [HttpGet]
     public IActionResult Portfolio()
     {
-        DaySimulationModel simulationState = simulationService.GetSimulationStatus();
+        string? userId = GetUserId();
 
-        ViewBag.CurrentDay = simulationState.Day;
-        ViewBag.Balance = simulationState.Balance;
+        if (string.IsNullOrEmpty(userId))
+        {
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
 
-        return View(simulationState);
+        string portfolioGuid = investmentService.GetOrCreatePortfolioGuid(userId);
+
+        DaySimulationModel dayModel = simulationService.GetSimulationStatus();
+
+        PortfolioResponseModel portfolioModel = investmentService.GetPortfolioViewModel(portfolioGuid);
+
+        PortfolioViewModel viewModel = new PortfolioViewModel
+        { 
+            Simulation = dayModel,
+            Portfolio = portfolioModel.Portfolio,
+            Watchlist = portfolioModel.Watchlist,
+            Transactions = portfolioModel.Transactions
+        };
+
+        return View(viewModel);
     }
 
     [HttpPost]

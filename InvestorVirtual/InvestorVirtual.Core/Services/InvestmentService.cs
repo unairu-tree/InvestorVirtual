@@ -106,38 +106,75 @@ public class InvestmentService(IRepository repository) : IInvestmentService
         };
     }
 
-    public bool ToggleWatchlist(string userId, string ticker)
+    public bool ToggleWatchlist(string portfolioGuid, string ticker)
     {
         Stock? stock = repository.All<Stock>()
-            .FirstOrDefault(s => s.Ticker == ticker && !s.IsDeleted);
+            .FirstOrDefault(s => s.Ticker == ticker&& !s.IsDeleted);
 
         if (stock == null) return false;
 
-        Watchlist? existingEntry = repository.All<Watchlist>()
-            .FirstOrDefault(w => w.UserId == userId
-            && w.StockId == stock.Id);
+        PortfolioStock? existingEntry = repository.All<PortfolioStock>()
+            .FirstOrDefault(ps => ps.PortfolioGuid == portfolioGuid
+                               && ps.StockId == stock.Id);
 
         if (existingEntry != null)
         {
             // Remove from watchlist
             repository.Remove(existingEntry);
             repository.SaveChanges();
-            return false; // Returns false indicating it is no longer in watchlist
+            return false; // No longer in watchlist
         }
         else
         {
             // Add to watchlist
-            var newWatchlistEntry = new Watchlist
+            var newEntry = new PortfolioStock
             {
-                UserId = userId,
+                PortfolioGuid = portfolioGuid,
                 StockId = stock.Id
             };
 
-            repository.Add(newWatchlistEntry);
+            repository.Add(newEntry);
             repository.SaveChanges();
-            return true; // Returns true indicating it is now bookmarked
+            return true; // Now bookmarked
         }
     }
 
-    public bool IsInWatchlist(string userId, string ticker) => repository.All<Watchlist>().Any(w => w.UserId == userId && w.Stock.Ticker == ticker);
+    public bool IsInWatchlist(string portfolioGuid, string ticker) => repository.All<PortfolioStock>().Any(ps => ps.PortfolioGuid == portfolioGuid && ps.Stock.Ticker == ticker);
+
+    public string GetOrCreatePortfolioGuid(string userId)
+    {
+        Portfolio? portfolio = repository.All<Portfolio>()
+            .FirstOrDefault(p => p.UserGuid == userId);
+
+        if (portfolio == null)
+        {
+            portfolio = new Portfolio
+            {
+                Guid = userId,
+                UserGuid = userId,
+                Balance = 10000m
+            };
+
+            repository.Add(portfolio);
+            repository.SaveChanges();
+        }
+
+        return portfolio.Guid.ToString();
+    }
+
+    public PortfolioResponseModel GetPortfolioViewModel(string portfolioGuid)
+    {
+        Portfolio? portfolio = repository.All<Portfolio>()
+            .Include(p => p.PortfolioStocks)
+                .ThenInclude(ps => ps.Stock)
+            .Include(p => p.Transactions)
+            .FirstOrDefault(p => p.Guid == portfolioGuid);
+
+        return new PortfolioResponseModel
+        {
+            Portfolio = portfolio ?? new Portfolio(),
+            Watchlist = portfolio?.PortfolioStocks ?? new List<PortfolioStock>(),
+            Transactions = portfolio?.Transactions ?? new List<Transaction>()
+        };
+    }
 }
