@@ -24,5 +24,6 @@ public class StockDetailsModel
 
     public bool IsInWatchlist { get; set; }
 
-    public ICollection<StockEventModel> Events { get; set; } = new HashSet<StockEventModel>();
+    // public ICollection<StockEventModel> Events { get; set; } = new HashSet<StockEventModel>();
+    public ICollection<StockEventModel> Events { get; set; } = new List<StockEventModel>();
 }

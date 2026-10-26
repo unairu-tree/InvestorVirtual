@@ -29,7 +29,21 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
             return NotFound();
         }
 
-        return View(model);
+        TempPortfolioViewModel tempPortfolio = new TempPortfolioViewModel
+        {
+            Id = model!.Id,
+            Ticker = model.Ticker,
+            CompanyName = model.CompanyName,
+            ShortDescription = model.ShortDescription,
+            Sector = model.Sector,
+            LogoPath = model.LogoPath,
+
+            IsInWatchlist = model.IsInWatchlist,
+
+            Events = model.Events
+        };
+
+        return View(tempPortfolio);
     }
 
     [HttpPost]

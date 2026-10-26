@@ -9,4 +9,14 @@ public class StockEventModel
     public string NewsSource { get; set; } = null!;
 
     public string NewsBody { get; set; } = null!;
+
+    // temp
+    public decimal CurrentPrice { get; set; }
+
+    public long Volume { get; set; }
+
+    public bool IsBullishVolume { get; set; }
+
+    public string? AnalysisSummary { get; set; }
+    // temp
 }

@@ -72,11 +72,11 @@ public class InvestmentService(IRepository repository) : IInvestmentService
         List<Event> activeEvents = stock.Events
             .Where(e => !e.IsDeleted)
             .OrderBy(e => e.Id)
-            .Take(currentDay)
+            //.Take(currentDay)
             .ToList();
 
         // The latest event represents today's active price and metrics
-        Event? todaysEvent = activeEvents.LastOrDefault();
+        // Event? todaysEvent = activeEvents.LastOrDefault();
 
         return new StockDetailsModel
         {
@@ -88,20 +88,26 @@ public class InvestmentService(IRepository repository) : IInvestmentService
             LogoPath = stock.LogoPath,
 
             // Current day trading stats
-            CurrentPrice = todaysEvent?.Price?.PriceValue ?? 0m,
-            Volume = todaysEvent?.Price?.Volume ?? 0,
-            IsBullishVolume = todaysEvent?.Price?.IsBullishVolume ?? true,
-            AnalysisSummary = todaysEvent?.Analysis?.Reasoning,
+            // CurrentPrice = todaysEvent?.Price?.PriceValue ?? 0m,
+            // Volume = todaysEvent?.Price?.Volume ?? 0,
+            // IsBullishVolume = todaysEvent?.Price?.IsBullishVolume ?? true,
+            // AnalysisSummary = todaysEvent?.Analysis?.Reasoning,
 
             IsInWatchlist = !string.IsNullOrEmpty(userId) && IsInWatchlist(userId, ticker),
 
-            // Timeline events mapped for your view iteration
             Events = activeEvents.Select((e, index) => new StockEventModel
             {
                 MilestoneDay = index + 1,
                 Title = e.Title,
                 NewsSource = e.News?.Source ?? string.Empty,
-                NewsBody = e.News?.Body ?? string.Empty
+                NewsBody = e.News?.Body ?? string.Empty,
+
+                // temp
+                CurrentPrice = e?.Price?.PriceValue ?? 0m,
+                Volume = e?.Price?.Volume ?? 0,
+                IsBullishVolume = e?.Price?.IsBullishVolume ?? true,
+                AnalysisSummary = e?.Analysis?.Reasoning,
+                // temp
             }).ToList()
         };
     }

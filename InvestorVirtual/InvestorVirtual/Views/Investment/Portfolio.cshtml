@@ -82,14 +82,14 @@
                                             @item.Stock?.Ticker
                                         </td>
                                         <td class="bg-transparent text-end" style="color: var(--terminal-text);">1</td>
-                                        <td class="bg-transparent text-end" style="color: var(--terminal-text);">    ?? "0.00")</td>
+                                        <td class="bg-transparent text-end" style="color: var(--terminal-text);">$0.00</td>
                                     </tr>
                                 }
                             }
                             else
                             {
                                 <tr>
-                                    <td colspan="3" class="text-center py-4" style="color: var(--terminal-text); opacity: 0.6;">No assets owned yet.</td>
+                                    <td colspan="3" class="text-center py-4" style="background-color: transparent !important; color: var(--terminal-text); opacity: 0.6;">No assets owned yet.</td>
                                 </tr>
                             }
                         </tbody>
@@ -117,17 +117,26 @@
                                 @foreach (var item in Model.Portfolio.PortfolioStocks)
                                 {
                                     string ticker = item.Stock?.Ticker ?? "N/A";
-                                    // Update this line to point to how your price is accessed through the event/stock
-                                    decimal price = 0m; // e.g., item.Stock?.Price or whatever your property is
+                                    decimal price = 0m;
                             
                                     <tr style="border-bottom: 1px solid var(--terminal-border); opacity: 0.9;">
                                         <td class="bg-transparent text-start fw-semibold" style="color: var(--terminal-text);">
-                                            @ticker
+                                            <a asp-action="Details" asp-route-ticker="@ticker" class="text-decoration-none glow-text" style="color: var(--terminal-text);">
+                                                @ticker
+                                            </a>
                                         </td>
-                                        <td class="bg-transparent text-end" style="color: var(--terminal-text);">1</td>
                                         <td class="bg-transparent text-end" style="color: var(--terminal-text);">$@price.ToString("F2")</td>
+                                        <td class="bg-transparent text-end">
+                                            <a asp-action="Details" asp-route-ticker="@ticker" class="btn btn-sm btn-outline-warning px-3">View</a>
+                                        </td>
                                     </tr>
                                 }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center py-4" style="background-color: transparent !important; color: var(--terminal-text); opacity: 0.6;">Your watchlist is empty.</td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -176,7 +185,7 @@
                             else
                             {
                                 <tr>
-                                    <td colspan="6" class="text-center py-4" style="color: var(--terminal-text); opacity: 0.6;">No transactions recorded yet.</td>
+                                    <td colspan="6" class="text-center py-4" style="background-color: transparent !important; color: var(--terminal-text); opacity: 0.6;">No transactions recorded yet.</td>
                                 </tr>
                             }
                         </tbody>
