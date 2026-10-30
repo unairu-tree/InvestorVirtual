@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InvestorVirtual.Common\InvestorVirtual.Common.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Common\InvestorVirtual.GCommon.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Data.Common\InvestorVirtual.Data.Common.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Data.Models\InvestorVirtual.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

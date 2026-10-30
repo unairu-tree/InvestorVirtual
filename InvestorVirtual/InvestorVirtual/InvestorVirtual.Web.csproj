@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-InvestorVirtual-b71fac44-0ccb-4201-ad10-d2cf7b29cd24</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.13" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.13">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\logos\" />
+    <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\images\icons\" />
+    <Folder Include="wwwroot\images\journey\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InvestorVirtual.Common\InvestorVirtual.GCommon.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Core\InvestorVirtual.Services.Core.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Web.Infrastructure\InvestorVirtual.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Web.ViewModels\InvestorVirtual.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

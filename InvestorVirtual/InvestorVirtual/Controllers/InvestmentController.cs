@@ -1,10 +1,11 @@
-﻿namespace InvestorVirtual.Controllers;
+﻿namespace InvestorVirtual.Web.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 
-using InvestorVirtual.Core.Contracts;
-using InvestorVirtual.Core.Models.Response;
-using InvestorVirtual.ViewModels.Investment;
+using InvestorVirtual.Web.ViewModels.Investment;
+
+using InvestorVirtual.Services.Core.Contracts;
+using InvestorVirtual.Services.Core.Data.Investment.Response;
 
 public class InvestmentController(IInvestmentService investmentService, IDaySimulationService simulationService) : BaseController
 {
@@ -29,7 +30,7 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
             return NotFound();
         }
 
-        TempPortfolioViewModel tempPortfolio = new TempPortfolioViewModel
+        TempPortfolioViewModel tempPortfolio = new()
         {
             Id = model!.Id,
             Ticker = model.Ticker,
@@ -69,34 +70,13 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
             TempData["Message"] = $"{ticker} removed from your Watchlist.";
         }
 
-        return RedirectToAction(nameof(Details), new { ticker = ticker });
+        return RedirectToAction(nameof(Details), new { ticker });
     }
 
     [HttpGet]
     public IActionResult Portfolio()
     {
-        string? userId = GetUserId();
-
-        if (string.IsNullOrEmpty(userId))
-        {
-            return RedirectToPage("/Account/Login", new { area = "Identity" });
-        }
-
-        string portfolioGuid = investmentService.GetOrCreatePortfolioGuid(userId);
-
-        DaySimulationModel dayModel = simulationService.GetSimulationStatus();
-
-        PortfolioResponseModel portfolioModel = investmentService.GetPortfolioViewModel(portfolioGuid);
-
-        PortfolioViewModel viewModel = new PortfolioViewModel
-        { 
-            Simulation = dayModel,
-            Portfolio = portfolioModel.Portfolio,
-            Watchlist = portfolioModel.Watchlist,
-            Transactions = portfolioModel.Transactions
-        };
-
-        return View(viewModel);
+        return View();
     }
 
     [HttpPost]

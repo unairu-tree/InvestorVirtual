@@ -1,6 +1,7 @@
-﻿namespace InvestorVirtual.Common.Extensions;
+﻿namespace InvestorVirtual.GCommon.Extensions;
 
 using System.Reflection;
+
 using System.ComponentModel.DataAnnotations;
 
 public static class EnumNameExtensions

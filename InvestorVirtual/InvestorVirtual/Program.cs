@@ -1,12 +1,13 @@
-namespace InvestorVirtual;
+namespace InvestorVirtual.Web;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using InvestorVirtual.Data;
-using InvestorVirtual.Data.Common;
-using InvestorVirtual.Core.Services;
-using InvestorVirtual.Core.Contracts;
+using InvestorVirtual.Data.Repository;
+
+using InvestorVirtual.Services.Core;
+using InvestorVirtual.Services.Core.Contracts;
 
 public class Program
 {
@@ -51,6 +52,7 @@ public class Program
         app.UseHttpsRedirection();
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapStaticAssets();

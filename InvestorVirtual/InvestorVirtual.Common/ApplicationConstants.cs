@@ -1,4 +1,4 @@
-﻿namespace InvestorVirtual.Common;
+﻿namespace InvestorVirtual.GCommon;
 
 public class ApplicationConstants
 {

@@ -1,6 +1,6 @@
-﻿namespace InvestorVirtual.Core.Contracts;
+﻿namespace InvestorVirtual.Services.Core.Contracts;
 
-using InvestorVirtual.Core.Models.Response;
+using InvestorVirtual.Services.Core.Data.Learning.Response;
 
 public interface ITermCategoryService
 {

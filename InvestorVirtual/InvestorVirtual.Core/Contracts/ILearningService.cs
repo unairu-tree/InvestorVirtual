@@ -1,7 +1,7 @@
-﻿namespace InvestorVirtual.Core.Contracts;
+﻿namespace InvestorVirtual.Services.Core.Contracts;
 
-using InvestorVirtual.Core.Models.Request;
-using InvestorVirtual.Core.Models.Response;
+using InvestorVirtual.Services.Core.Data.Learning.Request;
+using InvestorVirtual.Services.Core.Data.Learning.Response;
 
 // This is the interface inherited by the services responsible for passing data to the learning controller
 public interface ILearningService

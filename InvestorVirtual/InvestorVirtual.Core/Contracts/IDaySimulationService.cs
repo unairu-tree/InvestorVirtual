@@ -1,6 +1,6 @@
-﻿namespace InvestorVirtual.Core.Contracts;
+﻿namespace InvestorVirtual.Services.Core.Contracts;
 
-using InvestorVirtual.Core.Models.Response;
+using InvestorVirtual.Services.Core.Data.Investment.Response;
 
 public interface IDaySimulationService
 {

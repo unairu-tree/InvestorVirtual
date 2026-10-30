@@ -1,13 +1,14 @@
-namespace InvestorVirtual.Controllers;
+namespace InvestorVirtual.Web.Controllers;
 
 using System.Diagnostics;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-using InvestorVirtual.ViewModels;
-using InvestorVirtual.Core.Contracts;
-using InvestorVirtual.Core.Models.Response;
+using InvestorVirtual.Web.ViewModels;
+
+using InvestorVirtual.Services.Core.Contracts;
+using InvestorVirtual.Services.Core.Data.Investment.Response;
 
 [AllowAnonymous]
 public class HomeController(IHomeService homeService) : BaseController

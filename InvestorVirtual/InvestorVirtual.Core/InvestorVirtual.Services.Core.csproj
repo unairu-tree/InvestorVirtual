@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InvestorVirtual.Common\InvestorVirtual.GCommon.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Data.Models\InvestorVirtual.Data.Models.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Data\InvestorVirtual.Data.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Services.AutoMapping\InvestorVirtual.Services.AutoMapping.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Services.Common\InvestorVirtual.Services.Common.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Services.Core.Data\InvestorVirtual.Services.Core.Data.csproj" />
+  </ItemGroup>
+
+</Project>

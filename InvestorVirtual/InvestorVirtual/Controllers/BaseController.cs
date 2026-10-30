@@ -1,4 +1,4 @@
-﻿namespace InvestorVirtual.Controllers;
+﻿namespace InvestorVirtual.Web.Controllers;
 
 using System.Security.Claims;
 

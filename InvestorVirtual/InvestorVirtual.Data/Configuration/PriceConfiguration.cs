@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-using Models;
+using InvestorVirtual.Data.Models;
 
 public class PriceConfiguration : IEntityTypeConfiguration<Price>
 {

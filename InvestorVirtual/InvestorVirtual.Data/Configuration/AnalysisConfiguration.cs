@@ -3,8 +3,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-using Models;
-using Models.Enums;
+using InvestorVirtual.Data.Models;
+using InvestorVirtual.Data.Models.Enums;
 
 public class AnalysisConfiguration : IEntityTypeConfiguration<Analysis>
 {

@@ -1,15 +1,15 @@
-﻿namespace InvestorVirtual.Controllers;
+﻿namespace InvestorVirtual.Web.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-using InvestorVirtual.Core.Contracts;
-using InvestorVirtual.Core.Models.Request;
-using InvestorVirtual.Core.Models.Response;
+using InvestorVirtual.Web.ViewModels.Learning;
 
-using InvestorVirtual.ViewModels.Learning;
+using InvestorVirtual.Services.Core.Contracts;
+using InvestorVirtual.Services.Core.Data.Learning.Request;
+using InvestorVirtual.Services.Core.Data.Learning.Response;
 
-using static InvestorVirtual.Common.ApplicationConstants;
+using static InvestorVirtual.GCommon.ApplicationConstants;
 
 public class LearningController(ILearningService learningService, ITermCategoryService termCategoryService) : BaseController
 {
@@ -34,7 +34,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
     public IActionResult Create()
     {
         // Populating the "multi-way" model's category collection
-        LearningTermInputModel model = new LearningTermInputModel
+        LearningTermInputModel model = new()
         {
             Categories = termCategoryService.GetAllCategories()
         };
@@ -78,7 +78,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
         // Using try-catch here to catch the deeper error and show it to the end user as well
         try
         {
-            LearningTermRequestModel serviceModel = new LearningTermRequestModel
+            LearningTermRequestModel serviceModel = new()
             {
                 TermName = model.TermName,
                 Slug = model.Slug,
@@ -113,7 +113,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
             return NotFound();
         }
 
-        LearningTermInputModel model = new LearningTermInputModel
+        LearningTermInputModel model = new()
         {
             TermName = existingTerm.TermName,
             Slug = existingTerm.Slug,
@@ -155,7 +155,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
 
         try
         {
-            LearningTermRequestModel serviceModel = new LearningTermRequestModel
+            LearningTermRequestModel serviceModel = new()
             {
                 TermName = model.TermName,
                 Slug = model.Slug,

@@ -1,9 +1,23 @@
 <Solution>
+  <Folder Name="/Data/">
+    <Project Path="InvestorVirtual.Data.Common/InvestorVirtual.Data.Common.csproj" Id="07b27651-93f7-4f76-949a-1dbbe99054cd" />
+    <Project Path="InvestorVirtual.Data.Models/InvestorVirtual.Data.Models.csproj" Id="257debf9-f902-46ad-95fc-9a08c981760d" />
+    <Project Path="InvestorVirtual.Data/InvestorVirtual.Data.csproj" Id="0f07ae72-290a-43a8-841d-b5ee83f70142" />
+  </Folder>
+  <Folder Name="/Services/">
+    <Project Path="InvestorVirtual.Core/InvestorVirtual.Services.Core.csproj" Id="b4265c7f-3dc8-4a54-ba60-3085f9611cb7" />
+    <Project Path="InvestorVirtual.Services.AutoMapping/InvestorVirtual.Services.AutoMapping.csproj" Id="fbc764ed-aaad-47a5-b177-310a4a327612" />
+    <Project Path="InvestorVirtual.Services.Common/InvestorVirtual.Services.Common.csproj" Id="2755990b-3a5b-4853-b310-36cca638cc1d" />
+    <Project Path="InvestorVirtual.Services.Core.Data/InvestorVirtual.Services.Core.Data.csproj" Id="f00cec3e-919b-4621-907e-5b1f88236fd1" />
+  </Folder>
   <Folder Name="/Solution Items/">
     <File Path="../README.md" />
   </Folder>
-  <Project Path="InvestorVirtual.Common/InvestorVirtual.Common.csproj" Id="fa17316c-011f-4d2e-a782-1d27b08931a4" />
-  <Project Path="InvestorVirtual.Core/InvestorVirtual.Core.csproj" Id="b4265c7f-3dc8-4a54-ba60-3085f9611cb7" />
-  <Project Path="InvestorVirtual.Data/InvestorVirtual.Data.csproj" Id="0f07ae72-290a-43a8-841d-b5ee83f70142" />
-  <Project Path="InvestorVirtual/InvestorVirtual.csproj" />
+  <Folder Name="/Tests/" />
+  <Folder Name="/Web/">
+    <Project Path="InvestorVirtual.Web.Infrastructure/InvestorVirtual.Web.Infrastructure.csproj" Id="17729f25-9586-4e1d-8979-bb90c02dea3d" />
+    <Project Path="InvestorVirtual.Web.ViewModels/InvestorVirtual.Web.ViewModels.csproj" Id="838e7a8b-b5b5-4050-b71a-ab29a3b74f4d" />
+    <Project Path="InvestorVirtual/InvestorVirtual.Web.csproj" />
+  </Folder>
+  <Project Path="InvestorVirtual.Common/InvestorVirtual.GCommon.csproj" Id="fa17316c-011f-4d2e-a782-1d27b08931a4" />
 </Solution>
