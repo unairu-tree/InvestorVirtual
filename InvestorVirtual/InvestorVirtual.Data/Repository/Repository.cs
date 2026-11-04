@@ -17,6 +17,11 @@ public class Repository(ApplicationDbContext context) : IRepository
         context.Set<T>().Remove(entity);
     }
 
+    public void RemoveRange<T>(IEnumerable<T> entities) where T : class
+    {
+        context.Set<T>().RemoveRange(entities);
+    }
+
     public int SaveChanges()
     {
         return context.SaveChanges();

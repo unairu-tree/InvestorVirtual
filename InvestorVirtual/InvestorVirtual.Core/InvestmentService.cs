@@ -8,134 +8,149 @@ using InvestorVirtual.Data.Repository;
 using InvestorVirtual.Services.Core.Contracts;
 using InvestorVirtual.Services.Core.Data.Investment.Response;
 
+using static InvestorVirtual.GCommon.ApplicationConstants;
+
 // This is the investing service inheriting and implementing the tasks from the interface
 public class InvestmentService(IRepository repository) : IInvestmentService
 {
-    public IEnumerable<AllAssetsModel> GetAllAssets(string? searchQuery, string? sector, string? sorting) // TODO: Implement usage of milestone value
+    public IQueryable<AssetsResponseModel> GetAllAssets(string? searchQuery, string? sector)
     {
-        IQueryable<Stock> allStocks = repository.All<Stock>(); // Pull all stocks into the expression tree
+        IQueryable<Stock> allStocks = repository.All<Stock>()
+            .Where(s => !s.IsDeleted); // Pull all stocks into the expression tree
 
         if (!string.IsNullOrWhiteSpace(searchQuery)) // If a NAME was given - enters this 'if'
         {
             string searchTerm = searchQuery.Trim().ToLower(); // "Trims" and "ToLowers" the name to normalize it
             allStocks = allStocks
-                .Where(s => s.Ticker.Contains(searchTerm, StringComparison.CurrentCultureIgnoreCase) ||
-                            s.CompanyName.Contains(searchTerm, StringComparison.CurrentCultureIgnoreCase)); // Searching both "Ticker" and "Company Name" in order to replicate the feel of searching in apps/sites like "Revolut" and "Yahoo Finance"
+                .Where(s => s.Ticker.ToLower().Contains(searchTerm) ||     // Reverted to using .ToLower() since the previously commited version was unable to be translated by EF Core
+                            s.CompanyName.ToLower().Contains(searchTerm)); // Searching both "Ticker" and "Company Name" in order to replicate the feel of searching in apps/sites like "Revolut" and "Yahoo Finance"
         }
 
         if (!string.IsNullOrWhiteSpace(sector)) // If a SECTOR was given - enters this 'if'
         {
             string sectorTerm = sector.Trim().ToLower(); // Normalizing the term
             allStocks = allStocks
-                .Where(s => s.Sector.Contains(sectorTerm, StringComparison.CurrentCultureIgnoreCase)); // Attaching it to the expression tree
+                .Where(s => s.Sector.ToLower().Contains(sectorTerm)); // Attaching it to the expression tree
         }
 
-        allStocks = sorting switch // More compact vesion of switch case to attach the kind of sorting the user desires to see
-        {
-            "AddedDesc" => allStocks.OrderByDescending(s => s.Id), // Since ID is auto-incremented (in our case I manually added ids for most entities to make sure EF core could seed them properly based on how their relations work) we can use the ID as a form of "when was it added"
-            "AlphabeticalAsc" => allStocks.OrderBy(s => s.CompanyName), // Alphabetic ascending
-            "AlphabeticalDesc" => allStocks.OrderByDescending(s => s.CompanyName), // Alphabetic descending
-            // "PerformanceAsc" => allStocks.OrderBy()
-            // "PerformanceDesc" => allStocks.OrderByDescending()
-            _ => allStocks.OrderBy(s => s.Id) // Default added(id) ascending
-        };
+        // DEPRECATED - Moved logic to controller since the price preformance will come from another service and the ordering should be done in the controller where the viewmodel accepts all the combined information
+
+        //allStocks = sorting switch // More compact vesion of switch case to attach the kind of sorting the user desires to see
+        //{
+        //    "AddedDesc" => allStocks.OrderByDescending(s => s.Id), // Since ID is auto-incremented (in our case I manually added ids for most entities to make sure EF core could seed them properly based on how their relations work) we can use the ID as a form of "when was it added"
+        //    "AlphabeticalAsc" => allStocks.OrderBy(s => s.CompanyName), // Alphabetic ascending
+        //    "AlphabeticalDesc" => allStocks.OrderByDescending(s => s.CompanyName), // Alphabetic descending
+        //    // "PerformanceAsc" => allStocks.OrderBy()
+        //    // "PerformanceDesc" => allStocks.OrderByDescending()
+        //    _ => allStocks.OrderBy(s => s.Id) // Default added(id) ascending
+        //};
+
+        // DEPRECATED
 
         return allStocks
-            .Select(s => new AllAssetsModel
+            .Select(s => new AssetsResponseModel
             {
+                Id = s.Id,
                 Ticker = s.Ticker,
                 CompanyName = s.CompanyName,
+                ShortDescription = s.ShortDescription,
                 Sector = s.Sector,
                 LogoPath = s.LogoPath,
-                // TODO: Add price pulling logic when we handle the milestone steps so we can accurately pull the latest recorded price for the stock
-            })
-            .ToArray();
+            });
     }
 
-    public StockDetailsModel? GetStockDetails(string ticker, int currentDay, string userId)
+    public AssetsResponseModel? GetAsset(string ticker)
     {
-        // Fetches the stock and includes its relational data
-        Stock? stock = repository.All<Stock>()
-            .Where(s => s.Ticker == ticker && !s.IsDeleted)
-            .Include(s => s.Events)
-                .ThenInclude(e => e.Price)
-            .Include(s => s.Events)
-                .ThenInclude(e => e.News)
-            .Include(s => s.Events)
-                .ThenInclude(e => e.Analysis)
-            .FirstOrDefault();
-
-        if (stock == null)
-        {
-            return null;
-        }
-
-        // Order events chronologically (in this case by ID since that is how they were ordered upon config) and restrict history up to the current simulation day
-        List<Event> activeEvents = stock.Events
-            .Where(e => !e.IsDeleted)
-            .OrderBy(e => e.Id)
-            //.Take(currentDay)
-            .ToList();
-
-        // The latest event represents today's active price and metrics
-        // Event? todaysEvent = activeEvents.LastOrDefault();
-
-        return new StockDetailsModel
-        {
-            Id = stock.Id,
-            Ticker = stock.Ticker,
-            CompanyName = stock.CompanyName,
-            ShortDescription = stock.ShortDescription,
-            Sector = stock.Sector,
-            LogoPath = stock.LogoPath,
-
-            // Current day trading stats
-            // CurrentPrice = todaysEvent?.Price?.PriceValue ?? 0m,
-            // Volume = todaysEvent?.Price?.Volume ?? 0,
-            // IsBullishVolume = todaysEvent?.Price?.IsBullishVolume ?? true,
-            // AnalysisSummary = todaysEvent?.Analysis?.Reasoning,
-
-            IsInWatchlist = !string.IsNullOrEmpty(userId) && IsInWatchlist(userId, ticker),
-
-            Events = activeEvents.Select((e, index) => new StockEventModel
+        return repository.All<Stock>()
+            .Where(s => !s.IsDeleted && s.Ticker == ticker)
+            .Select(s => new AssetsResponseModel
             {
-                MilestoneDay = index + 1,
-                Title = e.Title,
-                NewsSource = e.News?.Source ?? string.Empty,
-                NewsBody = e.News?.Body ?? string.Empty,
+                Id = s.Id,
+                Ticker = s.Ticker,
+                CompanyName = s.CompanyName,
+                ShortDescription = s.ShortDescription,
+                Sector = s.Sector,
+                LogoPath = s.LogoPath,
+            })
+            .FirstOrDefault();
+    }
 
-                // temp
-                CurrentPrice = e?.Price?.PriceValue ?? 0m,
-                Volume = e?.Price?.Volume ?? 0,
-                IsBullishVolume = e?.Price?.IsBullishVolume ?? true,
-                AnalysisSummary = e?.Analysis?.Reasoning,
-                // temp
-            }).ToList()
-        };
+    public IEnumerable<EventResponseModel> GetAllEvents(int stockId, int currentDay)
+    {   
+        return repository.All<Event>()
+            .Where(e => !e.IsDeleted && e.Stock.Id == stockId)
+            .Take(currentDay)
+            .Select(e => new EventResponseModel
+            {
+                Id = e.Id,
+                Title = e.Title,
+                Date = e.Date,
+                Price = e.Price,
+                News = e.News,
+                Analysis = e.Analysis
+            })
+            .ToList();
+    }
+
+    public bool IsBullishVolume(string ticker, int currentDay)
+    {
+        // If we are on day 1, we return true because today's price is higher than 0 (since there was no day before the first day)
+        if (currentDay == 1)
+            return true;
+
+        // I could check the ticker here, but this method is called from the details controller where I already have 2 null checks so I can be almost certain that the ticker is given and is legitimate
+
+        // Gets latest event
+        Event latestEvent = repository.All<Event>()
+            .Include(e => e.Price)
+            .Where(le => !le.IsDeleted && le.Stock.Ticker == ticker)
+            .OrderBy(le => le.Id)
+            .Take(currentDay)
+            .Last();
+
+        // Gets previous event
+        Event previousEvent = repository.All<Event>()
+            .Include(e => e.Price)
+            .Where(le => !le.IsDeleted && le.Stock.Ticker == ticker)
+            .OrderBy(le => le.Id)
+            .Take(currentDay - 1)
+            .Last();
+
+        // Takes the prices
+        decimal latestPrice = latestEvent.Price.PriceValue;
+        decimal previousPrice = previousEvent.Price.PriceValue;
+
+        // Compares to see if the market is bullish (latest price > previous price), or bearish (latest price < previous price)
+        if (latestPrice - previousPrice > 0)
+            return true;
+        else
+            return false;
     }
 
     public bool ToggleWatchlist(string portfolioGuid, string ticker)
     {
+        // Finds a non-deleted stock with the given ticker
         Stock? stock = repository.All<Stock>()
-            .FirstOrDefault(s => s.Ticker == ticker&& !s.IsDeleted);
+            .FirstOrDefault(s => s.Ticker == ticker && !s.IsDeleted);
 
         if (stock == null) return false;
 
+        // Checks if the stock is already in the user's watchlist
         PortfolioStock? existingEntry = repository.All<PortfolioStock>()
             .FirstOrDefault(ps => ps.PortfolioGuid == portfolioGuid
                                && ps.StockId == stock.Id);
 
         if (existingEntry != null)
         {
-            // Remove from watchlist
+            // Removes from watchlist
             repository.Remove(existingEntry);
             repository.SaveChanges();
             return false; // No longer in watchlist
         }
         else
         {
-            // Add to watchlist
-            var newEntry = new PortfolioStock
+            // Adds to watchlist
+            PortfolioStock newEntry = new()
             {
                 PortfolioGuid = portfolioGuid,
                 StockId = stock.Id
@@ -151,38 +166,55 @@ public class InvestmentService(IRepository repository) : IInvestmentService
 
     public string GetOrCreatePortfolioGuid(string userId)
     {
+        // Checks to see if a portfolio exists
         Portfolio? portfolio = repository.All<Portfolio>()
             .FirstOrDefault(p => p.UserGuid == userId);
 
-        if (portfolio == null)
+        if (portfolio == null) // If not - creates a new portfolio
         {
             portfolio = new Portfolio
             {
-                Guid = userId,
-                UserGuid = userId,
-                Balance = 10000m
+                Guid = userId, // Sets matching GUID to user GUID
+                UserGuid = userId, // Binds to the user
+                Balance = StartingBalance // Sets starting balance
             };
 
             repository.Add(portfolio);
             repository.SaveChanges();
         }
 
-        return portfolio.Guid.ToString();
+        return portfolio.Guid.ToString(); // If yes - returns the portfolio GUID
     }
 
-    public PortfolioResponseModel GetPortfolioViewModel(string portfolioGuid)
+    public bool PortfolioExists(string guid)
     {
+        // Checks to see if a portfolio exists
         Portfolio? portfolio = repository.All<Portfolio>()
-            .Include(p => p.PortfolioStocks)
-                .ThenInclude(ps => ps.Stock)
-            .Include(p => p.Transactions)
+            .FirstOrDefault(p => p.Guid == guid);
+
+        if (portfolio == null)
+            return false; // If not - return false
+
+        return true; // If it does - return true
+    }
+
+    public void ResetSimulation(string portfolioGuid)
+    {
+        Portfolio? currentPortfolio = repository.All<Portfolio>()
             .FirstOrDefault(p => p.Guid == portfolioGuid);
 
-        return new PortfolioResponseModel
-        {
-            Portfolio = portfolio ?? new Portfolio(),
-            Watchlist = portfolio?.PortfolioStocks ?? new List<PortfolioStock>(),
-            Transactions = portfolio?.Transactions ?? new List<Transaction>()
-        };
+        if (currentPortfolio == null)
+            return; // Defensive safety check
+
+        // Resets the starting balance
+        currentPortfolio.Balance = StartingBalance;
+
+        // Resets the transactions list
+        IQueryable<Transaction> transactionsToRemove = repository.All<Transaction>()
+            .Where(t => t.PortfolioId == currentPortfolio.Guid);
+
+        repository.RemoveRange(transactionsToRemove);
+
+        repository.SaveChanges();
     }
 }

@@ -344,30 +344,9 @@ html.light-mode .mode-toggle-btn.active img.icon-svg {
 /* GENERAL STYLES AND EFFECTS */
 
 /* Keeps text highlighting effects, but removes the 'I' shaped cursor */
-.learning-container {
+.default-cursor-container {
     cursor: default;
 }
-
-/* Force standard default cursor globally across the entire site (in light mode) */
-html.light-mode,
-html.light-mode body,
-html.light-mode input,
-html.light-mode textarea,
-html.light-mode p,
-html.light-mode span,
-html.light-mode div {
-    cursor: default !important;
-}
-
-    /* Ensure interactive elements still show the pointer hand (in light mode) */
-    html.light-mode a,
-    html.light-mode button,
-    html.light-mode .theme-swatch-btn,
-    html.light-mode .mode-toggle-btn,
-    html.light-mode .page-link,
-    html.light-mode label[for] {
-        cursor: pointer !important;
-    }
 
 /* Base card style transitions */
 .card, .card .badge, .pagination .page-link {

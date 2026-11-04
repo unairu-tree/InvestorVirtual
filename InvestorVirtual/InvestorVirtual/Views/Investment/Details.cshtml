@@ -1,29 +1,14 @@
-﻿@* @model StockDetailsModel *@
-@model TempPortfolioViewModel
+﻿@model DetailsViewModel
 
 @{
     ViewData["Title"] = $"{Model.CompanyName} Details";
 }
 
-@* 
-    Reason for note dismissal: Attempting to at least "fix up" the details page to work with all the info it should so the page is not empty
-*@
-
 @{
-    var latest = Model.Events?.OrderByDescending(e => e.MilestoneDay).FirstOrDefault();
-
-    // 2. Get the previous day's event (e.g., Day 9 if today is Day 10)
-    int previousDayNumber = (latest?.MilestoneDay ?? 1) - 1;
-    var previousEvent = Model.Events?.FirstOrDefault(e => e.MilestoneDay == previousDayNumber);
-
-    // 3. Compare prices to determine if it's truly bullish or bearish
-    decimal todayPrice = latest?.CurrentPrice ?? 0m;
-    decimal previousPrice = previousEvent?.CurrentPrice ?? todayPrice; // Fallback to today's price if day 9 doesn't exist
-
-    bool isBullish = todayPrice >= previousPrice;
+    var latestEvent = Model.Events.LastOrDefault();
 }
 
-<div class="container py-4">
+<div class="container py-4 default-cursor-container">
     <!-- Back to Market Button -->
     <div class="mb-4">
         <a asp-action="Index" class="btn btn-outline-secondary btn-sm">
@@ -66,7 +51,7 @@
 
                             <div class="mt-3">
                                 <span class="text-uppercase small tracking-wider" style="color: var(--terminal-text); opacity: 0.7;">Current Price</span>
-                                <h2 class="fw-bold text-success mb-0">$@latest?.CurrentPrice.ToString("F2")</h2>
+                                <h2 class="fw-bold text-success mb-0">$@(latestEvent?.Price?.PriceValue.ToString("F2") ?? "0.00")</h2>
                             </div>
                         </div>
 
@@ -89,8 +74,8 @@
                         Sell
                     </button>
                     <form asp-action="ToggleWatchlist" asp-route-ticker="@Model.Ticker" method="post" class="flex-grow-1">
-                        <button type="submit" class="btn btn-outline-warning fw-bold py-2 px-4 w-100">
-                            ⭐ Watchlist
+                        <button type="submit" class="btn @(Model.IsInWatchlist ? "btn-warning" : "btn-outline-warning") fw-bold py-2 px-4 w-100">
+                            @(Model.IsInWatchlist ? "★ Remove from Watchlist" : "⭐ Add to Watchlist")
                         </button>
                     </form>
                 </div>
@@ -122,10 +107,10 @@
                             <div class="list-group-item bg-transparent px-0 py-3" style="border-bottom: 1px solid var(--terminal-border);">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <h5 class="fw-semibold mb-0 text-warning">@ev.Title</h5>
-                                    <span class="badge bg-dark border text-light">Day @ev.MilestoneDay</span>
+                                    <span class="badge bg-dark border text-light">@ev.Date.ToString(DateFormat)</span>
                                 </div>
-                                <p class="small mb-1" style="color: var(--terminal-text); opacity: 0.6;">Source: @ev.NewsSource</p>
-                                <p class="mb-0" style="color: var(--terminal-text); opacity: 0.9;">@ev.NewsBody</p>
+                                <p class="small mb-1" style="color: var(--terminal-text); opacity: 0.6;">Source: @(ev.News?.Source ?? "Market Wire")</p>
+                                <p class="mb-0" style="color: var(--terminal-text); opacity: 0.9;">@(ev.News?.Body ?? "No news commentary recorded for this timeline event.")</p>
                             </div>
                         }
                     </div>
@@ -144,19 +129,19 @@
                 <ul class="list-group list-group-flush bg-transparent mb-4">
                     <li class="list-group-item bg-transparent d-flex justify-content-between px-0 py-2" style="border-bottom: 1px solid var(--terminal-border);">
                         <span style="color: var(--terminal-text); opacity: 0.7;">Daily Volume:</span>
-                        <span class="fw-semibold" style="color: var(--terminal-text);">@latest?.Volume.ToString("N0") shares</span>
+                        <span class="fw-semibold" style="color: var(--terminal-text);">@(latestEvent?.Price?.Volume.ToString("N0") ?? "0") shares</span>
                     </li>
                     <li class="list-group-item bg-transparent d-flex justify-content-between px-0 py-2" style="border-bottom: 1px solid var(--terminal-border);">
                         <span style="color: var(--terminal-text); opacity: 0.7;">Volume Trend:</span>
-                        <span class="badge @(isBullish ? "bg-success" : "bg-danger")">
-                            @(isBullish ? "Bullish 📈" : "Bearish 📉")
+                        <span class="badge @(Model.IsBullishVolume ? "bg-success" : "bg-danger")">
+                            @(Model.IsBullishVolume ? "Bullish 📈" : "Bearish 📉")
                         </span>
                     </li>
                 </ul>
 
                 <h5 class="mb-2 glow-text" style="color: var(--terminal-text);">💡 Analyst Insight</h5>
                 <div class="p-3 rounded-3 bg-black bg-opacity-25 small lh-relaxed" style="border: 1px solid var(--terminal-border); color: var(--terminal-text);">
-                    @(latest?.AnalysisSummary ?? "No professional analyst coverage is currently available for this asset.")
+                    @(latestEvent?.Analysis.Reasoning ?? "No professional analyst coverage is currently available for this asset.")
                 </div>
             </div>
         </div>

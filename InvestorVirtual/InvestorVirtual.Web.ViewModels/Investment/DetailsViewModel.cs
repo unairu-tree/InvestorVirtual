@@ -2,8 +2,9 @@
 
 using InvestorVirtual.Services.Core.Data.Investment.Response;
 
-public class TempPortfolioViewModel
+public class DetailsViewModel
 {
+    // Stock details
     public int Id { get; set; }
 
     public string Ticker { get; set; } = null!;
@@ -16,15 +17,14 @@ public class TempPortfolioViewModel
 
     public string LogoPath { get; set; } = null!;
 
-    // public decimal CurrentPrice { get; set; }
-    // 
-    // public long Volume { get; set; }
-    // 
-    // public bool IsBullishVolume { get; set; }
-    // 
-    // public string? AnalysisSummary { get; set; }
+    // Price details
+    public bool IsBullishVolume { get; set; }
 
+    // Day simulation details
+    public int CurrentDay { get; set; }
+
+    // Watchlist details
     public bool IsInWatchlist { get; set; }
 
-    public ICollection<StockEventModel> Events { get; set; } = new HashSet<StockEventModel>();
+    public IEnumerable<EventResponseModel> Events { get; set; } = new HashSet<EventResponseModel>();
 }

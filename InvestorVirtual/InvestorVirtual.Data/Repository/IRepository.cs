@@ -8,5 +8,7 @@ public interface IRepository
 
     void Remove<T>(T entity) where T : class;
 
+    void RemoveRange<T>(IEnumerable<T> entities) where T : class;
+
     int SaveChanges();
 }

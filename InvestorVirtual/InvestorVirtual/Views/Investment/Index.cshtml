@@ -1,11 +1,11 @@
-﻿@model IEnumerable<AllAssetsModel>
+﻿@model IEnumerable<AssetsViewModel>
 
 @{
     ViewData["Title"] = "Market Assets";
 }
 
 <div class="container py-4">
-    <div class="mb-5 text-center">
+    <div class="mb-5 text-center default-cursor-container">
         <h1 class="fw-bold glow-text">Market Assets</h1>
         <p class="text-secondary">Explore available simulated equities and company sectors.</p>
     </div>
@@ -43,7 +43,7 @@
             </div>
 
             <!-- Filter Action Button -->
-            <div class="col-md-1">
+            <div class="col-md-1 default-cursor-container">
                 <label class="form-label small text-secondary fw-semibold mb-1 opacity-0 d-none d-md-block">Action</label>
                 <button type="submit" class="btn auth-btn-primary w-100 d-flex align-items-center justify-content-center" style="height: 38px;" title="Search">
                     <img src="@Url.Content("~/images/icons/search.svg")" alt="Search" class="search-icon-svg" style="width: 18px; height: 18px; filter: brightness(0);" />
