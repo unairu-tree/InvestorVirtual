@@ -86,7 +86,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
                 CategoryId = model.CategoryId
             };
 
-            learningService.AddLeraningTerm(serviceModel);
+            learningService.AddLearningTerm(serviceModel);
 
             TempData["SuccessMessage"] = "Successfully added new learning term!";
         }

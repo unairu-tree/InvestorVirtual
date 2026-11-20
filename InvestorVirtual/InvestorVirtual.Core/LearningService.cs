@@ -69,7 +69,7 @@ public class LearningService(IRepository repository, ILogger<LearningService> lo
             && !t.IsDeleted);
     }
 
-    public void AddLeraningTerm(LearningTermRequestModel model)
+    public void AddLearningTerm(LearningTermRequestModel model)
     {
         // Using try catch here to catch and handle the error in the back-end and log it for the developer
         try

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvestorVirtual.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20261024231808_IDontEvenKnowWhatIAmDoingAtThisPoint")]
-    partial class IDontEvenKnowWhatIAmDoingAtThisPoint
+    [Migration("20261024231808_RemoveBalanceFromDaySimulations")]
+    partial class RemoveBalanceFromDaySimulations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

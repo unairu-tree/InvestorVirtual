@@ -13,7 +13,7 @@ public interface ILearningService
     LearningServiceModel? GetLearningTerm(int id, string slug);
 
     // A method for saving the new term to the DB
-    void AddLeraningTerm(LearningTermRequestModel model);
+    void AddLearningTerm(LearningTermRequestModel model);
 
     // A method for editing an existing term
     void EditLearningTerm(int id, string slug, LearningTermRequestModel model);

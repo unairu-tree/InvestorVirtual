@@ -33,20 +33,6 @@ public class InvestmentService(IRepository repository) : IInvestmentService
                 .Where(s => s.Sector.ToLower().Contains(sectorTerm)); // Attaching it to the expression tree
         }
 
-        // DEPRECATED - Moved logic to controller since the price preformance will come from another service and the ordering should be done in the controller where the viewmodel accepts all the combined information
-
-        //allStocks = sorting switch // More compact vesion of switch case to attach the kind of sorting the user desires to see
-        //{
-        //    "AddedDesc" => allStocks.OrderByDescending(s => s.Id), // Since ID is auto-incremented (in our case I manually added ids for most entities to make sure EF core could seed them properly based on how their relations work) we can use the ID as a form of "when was it added"
-        //    "AlphabeticalAsc" => allStocks.OrderBy(s => s.CompanyName), // Alphabetic ascending
-        //    "AlphabeticalDesc" => allStocks.OrderByDescending(s => s.CompanyName), // Alphabetic descending
-        //    // "PerformanceAsc" => allStocks.OrderBy()
-        //    // "PerformanceDesc" => allStocks.OrderByDescending()
-        //    _ => allStocks.OrderBy(s => s.Id) // Default added(id) ascending
-        //};
-
-        // DEPRECATED
-
         return allStocks
             .Select(s => new AssetsResponseModel
             {

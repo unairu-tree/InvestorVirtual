@@ -5,7 +5,7 @@
 namespace InvestorVirtual.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class IDontEvenKnowWhatIAmDoingAtThisPoint : Migration
+    public partial class RemoveBalanceFromDaySimulations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

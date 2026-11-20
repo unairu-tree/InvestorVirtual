@@ -33,5 +33,5 @@ public class Portfolio
     public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 
     [Comment("Indicates whether this portfolio is soft-deleted.")]
-    public bool isDeleted { get; set; }
+    public bool IsDeleted { get; set; }
 }
