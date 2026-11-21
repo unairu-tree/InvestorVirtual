@@ -12,6 +12,8 @@ using InvestorVirtual.Web.Infrastructure.Extensions;
 
 public class Program
 {
+    const string LocalDevAndSameOriginPolicy = "LocalDevAndSameOriginPolicy";
+
     public static void Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -30,6 +32,16 @@ public class Program
         builder.Services.AddControllersWithViews(options =>
         {
             options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+        });
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(LocalDevAndSameOriginPolicy, policy =>
+            {
+                // TODO: Configure CORS policy for local development and same-origin requests
+                policy.AllowAnyHeader()
+                      .AllowAnyMethod();
+            });
         });
 
         builder.Services.RegisterRepositoriesFromAssembly(typeof(ApplicationDbContext).Assembly);
@@ -56,6 +68,10 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseRouting();
+
+        app.UseCors(LocalDevAndSameOriginPolicy);
+
+        app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
 
         app.UseAuthentication();
         app.UseAuthorization();

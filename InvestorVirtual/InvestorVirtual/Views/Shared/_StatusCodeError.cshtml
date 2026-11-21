@@ -1,0 +1,45 @@
+@model ErrorViewModel
+
+<div class="container py-5 default-cursor-container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-9">
+            <section class="welcome-banner rounded-4 p-4 p-md-5 text-center mb-4" aria-labelledby="status-error-title">
+                <p class="text-uppercase small fw-semibold mb-2">InvestorVirtual &bull; Terminal status</p>
+                <h1 id="status-error-title" class="display-5 fw-bold glow-text mb-3">@Model.Title</h1>
+                <p class="lead mb-4">@Model.Message</p>
+                <svg class="img-fluid" width="300" height="72" viewBox="0 0 300 72" aria-hidden="true" focusable="false">
+                    <path d="M0 60H300M0 36H300M0 12H300" fill="none" stroke="currentColor" stroke-opacity=".15" />
+                    <path d="M8 50 42 46 72 54 104 30 134 38 164 20 192 34 220 16 250 26 292 8" fill="none" stroke="var(--terminal-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="292" cy="8" r="4" fill="var(--terminal-accent)" />
+                </svg>
+            </section>
+
+            <section class="card terminal-card border rounded-4 p-4 p-md-5" aria-label="Request status details">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                    <span class="badge rounded-pill border border-secondary px-3 py-2">HTTP @Model.StatusCode</span>
+                    <span class="small text-uppercase text-secondary">Request status</span>
+                </div>
+                <p class="card-text mb-4">The terminal is ready when you are. Choose a destination below to continue.</p>
+
+                @if (Model.ShowRequestId)
+                {
+                    <p class="small text-secondary mb-4">
+                        Reference: <code>@Model.RequestId</code>
+                    </p>
+                }
+
+                <div class="d-flex flex-wrap gap-3">
+                    @if (Model.StatusCode == StatusCodes.Status401Unauthorized)
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn auth-btn-primary px-4 py-2">Sign in</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Home" asp-action="Index" class="btn auth-btn-primary px-4 py-2">Return to dashboard</a>
+                    }
+                    <button type="button" class="btn btn-outline-secondary px-4 py-2" onclick="window.history.back()">Go back</button>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
