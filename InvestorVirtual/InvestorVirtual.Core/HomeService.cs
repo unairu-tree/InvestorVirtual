@@ -1,17 +1,19 @@
 ﻿namespace InvestorVirtual.Services.Core;
 
-using InvestorVirtual.Data.Models;
-using InvestorVirtual.Data.Repository;
+using Microsoft.EntityFrameworkCore;
 
+using InvestorVirtual.Data.Repository.Contracts;
 using InvestorVirtual.Services.Core.Contracts;
 using InvestorVirtual.Services.Core.Data.Investment.Response;
 
 // This is the home service inheriting and implementing the tasks from the interface
-public class HomeService(IRepository repository) : IHomeService
+public class HomeService(IStockRepository stockRepository) : IHomeService
 {
-    public IEnumerable<AssetShowcaseModel> GetAssetShowcases()
+    // Fetches a list of assets to showcase on the home page, limited to 10 items
+    public async Task<IEnumerable<AssetShowcaseModel>> GetAssetShowcasesAsync()
     {
-        return repository.All<Stock>()
+        return await stockRepository
+            .AllAsNoTracking()
             .OrderBy(stock => stock.Id)
             .Take(10) // The configurable amount of showcased assets on the home page (not implemented as an application constant since the logic might change entirely later)
             .Select(stock => new AssetShowcaseModel
@@ -19,6 +21,6 @@ public class HomeService(IRepository repository) : IHomeService
                 Ticker = stock.Ticker,
                 LogoPath = stock.LogoPath
             })
-            .ToArray();
+            .ToArrayAsync();
     }
 }

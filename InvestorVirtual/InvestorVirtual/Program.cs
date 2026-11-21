@@ -1,13 +1,14 @@
 namespace InvestorVirtual.Web;
 
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using InvestorVirtual.Data;
-using InvestorVirtual.Data.Repository;
-
 using InvestorVirtual.Services.Core;
 using InvestorVirtual.Services.Core.Contracts;
+using InvestorVirtual.Web.Infrastructure.Extensions;
+
 
 public class Program
 {
@@ -26,9 +27,13 @@ public class Program
                 IdentityConfigurationOptions(options, builder.Configuration);
             })
             .AddEntityFrameworkStores<ApplicationDbContext>();
-        builder.Services.AddControllersWithViews();
+        builder.Services.AddControllersWithViews(options =>
+        {
+            options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+        });
 
-        builder.Services.AddScoped<IRepository, Repository>();
+        builder.Services.RegisterRepositoriesFromAssembly(typeof(ApplicationDbContext).Assembly);
+
         builder.Services.AddScoped<IHomeService, HomeService>();
         builder.Services.AddScoped<ILearningService, LearningService>();
         builder.Services.AddScoped<IInvestmentService, InvestmentService>();

@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+using InvestorVirtual.Data.Common.Models;
+
 using static InvestorVirtual.GCommon.EntityValidation.Event;
 
 // This model represents the main hub that links the price, news, analysis together and then links to the stock
 [Comment("This model represents the main hub that links the price, news, analysis together and then links to the stock")]
-public class Event
+public class Event : ISoftDeletableEntity
 {
     [Key]
     public int Id { get; set; }

@@ -14,9 +14,9 @@ using InvestorVirtual.Services.Core.Data.Investment.Response;
 public class HomeController(IHomeService homeService) : BaseController
 {
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        IEnumerable<AssetShowcaseModel> assetShowcases = homeService.GetAssetShowcases();
+        IEnumerable<AssetShowcaseModel> assetShowcases = await homeService.GetAssetShowcasesAsync();
 
         return View(assetShowcases);
     }

@@ -3,22 +3,24 @@
 using Microsoft.Extensions.Logging;
 
 using InvestorVirtual.Data.Models;
-using InvestorVirtual.Data.Repository;
 using InvestorVirtual.Data.Models.Enums;
+using InvestorVirtual.Data.Repository.Contracts;
 
 using InvestorVirtual.Services.Core.Contracts;
 using InvestorVirtual.Services.Core.Data.Learning.Request;
 using InvestorVirtual.Services.Core.Data.Learning.Response;
 
 using static InvestorVirtual.GCommon.ApplicationConstants;
+using Microsoft.EntityFrameworkCore;
 
 // This is the learning service inheriting and implementing the tasks from the interface
-public class LearningService(IRepository repository, ILogger<LearningService> logger) : ILearningService
+public class LearningService(ILearningRepository learningRepository, ILogger<LearningService> logger) : ILearningService
 {
-    // Learning terms fetching with implemented .Skip()/.Take() pagination logic. "int page" comes from the controller.
-    public IEnumerable<LearningServiceModel> GetAllLearningTerms(int page)
+    // Learning terms fetching with implemented .Skip()/.Take() pagination logic. "int page" comes from the controller
+    public async Task<IEnumerable<LearningServiceModel>> GetAllLearningTermsAsync(int page)
     {
-        return repository.All<LearningTerm>()
+        return await learningRepository
+            .AllAsNoTracking()
             .Where(lt => lt.IsDeleted == false)
             .OrderBy(lt => lt.TermName)
             .Skip((page - 1) * DefaultPageSize)
@@ -31,12 +33,14 @@ public class LearningService(IRepository repository, ILogger<LearningService> lo
                 Description = lt.Description,
                 Category = lt.Category
             })
-            .ToArray();
+            .ToArrayAsync();
     }
 
-    public LearningServiceModel? GetLearningTerm(int id, string slug)
+    // Single learning term fetching for usage in edits
+    public async Task<LearningServiceModel?> GetLearningTermAsync(int id, string slug)
     {
-        return repository.All<LearningTerm>()
+        return await learningRepository
+            .AllAsNoTracking()
             .Where(lt => lt.Id == id
             && lt.Slug == slug
             && lt.IsDeleted == false)
@@ -48,40 +52,55 @@ public class LearningService(IRepository repository, ILogger<LearningService> lo
                 Description = lt.Description,
                 Category = lt.Category
             })
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
     }
 
     // A check for if a term exists before creating a new one
-    public bool LearningTermExists(string name, string slug)
+    public async Task<bool> LearningTermExistsAsync(string name, string slug)
     {
-        return repository.All<LearningTerm>()
-            .Any(t => t.Slug == slug
+        return await learningRepository
+            .AllAsNoTracking()
+            .AnyAsync(t => t.Slug == slug
             && t.TermName == name
             && !t.IsDeleted);
     }
 
-    // A specific check for if a term exists when editing. Checks ANY other term besides the one being edited.
-    public bool LearningTermExistsForEdit(int currentId, string name, string slug)
+    // A specific check for if a term exists when editing. Checks ANY other term besides the one being edited
+    public async Task<bool> LearningTermExistsForEditAsync(int currentId, string name, string slug)
     {
-        return repository.All<LearningTerm>()
-            .Any(t => t.Id != currentId
+        return await learningRepository
+            .AllAsNoTracking()
+            .AnyAsync(t => t.Id != currentId
             && (t.Slug == slug || t.TermName == name)
             && !t.IsDeleted);
     }
 
-    public void AddLearningTerm(LearningTermRequestModel model)
+    // Adding a new learning term to the database with the option to recover a soft-deleted term if it exists
+    public async Task AddLearningTermAsync(LearningTermRequestModel model)
     {
         // Using try catch here to catch and handle the error in the back-end and log it for the developer
         try
         {
             // Switching the soft-delete off and applying the changes to the term
-            LearningTerm? existingTerm = repository.All<LearningTerm>()
-                .FirstOrDefault(t => t.Slug == model.Slug || t.TermName == model.TermName);
+            LearningTerm? existingTerm = await learningRepository
+                .All()
+                .FirstOrDefaultAsync(t => t.Slug == model.Slug || t.TermName == model.TermName);
 
             if (existingTerm != null && existingTerm.IsDeleted)
             {
                 // Removing soft-delete on terms when a user tries submitting a term very similar to past deleted one.
-                UndeleteAndModifyTerm(existingTerm, model);
+                learningRepository.Recover(existingTerm);
+
+                existingTerm.TermName = model.TermName;
+                existingTerm.Slug = model.Slug;
+                existingTerm.Description = model.Description;
+                existingTerm.Category = (TermCategory)model.CategoryId;
+                
+            }
+            else if (existingTerm != null && !existingTerm.IsDeleted)
+            {
+                // A non-deleted term with this name or slug already exists
+                throw new InvalidOperationException("A learning term with this name and/or slug already exists.");
             }
             else
             {
@@ -94,10 +113,10 @@ public class LearningService(IRepository repository, ILogger<LearningService> lo
                     Category = (TermCategory)model.CategoryId // Translating the id back into an enum
                 };
 
-                repository.Add(learningTerm);
+                await learningRepository.AddAsync(learningTerm);
             }
 
-            repository.SaveChanges();
+            await learningRepository.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -107,12 +126,14 @@ public class LearningService(IRepository repository, ILogger<LearningService> lo
         }
     }
 
-    public void EditLearningTerm(int id, string slug, LearningTermRequestModel model)
+    // Editing an existing learning term in the database
+    public async Task EditLearningTermAsync(int id, string slug, LearningTermRequestModel model)
     {
         try
         {
-            LearningTerm? existingTerm = repository.All<LearningTerm>()
-                .FirstOrDefault(lt => lt.Id == id && lt.Slug == slug && !lt.IsDeleted)
+            LearningTerm? existingTerm = await learningRepository
+                .All()
+                .FirstOrDefaultAsync(lt => lt.Id == id && lt.Slug == slug && !lt.IsDeleted)
                 ?? throw new InvalidOperationException($"Learning term with ID {id} and slug '{slug}' was not found.");
 
             existingTerm.TermName = model.TermName;
@@ -120,7 +141,7 @@ public class LearningService(IRepository repository, ILogger<LearningService> lo
             existingTerm.Description = model.Description;
             existingTerm.Category = (TermCategory)model.CategoryId;
 
-            repository.SaveChanges();
+            await learningRepository.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -129,22 +150,28 @@ public class LearningService(IRepository repository, ILogger<LearningService> lo
         }
     }
 
-    public void DeleteLearningTerm(int id)
+    // Deleting a learning term from the database (soft-delete)
+    public async Task DeleteLearningTermAsync(int id)
     {
-        LearningTerm? term = repository.All<LearningTerm>().FirstOrDefault(t => t.Id == id);
+        LearningTerm? term = await learningRepository.All().FirstOrDefaultAsync(t => t.Id == id);
 
         if (term != null)
         {
             term.IsDeleted = true;
-            repository.SaveChanges();
+            await learningRepository.SaveChangesAsync();
         }
     }
 
-    public int GetTotalLearningTermsCount() => repository
-        .All<LearningTerm>()
-        .Where(lt => lt.IsDeleted == false)
-        .Count();
+    // Fetching the total count of learning terms for pagination purposes
+    public async Task<int> GetTotalLearningTermsCountAsync()
+    {
+        return await learningRepository
+            .AllAsNoTracking()
+            .Where(lt => lt.IsDeleted == false)
+            .CountAsync();
+    }
 
+    /* DEPRECATED */
     /* PRIVATE METHODS FOR USE IN THE SERVICE ONLY */
     private static void UndeleteAndModifyTerm(LearningTerm existingTerm, LearningTermRequestModel model)
     {
@@ -154,4 +181,5 @@ public class LearningService(IRepository repository, ILogger<LearningService> lo
         existingTerm.Category = (TermCategory)model.CategoryId;
         existingTerm.IsDeleted = false;
     }
+    /* DEPRECATED */
 }

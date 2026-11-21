@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+using InvestorVirtual.Data.Common.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,7 +11,7 @@ using static InvestorVirtual.GCommon.ApplicationConstants;
 
 // This model is empty and not configured on startup. It gets configured through the site UI.
 [Comment("This model represents the portfolio that the user creates upon starting a simulation. It will be the central hub of operations, showing the user's investment holdings, their watchlist, and their current balance.")]
-public class Portfolio
+public class Portfolio : ISoftDeletableEntity
 {
     [Key]
     [Comment("Matches the user's GUID.")]

@@ -6,5 +6,5 @@ using InvestorVirtual.Services.Core.Data.Investment.Response;
 public interface IHomeService
 {
     // A collection fetching from the DB an exact number of assets to showcase on the welcome screen (the exact number is configured in the service)
-    IEnumerable<AssetShowcaseModel> GetAssetShowcases();
+    Task<IEnumerable<AssetShowcaseModel>> GetAssetShowcasesAsync();
 }

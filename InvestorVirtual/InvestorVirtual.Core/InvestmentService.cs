@@ -3,19 +3,26 @@
 using Microsoft.EntityFrameworkCore;
 
 using InvestorVirtual.Data.Models;
-using InvestorVirtual.Data.Repository;
-
+using InvestorVirtual.Data.Repository.Contracts;
 using InvestorVirtual.Services.Core.Contracts;
 using InvestorVirtual.Services.Core.Data.Investment.Response;
 
 using static InvestorVirtual.GCommon.ApplicationConstants;
 
 // This is the investing service inheriting and implementing the tasks from the interface
-public class InvestmentService(IRepository repository) : IInvestmentService
+public class InvestmentService(
+    IStockRepository stockRepository,
+    IEventRepository eventRepository,
+    IPortfolioStockRepository portfolioStockRepository,
+    IPortfolioRepository portfolioRepository,
+    ITransactionRepository transactionRepository
+    ) : IInvestmentService
 {
+    // Fetching all assets with optional search and sector filters
     public IQueryable<AssetsResponseModel> GetAllAssets(string? searchQuery, string? sector)
     {
-        IQueryable<Stock> allStocks = repository.All<Stock>()
+        IQueryable<Stock> allStocks = stockRepository
+            .AllAsNoTracking()
             .Where(s => !s.IsDeleted); // Pull all stocks into the expression tree
 
         if (!string.IsNullOrWhiteSpace(searchQuery)) // If a NAME was given - enters this 'if'
@@ -45,9 +52,11 @@ public class InvestmentService(IRepository repository) : IInvestmentService
             });
     }
 
-    public AssetsResponseModel? GetAsset(string ticker)
+    // Fetching a single asset by its ticker symbol
+    public async Task<AssetsResponseModel?> GetAssetAsync(string ticker)
     {
-        return repository.All<Stock>()
+        return await stockRepository
+            .AllAsNoTracking()
             .Where(s => !s.IsDeleted && s.Ticker == ticker)
             .Select(s => new AssetsResponseModel
             {
@@ -58,12 +67,14 @@ public class InvestmentService(IRepository repository) : IInvestmentService
                 Sector = s.Sector,
                 LogoPath = s.LogoPath,
             })
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
     }
 
-    public IEnumerable<EventResponseModel> GetAllEvents(int stockId, int currentDay)
+    // Fetching all events for a specific stock up to the current day
+    public async Task<IEnumerable<EventResponseModel>> GetAllEventsAsync(int stockId, int currentDay)
     {   
-        return repository.All<Event>()
+        return await eventRepository
+            .AllAsNoTracking()
             .Where(e => !e.IsDeleted && e.Stock.Id == stockId)
             .Take(currentDay)
             .Select(e => new EventResponseModel
@@ -75,62 +86,56 @@ public class InvestmentService(IRepository repository) : IInvestmentService
                 News = e.News,
                 Analysis = e.Analysis
             })
-            .ToList();
+            .ToListAsync();
     }
 
-    public bool IsBullishVolume(string ticker, int currentDay)
+    // Checking if the latest event's price is higher than the previous event's price to determine if the market is bullish or bearish
+    public async Task<bool> IsBullishVolumeAsync(string ticker, int currentDay)
     {
         // If we are on day 1, we return true because today's price is higher than 0 (since there was no day before the first day)
-        if (currentDay == 1)
+        if (currentDay <= 1)
             return true;
 
         // I could check the ticker here, but this method is called from the details controller where I already have 2 null checks so I can be almost certain that the ticker is given and is legitimate
 
-        // Gets latest event
-        Event latestEvent = repository.All<Event>()
+        // Gets a list of the events up to the current day for the given stock ticker, ordered by Date
+        List<Event> eventsUpToCurrentDay = await eventRepository
+            .AllAsNoTracking()
             .Include(e => e.Price)
-            .Where(le => !le.IsDeleted && le.Stock.Ticker == ticker)
-            .OrderBy(le => le.Id)
+            .Where(e => !e.IsDeleted && e.Stock.Ticker == ticker)
+            .OrderBy(e => e.Date)
             .Take(currentDay)
-            .Last();
+            .ToListAsync();
 
-        // Gets previous event
-        Event previousEvent = repository.All<Event>()
-            .Include(e => e.Price)
-            .Where(le => !le.IsDeleted && le.Stock.Ticker == ticker)
-            .OrderBy(le => le.Id)
-            .Take(currentDay - 1)
-            .Last();
-
-        // Takes the prices
-        decimal latestPrice = latestEvent.Price.PriceValue;
-        decimal previousPrice = previousEvent.Price.PriceValue;
+        // Gets latest and previous events
+        Event latestEvent = eventsUpToCurrentDay[^1]; // Shorthand expression for getting the last element of a list (.Count - 1)
+        Event previousEvent = eventsUpToCurrentDay[^2]; // Shorthand expression for getting the second last element of a list (.Count - 2)
 
         // Compares to see if the market is bullish (latest price > previous price), or bearish (latest price < previous price)
-        if (latestPrice - previousPrice > 0)
-            return true;
-        else
-            return false;
+        return latestEvent.Price.PriceValue > previousEvent.Price.PriceValue;
     }
 
-    public bool ToggleWatchlist(string portfolioGuid, string ticker)
+    // Toggling a stock in the user's watchlist. If it exists, it removes it; if it doesn't exist, it adds it.
+    public async Task<bool> ToggleWatchlistAsync(string portfolioGuidOrUserId, string ticker)
     {
         // Finds a non-deleted stock with the given ticker
-        Stock? stock = repository.All<Stock>()
-            .FirstOrDefault(s => s.Ticker == ticker && !s.IsDeleted);
+        Stock? stock = await stockRepository
+            .AllAsNoTracking()
+            .FirstOrDefaultAsync(s => s.Ticker == ticker && !s.IsDeleted);
 
         if (stock == null) return false;
 
         // Checks if the stock is already in the user's watchlist
-        PortfolioStock? existingEntry = repository.All<PortfolioStock>()
-            .FirstOrDefault(ps => ps.PortfolioGuid == portfolioGuid
+        PortfolioStock? existingEntry = await portfolioStockRepository
+            .All()
+            .FirstOrDefaultAsync(ps => ps.PortfolioGuid == portfolioGuidOrUserId
                                && ps.StockId == stock.Id);
 
         if (existingEntry != null)
         {
             // Removes from watchlist
-            repository.Remove(existingEntry);
-            repository.SaveChanges();
+            portfolioStockRepository.Remove(existingEntry);
+            await portfolioStockRepository.SaveChangesAsync();
             return false; // No longer in watchlist
         }
         else
@@ -138,23 +143,31 @@ public class InvestmentService(IRepository repository) : IInvestmentService
             // Adds to watchlist
             PortfolioStock newEntry = new()
             {
-                PortfolioGuid = portfolioGuid,
+                PortfolioGuid = portfolioGuidOrUserId,
                 StockId = stock.Id
             };
 
-            repository.Add(newEntry);
-            repository.SaveChanges();
+            await portfolioStockRepository.AddAsync(newEntry);
+            await portfolioStockRepository.SaveChangesAsync();
             return true; // Now bookmarked
         }
     }
 
-    public bool IsInWatchlist(string portfolioGuid, string ticker) => repository.All<PortfolioStock>().Any(ps => ps.PortfolioGuid == portfolioGuid && ps.Stock.Ticker == ticker);
+    // Checks if a stock is in the user's watchlist for displaying the correct button state in the UI
+    public async Task<bool> IsInWatchlistAsync(string portfolioGuid, string ticker)
+    {
+        return await portfolioStockRepository
+            .AllAsNoTracking()
+            .AnyAsync(ps => ps.PortfolioGuid == portfolioGuid && ps.Stock.Ticker == ticker);
+    }
 
-    public string GetOrCreatePortfolioGuid(string userId)
+    // Fetches the user's portfolio GUID or creates a new portfolio if it doesn't exist (portfolio and user guid are tied 1:1)
+    public async Task<string> GetOrCreatePortfolioGuidAsync(string userId)
     {
         // Checks to see if a portfolio exists
-        Portfolio? portfolio = repository.All<Portfolio>()
-            .FirstOrDefault(p => p.UserGuid == userId);
+        Portfolio? portfolio = await portfolioRepository
+            .All()
+            .FirstOrDefaultAsync(p => p.UserGuid == userId);
 
         if (portfolio == null) // If not - creates a new portfolio
         {
@@ -165,18 +178,20 @@ public class InvestmentService(IRepository repository) : IInvestmentService
                 Balance = StartingBalance // Sets starting balance
             };
 
-            repository.Add(portfolio);
-            repository.SaveChanges();
+            await portfolioRepository.AddAsync(portfolio);
+            await portfolioRepository.SaveChangesAsync();
         }
 
         return portfolio.Guid.ToString(); // If yes - returns the portfolio GUID
     }
 
-    public bool PortfolioExists(string guid)
+    // Checks if a portfolio exists for a given GUID
+    public async Task<bool> PortfolioExistsAsync(string guid)
     {
         // Checks to see if a portfolio exists
-        Portfolio? portfolio = repository.All<Portfolio>()
-            .FirstOrDefault(p => p.Guid == guid);
+        Portfolio? portfolio = await portfolioRepository
+            .AllAsNoTracking()
+            .FirstOrDefaultAsync(p => p.Guid == guid);
 
         if (portfolio == null)
             return false; // If not - return false
@@ -184,10 +199,12 @@ public class InvestmentService(IRepository repository) : IInvestmentService
         return true; // If it does - return true
     }
 
-    public void ResetSimulation(string portfolioGuid)
+    // Resets the user's portfolio to the starting balance and removes all transactions
+    public async Task ResetSimulationAsync(string portfolioGuidOrUserId)
     {
-        Portfolio? currentPortfolio = repository.All<Portfolio>()
-            .FirstOrDefault(p => p.Guid == portfolioGuid);
+        Portfolio? currentPortfolio = await portfolioRepository
+            .All()
+            .FirstOrDefaultAsync(p => p.Guid == portfolioGuidOrUserId);
 
         if (currentPortfolio == null)
             return; // Defensive safety check
@@ -196,11 +213,13 @@ public class InvestmentService(IRepository repository) : IInvestmentService
         currentPortfolio.Balance = StartingBalance;
 
         // Resets the transactions list
-        IQueryable<Transaction> transactionsToRemove = repository.All<Transaction>()
-            .Where(t => t.PortfolioId == currentPortfolio.Guid);
+        IEnumerable<Transaction> transactionsToRemove = await transactionRepository
+            .All()
+            .Where(t => t.PortfolioId == currentPortfolio.Guid)
+            .ToListAsync();
 
-        repository.RemoveRange(transactionsToRemove);
+        transactionRepository.RemoveRange(transactionsToRemove);
 
-        repository.SaveChanges();
+        await transactionRepository.SaveChangesAsync();
     }
 }

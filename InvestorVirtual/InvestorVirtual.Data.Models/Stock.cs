@@ -4,11 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 using System.ComponentModel.DataAnnotations;
 
+using InvestorVirtual.Data.Common.Models;
+
 using static InvestorVirtual.GCommon.EntityValidation.Stock;
 
 // This model represents the stocks each user can interact with, that includes...
 [Comment("This model represents the stocks each user can interact with")]
-public class Stock
+public class Stock : ISoftDeletableEntity
 {
     [Key]
     public int Id { get; set; }

@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 using InvestorVirtual.Data.Models.Enums;
+using InvestorVirtual.Data.Common.Models;
 
 using static InvestorVirtual.GCommon.EntityValidation.LearningTerm;
 
 // This model is independent from the others and represents the financial terms with descriptions about them for the users to read and learn
 [Comment("This model is independent from the others and represents the financial terms with descriptions about them for the users to read and learn")]
-public class LearningTerm
+public class LearningTerm : ISoftDeletableEntity
 {
     [Key]
     public int Id { get; set; }

@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\InvestorVirtual.Common\InvestorVirtual.GCommon.csproj" />
+    <ProjectReference Include="..\InvestorVirtual.Data\InvestorVirtual.Data.csproj" />
   </ItemGroup>
 
 </Project>

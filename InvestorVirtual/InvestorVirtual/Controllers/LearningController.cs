@@ -15,14 +15,23 @@ public class LearningController(ILearningService learningService, ITermCategoryS
 {
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult Index([FromQuery] int page = 1) // The view hands a page number in the query and I pull it with this attribute to hand to the service
+    public async Task<IActionResult> Index([FromQuery] int page = 1) // The view hands a page number in the query and I pull it with this attribute to hand to the service
     {
-        IEnumerable<LearningServiceModel> learningTerms = learningService.GetAllLearningTerms(page);
+        // A guardrail for the page number to not be less than 1, since that would break the pagination logic in the service
+        if (page < 1)
+            page = 1;
 
-        int totalTerms = learningService.GetTotalLearningTermsCount(); // Using the count of the total terms to dynamically calculate the amount of pages needed for viewing
+        int pageSize = DefaultPageSize; // The total number of items per page, which is set in the ApplicationConstants.cs file
+        int totalTerms = await learningService.GetTotalLearningTermsCountAsync(); // Using the count of the total terms to dynamically calculate the amount of pages needed for viewing
+        int totalPages = (int)Math.Ceiling(totalTerms / (double)pageSize); // Dynamically calculating the total pages needed for viewing based on the total terms and the page size
 
-        int pageSize = DefaultPageSize;
-        int totalPages = (int)Math.Ceiling(totalTerms / (double)pageSize);
+        // A guardrail for the page number to not be greater than the total pages, since that would break the pagination logic in the service
+        if (totalPages > 0 && page > totalPages)
+            page = totalPages;
+
+        IEnumerable<LearningServiceModel> learningTerms = totalTerms > 0
+            ? await learningService.GetAllLearningTermsAsync(page)
+            : Array.Empty<LearningServiceModel>();
 
         ViewBag.TotalPages = totalPages;
         ViewBag.CurrentPage = page;
@@ -43,7 +52,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
     }
 
     [HttpPost]
-    public IActionResult Create(LearningTermInputModel model)
+    public async Task<IActionResult> Create(LearningTermInputModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -66,7 +75,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
             return View(model);
         }
 
-        if (learningService.LearningTermExists(model.TermName, model.Slug))
+        if (await learningService.LearningTermExistsAsync(model.TermName, model.Slug))
         {
             ModelState.AddModelError(string.Empty, "A learning term with this name or slug already exists.");
 
@@ -86,7 +95,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
                 CategoryId = model.CategoryId
             };
 
-            learningService.AddLearningTerm(serviceModel);
+            await learningService.AddLearningTermAsync(serviceModel);
 
             TempData["SuccessMessage"] = "Successfully added new learning term!";
         }
@@ -104,9 +113,9 @@ public class LearningController(ILearningService learningService, ITermCategoryS
 
     [HttpGet]
     [Route("Learning/Edit/{id}/{slug}")]
-    public IActionResult Edit(int id, string slug)
+    public async Task<IActionResult> Edit(int id, string slug)
     {
-        LearningServiceModel? existingTerm = learningService.GetLearningTerm(id, slug);
+        LearningServiceModel? existingTerm = await learningService.GetLearningTermAsync(id, slug);
 
         if (existingTerm == null)
         {
@@ -127,9 +136,9 @@ public class LearningController(ILearningService learningService, ITermCategoryS
 
     [HttpPost]
     [Route("Learning/Edit/{id}/{slug}")]
-    public IActionResult Edit(int id, string slug, LearningTermInputModel model)
+    public async Task<IActionResult> Edit(int id, string slug, LearningTermInputModel model)
     {
-        LearningServiceModel? existingTerm = learningService.GetLearningTerm(id, slug);
+        LearningServiceModel? existingTerm = await learningService.GetLearningTermAsync(id, slug);
 
         if (existingTerm == null)
         {
@@ -144,7 +153,19 @@ public class LearningController(ILearningService learningService, ITermCategoryS
             return View(model);
         }
 
-        if (learningService.LearningTermExistsForEdit(id, model.TermName, model.Slug))
+        bool isCategoryValid = termCategoryService.GetAllCategories()
+            .Any(c => c.Id == model.CategoryId);
+
+        if (!isCategoryValid)
+        {
+            ModelState.AddModelError(nameof(model.CategoryId), "Please select a valid category.");
+
+            // Re-populating the "multi-way" model's category collection
+            model.Categories = termCategoryService.GetAllCategories();
+            return View(model);
+        }
+
+        if (await learningService.LearningTermExistsForEditAsync(id, model.TermName, model.Slug))
         {
             ModelState.AddModelError(string.Empty, "A learning term with this name already exists.");
 
@@ -163,7 +184,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
                 CategoryId = model.CategoryId
             };
 
-            learningService.EditLearningTerm(id, slug, serviceModel);
+            await learningService.EditLearningTermAsync(id, slug, serviceModel);
 
             TempData["SuccessMessage"] = "Successfully edited the learning term!";
         }
@@ -183,7 +204,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
     [Route("Learning/Delete/{id}/{slug}")]
     public async Task<IActionResult> Delete(int id, string slug) // Using both the ID and Slug so the user does not tamper their way into opening a wrong term deletion screen
     {
-        LearningServiceModel? term = learningService.GetLearningTerm(id, slug);
+        LearningServiceModel? term = await learningService.GetLearningTermAsync(id, slug);
 
         if (term == null)
         {
@@ -196,9 +217,9 @@ public class LearningController(ILearningService learningService, ITermCategoryS
     [HttpPost]
     [ActionName("Delete")]
     [Route("Learning/Delete/{id}/{slug}")]
-    public IActionResult DeleteConfirmed(int id, string slug) // Using both the ID and Slug so even if the user opens a deletion screen normally, they don't tamper their way into deleting the wrong term
+    public async Task<IActionResult> DeleteConfirmed(int id, string slug) // Using both the ID and Slug so even if the user opens a deletion screen normally, they don't tamper their way into deleting the wrong term
     {
-        LearningServiceModel? term = learningService.GetLearningTerm(id, slug);
+        LearningServiceModel? term = await learningService.GetLearningTermAsync(id, slug);
 
         if (term == null)
         {
@@ -209,7 +230,7 @@ public class LearningController(ILearningService learningService, ITermCategoryS
 
         try
         {
-            learningService.DeleteLearningTerm(id); // Not sending the slug down to .Core since it has already been checked for tampering
+            await learningService.DeleteLearningTermAsync(id); // Not sending the slug down to .Core since it has already been checked for tampering
             TempData["SuccessMessage"] = "Learning term successfully deleted!";
         }
         catch (Exception)

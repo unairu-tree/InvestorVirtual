@@ -1,21 +1,23 @@
 ﻿namespace InvestorVirtual.Web.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using InvestorVirtual.Web.ViewModels.Investment;
 
 using InvestorVirtual.Services.Core.Contracts;
 using InvestorVirtual.Services.Core.Data.Investment.Response;
 
-public class InvestmentController(IInvestmentService investmentService, IDaySimulationService simulationService) : BaseController
+public class InvestmentController(
+    IInvestmentService investmentService,
+    IDaySimulationService simulationService,
+    ILogger<InvestmentController> logger
+    ) : BaseController
 {
     [HttpGet]
-    public IActionResult Index(string? searchQuery, string? sector, string? sorting)
+    public async Task<IActionResult> Index(string? searchQuery, string? sector, string? sorting)
     {
-        // Deprecated
-        // IEnumerable<AllAssetsModel> allAssets = investmentService.GetAllAssets(searchQuery, sector);
-
-        int currentDay = simulationService.GetSimulationStatus().Day;
+        int currentDay = (await simulationService.GetSimulationStatusAsync()).Day;
 
         IQueryable<AssetsResponseModel> allAssets = investmentService.GetAllAssets(searchQuery, sector);
 
@@ -29,7 +31,7 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
             _ => allAssets.OrderBy(s => s.Id) // Default: Added(id) ascending
         };
 
-        IEnumerable<AssetsViewModel> assetsViewModel = allAssets
+        IEnumerable<AssetsViewModel> assetsViewModel = await allAssets
             .Select(a => new AssetsViewModel
             {
                 Ticker = a.Ticker,
@@ -37,23 +39,23 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
                 Sector = a.Sector,
                 LogoPath = a.LogoPath
             })
-            .ToArray();
+            .ToArrayAsync();
 
         return View(assetsViewModel);
     }
 
     [HttpGet]
-    public IActionResult Details(string ticker)
+    public async Task<IActionResult> Details(string ticker)
     {
-        int currentDay = simulationService.GetSimulationStatus().Day;
+        int currentDay = (await simulationService.GetSimulationStatusAsync()).Day;
         string? userId = GetUserId();
 
-        AssetsResponseModel? asset = investmentService.GetAsset(ticker);
+        AssetsResponseModel? asset = await investmentService.GetAssetAsync(ticker);
 
         if (asset == null) // Potentially add a user ID check, but the [Authorize] on the base controller that this controlelr inherits from guarantees me that the user cannot reach details without logging in or registering first
             return NotFound();
 
-        IEnumerable<EventResponseModel> events = investmentService.GetAllEvents(asset.Id , currentDay);
+        IEnumerable<EventResponseModel> events = await investmentService.GetAllEventsAsync(asset.Id , currentDay);
 
         // Normally at this point I have confirmed that there is an actual asset and the day is seeded to start at 1, but I left this check here just in case
         if (!events.Any()) // .Any() instead of null, because the service method is returning a list that if the query goes wrong will return an empty list instead of a null
@@ -68,9 +70,9 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
             Sector = asset.Sector,
             LogoPath = asset.LogoPath,
 
-            IsBullishVolume = investmentService.IsBullishVolume(ticker, currentDay),
+            IsBullishVolume = await investmentService.IsBullishVolumeAsync(ticker, currentDay),
 
-            IsInWatchlist = investmentService.IsInWatchlist(userId!, ticker),
+            IsInWatchlist = await investmentService.IsInWatchlistAsync(userId!, ticker),
 
             Events = events
         };
@@ -79,7 +81,7 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
     }
 
     [HttpPost]
-    public IActionResult ToggleWatchlist(string ticker)
+    public async Task<IActionResult> ToggleWatchlist(string ticker)
     {
         string? userId = GetUserId();
 
@@ -88,10 +90,13 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
             return RedirectToPage("/Account/Login", new { area = "Identity" });
         }
 
-        string portfolioGuid = investmentService.GetOrCreatePortfolioGuid(userId);
+        // Fetches the portfolio GUID for the user, creating one if it doesn't exist
+        string portfolioGuid = await investmentService.GetOrCreatePortfolioGuidAsync(userId);
 
-        bool isBookmarked = investmentService.ToggleWatchlist(portfolioGuid, ticker);
+        // Toggles the watchlist status for the asset and returns whether it was added or removed
+        bool isBookmarked = await investmentService.ToggleWatchlistAsync(portfolioGuid, ticker);
 
+        // Dynamically sets the TempData message based on whether the asset was added or removed from the watchlist
         if (isBookmarked)
         {
             TempData["SuccessMessage"] = $"{ticker} added to your Watchlist!";
@@ -111,10 +116,10 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
     }
 
     [HttpPost]
-    public IActionResult AdvanceDay()
+    public async Task<IActionResult> AdvanceDay()
     {
         // Gets the current day from the simulation
-        int currentDay = simulationService.GetSimulationStatus().Day;
+        int currentDay = (await simulationService.GetSimulationStatusAsync()).Day;
 
         // If the day is equal to or higher than 10 notifies the user that they are on the last day of simulation
         if (currentDay >= 10)
@@ -124,7 +129,7 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
         }
 
         // Otherwise it advances the day and gets the new value
-        int newDay = simulationService.AdvanceDay();
+        int newDay = await simulationService.AdvanceDayAsync();
 
         if (newDay == 10)
         {
@@ -141,24 +146,31 @@ public class InvestmentController(IInvestmentService investmentService, IDaySimu
     }
 
     [HttpPost]
-    public IActionResult ResetSimulation() // Accept no outside parameters to avoid parameter tampering
+    public async Task<IActionResult> ResetSimulation() // Accept no outside parameters to avoid parameter tampering
     {
-        // Resets simulation back to day 1
-        simulationService.ResetSimulation(); // Days are seeded by default and method does not accept parameter as well, attacks shouldn't be able to break this
-
         string? userId = GetUserId(); // Uses base controller method to get the user ID
 
         if (string.IsNullOrEmpty(userId))
-        {
             return RedirectToPage("/Account/Login", new { area = "Identity" }); // If an attack is done without an actual user the logic will prompt the user to the log-in page
-        }
 
-        if (!investmentService.PortfolioExists(userId)) // If by any chance they are able to send a false request I utilize the matching guids for user/portfolio and use the base controller's method-found user guid to check if a portfolio exits
+        if (!await investmentService.PortfolioExistsAsync(userId)) // If by any chance they are able to send a false request I utilize the matching guids for user/portfolio and use the base controller's method-found user guid to check if a portfolio exits
             return NotFound(); // If not I return 404 (Will be changed to custom 404 later down the line for exam requirements)
 
-        investmentService.ResetSimulation(userId); // After all those security checks and handles - resets the portfolio too
+        try
+        {
+            // Resets simulation back to day 1
+            await simulationService.ResetSimulationAsync(); // Days are seeded by default and method does not accept parameter as well, attacks shouldn't be able to break this
 
-        TempData["SuccessMessage"] = "Simulation has been reset to Day 1."; // Displays a message
+            // Resets the user's portfolio balance and clears their transactions
+            await investmentService.ResetSimulationAsync(userId);
+
+            TempData["SuccessMessage"] = "Simulation has been reset to Day 1."; // Displays a message
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error occurred while resetting the simulation for user {UserId}.", userId); // Logs the error with the user ID for debugging purposes
+            TempData["ErrorMessage"] = "Something went wrong while resetting the simulation! Please try again.";
+        }
 
         return RedirectToAction(nameof(Portfolio)); // Returns to portfolio
     }

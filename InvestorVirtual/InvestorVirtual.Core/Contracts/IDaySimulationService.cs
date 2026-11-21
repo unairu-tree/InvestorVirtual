@@ -6,11 +6,11 @@ using InvestorVirtual.Services.Core.Data.Investment.Response;
 public interface IDaySimulationService
 {
     // A method to get the current simulation status
-    DaySimulationModel GetSimulationStatus();
+    Task<DaySimulationModel> GetSimulationStatusAsync();
 
     // A method to advance and return the current day
-    int AdvanceDay();
+    Task<int> AdvanceDayAsync();
 
     // A method to restart the simulation - for the day it resets it back to 1
-    void ResetSimulation();
+    Task ResetSimulationAsync();
 }

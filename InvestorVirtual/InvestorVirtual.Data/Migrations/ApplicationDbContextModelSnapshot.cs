@@ -2995,14 +2995,14 @@ namespace InvestorVirtual.Data.Migrations
                         .HasColumnType("DECIMAL(18, 2)")
                         .HasComment("The current balance of the portfolio, representing the amount of money available for investment.");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Indicates whether this portfolio is soft-deleted.");
+
                     b.Property<string>("UserGuid")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasComment("The GUID of the user to whom this portfolio belongs.");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit")
-                        .HasComment("Indicates whether this portfolio is soft-deleted.");
 
                     b.HasKey("Guid");
 
