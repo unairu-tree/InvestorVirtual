@@ -76,6 +76,8 @@ public class InvestmentService(
         return await eventRepository
             .AllAsNoTracking()
             .Where(e => !e.IsDeleted && e.Stock.Id == stockId)
+            .OrderBy(e => e.Date)
+            .ThenBy(e => e.Id)
             .Take(currentDay)
             .Select(e => new EventResponseModel
             {

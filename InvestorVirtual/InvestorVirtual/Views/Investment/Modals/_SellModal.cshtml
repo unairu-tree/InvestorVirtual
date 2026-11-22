@@ -1,0 +1,89 @@
+﻿@model DetailsViewModel
+@using System.Linq
+
+@{
+    var latestEvent = Model?.Events?.LastOrDefault();
+    var unitPriceInvariant = latestEvent?.Price?.PriceValue.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? "0.00";
+    var unitPriceDisplay = latestEvent?.Price?.PriceValue.ToString("F2") ?? "0.00";
+}
+
+<!-- Sell Modal -->
+<div class="modal fade" id="sellModal" tabindex="-1" aria-labelledby="sellModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content terminal-card border rounded-4 shadow-lg">
+            <div class="modal-header" style="border-bottom: 1px solid var(--terminal-border);">
+                <div>
+                    <span class="badge bg-danger mb-1">SELL ORDER</span>
+                    <h5 class="modal-title fw-bold glow-text mb-0" id="sellModalLabel" style="color: var(--terminal-text);">
+                        Sell <span id="sellModalTicker">@Model!.Ticker</span>
+                    </h5>
+                    <small style="color: var(--terminal-text); opacity: 0.7;">@Model!.CompanyName</small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form id="sellOrderForm" method="post" onsubmit="return false;" data-trade-mode="shares">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3 pb-2" style="border-bottom: 1px solid var(--terminal-border);">
+                        <span class="small" style="color: var(--terminal-text); opacity: 0.75;">Current Price</span>
+                        <span class="fw-bold text-danger fs-5">
+                            $<span id="sellModalPrice" data-unit-price="@unitPriceInvariant">@unitPriceDisplay</span>
+                        </span>
+                    </div>
+
+                    <!-- Primary Editable Box (Switches between Shares and Dollars) -->
+                    <div class="mb-2">
+                        <label id="sellPrimaryLabel" for="sellPrimaryInput" class="form-label small fw-semibold">Shares to Sell</label>
+                        <div class="input-group">
+                            <span id="sellPrimaryPrefix" class="input-group-text terminal-card d-none" style="border-color: var(--terminal-border); color: var(--terminal-text);">$</span>
+                            <input type="number"
+                                   id="sellPrimaryInput"
+                                   name="primaryAmount"
+                                   class="form-control terminal-card fw-semibold"
+                                   min="1"
+                                   step="1"
+                                   value="1"
+                                   required />
+                        </div>
+                    </div>
+
+                    <!-- Swap Mode Button Between Shares & Derived Value -->
+                    <div class="d-flex justify-content-center my-2">
+                        <button type="button"
+                                id="sellSwapModeBtn"
+                                class="btn btn-sm btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center"
+                                style="width: 36px; height: 36px; border-color: var(--terminal-border); color: var(--terminal-text);"
+                                title="Switch between entering Shares or Dollar Amount"
+                                aria-label="Switch between entering Shares or Dollar Amount">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M7 3v18"></path>
+                                <path d="m3 7 4-4 4 4"></path>
+                                <path d="M17 21V3"></path>
+                                <path d="m21 17-4 4-4-4"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Secondary Readout Box (Styled like a price readout, updates dynamically) -->
+                    <div class="p-3 rounded-3 d-flex justify-content-between align-items-center mb-2" style="background-color: rgba(0, 0, 0, 0.2); border: 1px solid var(--terminal-border);">
+                        <span id="sellSecondaryLabel" class="small" style="color: var(--terminal-text); opacity: 0.75;">Estimated Proceeds</span>
+                        <span id="sellSecondaryValue" class="fw-bold text-danger fs-5">$0.00</span>
+                    </div>
+
+                    <!-- Hidden normalized values ready for future C# / backend binding -->
+                    <input type="hidden" id="sellComputedShares" name="quantity" value="1" />
+                    <input type="hidden" id="sellComputedTotal" name="estimatedTotal" value="0.00" />
+
+                    <div id="sellFrontendNotice" class="small text-warning mt-2 d-none">
+                        Frontend preview only — backend order execution will be wired up next.
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="border-top: 1px solid var(--terminal-border);">
+                    <button type="button" class="btn btn-outline-secondary px-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" id="sellSubmitBtn" class="btn btn-danger fw-bold px-4">Confirm Sell</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

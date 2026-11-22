@@ -16,6 +16,7 @@ public class DaySimulationService(IDaySimulationRepository daySimulationReposito
     {
         return await daySimulationRepository
             .AllAsNoTracking()
+            .OrderBy(s => s.Id)
             .Select(s => new DaySimulationModel
             {
                 Day = s.Day

@@ -687,6 +687,14 @@ html.light-mode .theme-swatch-btn {
         background: rgba(255, 255, 255, 0.1);
     }
 
+.btn-delete-term {
+    background-color: #dc2626;
+}
+
+    .btn-delete-term:hover {
+        background-color: #b91c1c;
+    }
+
 .footer-link {
     transition: color 0.2s ease-in-out;
 }
@@ -835,9 +843,9 @@ html.light-mode .offcanvas.mobile-partial .btn-close {
 html.light-mode .badge:not(.bg-success):not(.bg-danger),
 html.light-mode .badge.border-light:not(.bg-success):not(.bg-danger),
 html.light-mode .badge.border-secondary:not(.bg-success):not(.bg-danger) {
+    background-color: var(--terminal-card-bg) !important;
     color: var(--terminal-text) !important;
-    border-color: var(--terminal-border) !important;
-    background-color: rgba(0, 0, 0, 0.03) !important;
+    border: 1px solid var(--auth-label-focus, var(--terminal-border)) !important;
 }
 
 /* Explicit status enforcement for light mode */
@@ -851,4 +859,25 @@ html.light-mode .badge.bg-danger {
     background-color: #dc3545 !important;
     color: #ffffff !important;
     border-color: #dc3545 !important;
+}
+
+/* News event cards in Details */
+.news-event-card {
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
+}
+
+:root:not(.light-mode) .news-event-card:hover {
+    border-color: var(--terminal-accent) !important;
+    box-shadow: 0 0 12px var(--terminal-glow);
+}
+
+html.light-mode .news-event-card:hover {
+    border-color: var(--auth-label-focus, var(--terminal-border)) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-subtle);
+}
+
+/* Keep the date pill inside the news card calm on hover */
+.news-event-card:hover .badge {
+    transform: none;
 }
