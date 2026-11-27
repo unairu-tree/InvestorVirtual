@@ -3024,6 +3024,14 @@ namespace InvestorVirtual.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("The ID of the stock that is watchlisted.");
 
+                    b.Property<bool>("IsInWatchlist")
+                        .HasColumnType("bit")
+                        .HasComment("Indicates whether the stock is in the portfolio's watchlist.");
+
+                    b.Property<decimal>("SharesOwned")
+                        .HasColumnType("DECIMAL(18, 8)")
+                        .HasComment("The number of shares owned of this stock.");
+
                     b.HasKey("PortfolioGuid", "StockId");
 
                     b.HasIndex("StockId");
@@ -4049,7 +4057,7 @@ namespace InvestorVirtual.Data.Migrations
                         .HasComment("The price per share at the time of the transaction.");
 
                     b.Property<decimal>("Shares")
-                        .HasColumnType("DECIMAL(18, 2)")
+                        .HasColumnType("DECIMAL(18, 8)")
                         .HasComment("The number of shares involved in this transaction.");
 
                     b.Property<int>("StockId")

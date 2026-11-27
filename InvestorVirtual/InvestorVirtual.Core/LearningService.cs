@@ -170,16 +170,4 @@ public class LearningService(ILearningRepository learningRepository, ILogger<Lea
             .Where(lt => lt.IsDeleted == false)
             .CountAsync();
     }
-
-    /* DEPRECATED */
-    /* PRIVATE METHODS FOR USE IN THE SERVICE ONLY */
-    private static void UndeleteAndModifyTerm(LearningTerm existingTerm, LearningTermRequestModel model)
-    {
-        existingTerm.TermName = model.TermName;
-        existingTerm.Slug = model.Slug;
-        existingTerm.Description = model.Description;
-        existingTerm.Category = (TermCategory)model.CategoryId;
-        existingTerm.IsDeleted = false;
-    }
-    /* DEPRECATED */
 }

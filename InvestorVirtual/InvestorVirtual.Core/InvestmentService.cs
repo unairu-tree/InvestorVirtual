@@ -72,7 +72,7 @@ public class InvestmentService(
 
     // Fetching all events for a specific stock up to the current day
     public async Task<IEnumerable<EventResponseModel>> GetAllEventsAsync(int stockId, int currentDay)
-    {   
+    {
         return await eventRepository
             .AllAsNoTracking()
             .Where(e => !e.IsDeleted && e.Stock.Id == stockId)
@@ -125,42 +125,74 @@ public class InvestmentService(
             .AllAsNoTracking()
             .FirstOrDefaultAsync(s => s.Ticker == ticker && !s.IsDeleted);
 
-        if (stock == null) return false;
+        if (stock == null)
+        {
+            return false;
+        }
 
-        // Checks if the stock is already in the user's watchlist
+        // Query the entry so we can check if it exists and make changes to it if it does
         PortfolioStock? existingEntry = await portfolioStockRepository
             .All()
-            .FirstOrDefaultAsync(ps => ps.PortfolioGuid == portfolioGuidOrUserId
-                               && ps.StockId == stock.Id);
+            .FirstOrDefaultAsync(ps => ps.PortfolioGuid == portfolioGuidOrUserId && ps.StockId == stock.Id);
 
         if (existingEntry != null)
         {
-            // Removes from watchlist
-            portfolioStockRepository.Remove(existingEntry);
-            await portfolioStockRepository.SaveChangesAsync();
-            return false; // No longer in watchlist
-        }
-        else
-        {
-            // Adds to watchlist
-            PortfolioStock newEntry = new()
+            if (existingEntry.IsInWatchlist)
             {
-                PortfolioGuid = portfolioGuidOrUserId,
-                StockId = stock.Id
-            };
+                // Removes from watchlist
+                existingEntry.IsInWatchlist = false;
 
-            await portfolioStockRepository.AddAsync(newEntry);
+                if (!existingEntry.IsOwned)
+                {
+                    // If it is not owned when removing it from the watchlist, erases the entry entirely
+                    portfolioStockRepository.Remove(existingEntry);
+                }
+
+                await portfolioStockRepository.SaveChangesAsync();
+                return false; // No longer in watchlist
+            }
+
+            // Adds to watchlist
+            existingEntry.IsInWatchlist = true;
+
             await portfolioStockRepository.SaveChangesAsync();
             return true; // Now bookmarked
         }
+
+        // Adds to watchlist
+        PortfolioStock newEntry = new()
+        {
+            PortfolioGuid = portfolioGuidOrUserId,
+            StockId = stock.Id,
+            IsInWatchlist = true,
+            SharesOwned = 0m
+        };
+
+        await portfolioStockRepository.AddAsync(newEntry);
+        await portfolioStockRepository.SaveChangesAsync();
+        return true; // Now bookmarked
     }
 
     // Checks if a stock is in the user's watchlist for displaying the correct button state in the UI
-    public async Task<bool> IsInWatchlistAsync(string portfolioGuid, string ticker)
+    public async Task<bool> IsInWatchlistAsync(string portfolioGuidOrUserId, string ticker)
     {
         return await portfolioStockRepository
             .AllAsNoTracking()
-            .AnyAsync(ps => ps.PortfolioGuid == portfolioGuid && ps.Stock.Ticker == ticker);
+            .AnyAsync(ps => ps.PortfolioGuid == portfolioGuidOrUserId
+                            && ps.IsInWatchlist
+                            && !ps.Stock.IsDeleted
+                            && ps.Stock.Ticker == ticker);
+    }
+
+    // Checks if a stock is owned by the user for displaying the correct button state in the UI
+    public async Task<bool> IsOwnedAsync(string portfolioGuidOrUserId, string ticker)
+    {
+        return await portfolioStockRepository
+            .AllAsNoTracking()
+            .AnyAsync(ps => ps.PortfolioGuid == portfolioGuidOrUserId
+                            && ps.SharesOwned > 0m
+                            && !ps.Stock.IsDeleted
+                            && ps.Stock.Ticker == ticker);
     }
 
     // Fetches the user's portfolio GUID or creates a new portfolio if it doesn't exist (portfolio and user guid are tied 1:1)
@@ -199,6 +231,29 @@ public class InvestmentService(
             return false; // If not - return false
 
         return true; // If it does - return true
+    }
+
+    // Fetches the user's portfolio and all of its associated data (watchlist, transactions, balance)
+    public async Task<PortfolioResponseModel?> GetPortfolioAsync(string portfolioGuidOrUserId)
+    {
+        Portfolio? portfolio = await portfolioRepository
+            .AllAsNoTracking()
+            .Include(p => p.PortfolioStocks)
+                .ThenInclude(ps => ps.Stock)
+            .Include(p => p.Transactions)
+            .FirstOrDefaultAsync(p => p.Guid == portfolioGuidOrUserId);
+
+        if (portfolio == null)
+        {
+            return null;
+        }
+
+        return new PortfolioResponseModel
+        {
+            Balance = portfolio.Balance,
+            PortfolioStocks = portfolio.PortfolioStocks,
+            Transactions = portfolio.Transactions
+        };
     }
 
     // Resets the user's portfolio to the starting balance and removes all transactions

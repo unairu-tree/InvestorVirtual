@@ -23,11 +23,17 @@ public interface IInvestmentService
     // A method to check if the stock is already in a watchlist
     Task<bool> IsInWatchlistAsync(string portfolioGuidOrUserId, string ticker);
 
+    // A method to check if the stock is owned by the user
+    Task<bool> IsOwnedAsync(string portfolioGuidOrUserId, string ticker);
+
     // A helper method that extracts the portfolio tied to the user id (or creates one automatically if a portfolio does not exist)
     Task<string> GetOrCreatePortfolioGuidAsync(string userId);
 
     // A helper method that checks if a portfolio exists (main usage will be to check in case someone uses apps like PostMan to bypass the front end)
     Task<bool> PortfolioExistsAsync(string guid);
+
+    // A method to get the portfolio tied to a user id and all of its associated data (watchlist, transactions, balance)
+    Task<PortfolioResponseModel?> GetPortfolioAsync(string portfolioGuidOrUserId);
 
     // A method to restart the simulation - for the portfolio it sets balance back to default and clears all transactions, but keeps the watchlist
     Task ResetSimulationAsync(string portfolioGuidOrUserId);
